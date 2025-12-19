@@ -1,6 +1,0 @@
-flask
-playwright
-langgraph
-langchain-community
-streamlit
-gradio
