@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Agent Test Interface</title>
+
+    <!-- Link external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>AI Agent Test Interface</h2>
+
+    <textarea id="instruction" placeholder="Enter instruction..."></textarea>
+    <br>
+    <button onclick="sendInstruction()">Submit</button>
+
+    <pre id="output"></pre>
+</div>
+
+<script>
+function sendInstruction() {
+    const instruction = document.getElementById("instruction").value;
+
+    fetch("/test", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ instruction: instruction })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").textContent =
+            JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+        document.getElementById("output").textContent = "Error occurred";
+    });
+}
+</script>
+
+</body>
+</html>
+
