@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Page</title>
+</head>
+<body>
+  <h1>Search</h1>
+
+  <input type="text" id="query" placeholder="Search...">
+  <button onclick="submitSearch()">Search</button>
+
+  <h3>API Response:</h3>
+  <pre id="resultBox"></pre>
+
+  <br>
+  <a href="/">Back to Home</a>
+
+  <script>
+    function submitSearch() {
+      const query = document.getElementById("query").value;
+
+      fetch("/api/submit_test", {
+        method: "POST",
+        body: "search test for query " + query
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("resultBox").textContent =
+          JSON.stringify(data, null, 2);
+      });
+    }
+  </script>
+</body>
+</html>
+
