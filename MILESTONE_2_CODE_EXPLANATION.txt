@@ -1,0 +1,298 @@
+================================================================================
+                    AI WEB TESTING AGENT - MILESTONE 2
+                         Code Explanation Document
+================================================================================
+
+Project: AI Agent to Test Websites Automatically Using Natural Language
+Milestone: 2 (Week 3-4)
+Date: December 2024
+
+================================================================================
+                              OVERVIEW
+================================================================================
+
+Milestone 2 focuses on building the core AI pipeline that transforms natural 
+language test instructions into executable Playwright test scripts.
+
+Key Deliverables:
+  1. Instruction Parser Module
+  2. Code Generator Module  
+  3. LangGraph Workflow Integration
+  4. API Endpoint for Processing
+
+================================================================================
+                         PROJECT STRUCTURE
+================================================================================
+
+AATW/
+├── app.py                      # Flask application (REST API)
+├── agent/
+│   ├── __init__.py
+│   ├── instruction_parser.py   # Module 1: NL → Structured Actions
+│   ├── code_generator.py       # Module 2: Actions → Playwright Code
+│   └── langgraph_agent.py      # Module 3: Workflow Orchestration
+├── templates/
+│   └── index.html              # Web Interface (Futuristic UI)
+└── static/
+    └── styles.css              # Styling
+
+================================================================================
+                    MODULE 1: INSTRUCTION PARSER
+                    (agent/instruction_parser.py)
+================================================================================
+
+PURPOSE:
+--------
+Parses natural language test instructions and extracts structured browser 
+actions that can be understood by the code generator.
+
+MAIN FUNCTION:
+--------------
+  parse_instruction(instruction: str) -> list
+
+INPUT EXAMPLE:
+--------------
+  "Open home page and click login button"
+
+OUTPUT EXAMPLE:
+---------------
+  [
+    {"action": "open_page", "target": "home page"},
+    {"action": "click", "target": "login button"}
+  ]
+
+SUPPORTED ACTIONS:
+------------------
+  1. NAVIGATION: open, navigate, go to
+     - Detects: home, login, dashboard, profile, settings pages
+     - Also supports direct URLs (http://...)
+     
+  2. TEXT INPUT: enter, type, fill
+     - Detects: username, password, email, search fields
+     - Extracts values from quotes in instruction
+     
+  3. CLICK: click, submit, press
+     - Detects: submit, login, save, search, register buttons
+     
+  4. VERIFY: verify, check, assert
+     - Detects: error message, success message, page title, text
+     
+  5. WAIT: wait X seconds
+     - Extracts duration from instruction
+
+HOW IT WORKS:
+-------------
+  1. Convert instruction to lowercase for pattern matching
+  2. Use regex to extract URLs and quoted values
+  3. Check for action keywords (open, click, enter, etc.)
+  4. Map detected elements to structured action dictionaries
+  5. Return list of actions in execution order
+
+================================================================================
+                     MODULE 2: CODE GENERATOR
+                     (agent/code_generator.py)
+================================================================================
+
+PURPOSE:
+--------
+Converts structured actions from the parser into executable Playwright Python 
+scripts that can be run for automated browser testing.
+
+MAIN FUNCTIONS:
+---------------
+  1. generate_playwright_code(parsed_actions, target_url) -> str
+  2. generate_assertions(parsed_actions) -> list
+
+HELPER FUNCTIONS:
+-----------------
+  - _get_url_for_page(page_name, base_url)
+      Maps page names to URL paths
+      Example: "home page" -> "/"
+               "login page" -> "/login"
+               
+  - _get_selector_for_field(field_name)
+      Maps field names to CSS selectors
+      Example: "username field" -> 'input[name="username"]'
+      
+  - _get_selector_for_button(button_name)
+      Maps button names to CSS selectors
+      Example: "login button" -> 'button:has-text("Login")'
+
+GENERATED CODE EXAMPLE:
+-----------------------
+  from playwright.sync_api import sync_playwright
+
+  def run_test():
+      with sync_playwright() as p:
+          browser = p.chromium.launch(headless=True)
+          page = browser.new_page()
+          
+          page.goto("http://localhost:5000/")
+          print("Navigated to: http://localhost:5000/")
+          
+          page.click('button:has-text("Login")')
+          print("Clicked: login button")
+          
+          browser.close()
+          print("Test completed successfully!")
+
+  if __name__ == "__main__":
+      run_test()
+
+ASSERTIONS OUTPUT:
+------------------
+  [
+    {
+      "type": "page_loaded",
+      "description": "Page 'home page' should load successfully",
+      "check": "page.url contains expected path"
+    },
+    {
+      "type": "element_clickable", 
+      "description": "'login button' should be clickable",
+      "check": "element is visible and enabled"
+    }
+  ]
+
+================================================================================
+                     MODULE 3: LANGGRAPH AGENT
+                     (agent/langgraph_agent.py)
+================================================================================
+
+PURPOSE:
+--------
+Orchestrates the workflow pipeline using LangGraph's StateGraph to connect
+the instruction parser and code generator in a modular, extensible way.
+
+STATE DEFINITION:
+-----------------
+  class AgentState(TypedDict):
+      instruction: str           # Original user input
+      parsed_actions: List[Dict] # Output from parser
+      generated_code: str        # Output from code generator
+      assertions: List[Dict]     # Generated test assertions
+      status: str                # Workflow status
+      error: str                 # Error message if any
+
+WORKFLOW NODES:
+---------------
+  Node 1: parse_node
+    - Input: AgentState with instruction
+    - Calls: parse_instruction() from instruction_parser.py
+    - Output: AgentState with parsed_actions
+    
+  Node 2: generate_code_node
+    - Input: AgentState with parsed_actions
+    - Calls: generate_playwright_code() and generate_assertions()
+    - Output: AgentState with generated_code and assertions
+
+WORKFLOW PIPELINE:
+------------------
+  [Entry] -> parse_node -> generate_code_node -> [END]
+
+MAIN ENTRY POINT:
+-----------------
+  handle_instruction(instruction: str) -> Dict
+
+  This function:
+    1. Initializes the state with the user instruction
+    2. Invokes the compiled workflow
+    3. Returns the final result with code and assertions
+
+================================================================================
+                         FLASK API (app.py)
+================================================================================
+
+ENDPOINTS:
+----------
+  GET  /        - Serves the web interface (index.html)
+  POST /test    - Processes natural language instruction
+  GET  /health  - Health check endpoint
+
+POST /test REQUEST:
+-------------------
+  Content-Type: application/json
+  Body: {"instruction": "Open home page and click login button"}
+
+POST /test RESPONSE:
+--------------------
+  {
+    "status": "success",
+    "instruction": "Open home page and click login button",
+    "parsed_actions": [
+      {"action": "open_page", "target": "home page"},
+      {"action": "click", "target": "login button"}
+    ],
+    "generated_code": "from playwright.sync_api import...",
+    "assertions": [...],
+    "workflow_status": "code_generated"
+  }
+
+================================================================================
+                         HOW TO RUN
+================================================================================
+
+1. Activate virtual environment:
+   projenv\Scripts\activate
+
+2. Start Flask server:
+   python app.py
+
+3. Open browser:
+   http://localhost:5000
+
+4. Enter natural language instruction and click EXECUTE
+
+================================================================================
+                         EXAMPLE WORKFLOW
+================================================================================
+
+USER INPUT:
+  "Navigate to login page, enter 'testuser' in username, 
+   enter 'password123' in password, and click submit"
+
+STEP 1 - PARSING:
+  [
+    {"action": "open_page", "target": "login page"},
+    {"action": "enter_text", "target": "username field", "value": "testuser"},
+    {"action": "enter_text", "target": "password field", "value": "password123"},
+    {"action": "click", "target": "submit button"}
+  ]
+
+STEP 2 - CODE GENERATION:
+  from playwright.sync_api import sync_playwright
+
+  def run_test():
+      with sync_playwright() as p:
+          browser = p.chromium.launch(headless=True)
+          page = browser.new_page()
+          
+          page.goto("http://localhost:5000/login")
+          page.fill('input[name="username"]', "testuser")
+          page.fill('input[type="password"]', "password123")
+          page.click('button[type="submit"]')
+          
+          browser.close()
+
+STEP 3 - ASSERTIONS:
+  - Page '/login' should load successfully
+  - 'username field' should accept input
+  - 'password field' should accept input
+  - 'submit button' should be clickable
+
+================================================================================
+                         TECHNOLOGY STACK
+================================================================================
+
+  - Python 3.x      : Programming language
+  - Flask           : Web framework and REST API
+  - LangGraph       : Agent workflow orchestration (StateGraph)
+  - Playwright      : Browser automation library
+  - HTML/CSS/JS     : Web interface with futuristic design
+
+================================================================================
+                              END
+================================================================================
+
+Prepared by: AI Web Testing Agent Team
+GitHub: github.com/Suryareddy180/AI-Agent-to-Test-Websites-Automatically-Using-Natural-Language
