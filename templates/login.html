@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+</head>
+<body>
+  <h1>Login</h1>
+
+  <input type="text" id="username" placeholder="Username"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+
+  <button onclick="submitLogin()">Login</button>
+
+  <h3>API Response:</h3>
+  <pre id="resultBox"></pre>
+
+  <br>
+  <a href="/">Back to Home</a>
+
+  <script>
+    function submitLogin() {
+      const username = document.getElementById("username").value;
+
+      fetch("/api/submit_test", {
+        method: "POST",
+        body: "login test for user " + username
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("resultBox").textContent =
+          JSON.stringify(data, null, 2);
+      });
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Test Agent</title>
+  <style>
+    textarea { width: 400px; height: 60px; }
+    pre { background: #f4f4f4; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>🤖 AI Test Agent</h2>
+
+<textarea id="instruction" placeholder="Enter your test instruction"></textarea><br><br>
+<button onclick="runAgent()">Run Agent</button>
+
+<p id="status"></p>
+
+<pre id="output"></pre>
+
+<script>
+async function runAgent() {
+  const instruction = document.getElementById("instruction").value;
+  document.getElementById("status").innerText = "AI is thinking...";
+
+  const response = await fetch("/api/submit_test", {
+    method: "POST",
+    body: instruction
+  });
+
+  const data = await response.json();
+  document.getElementById("output").innerText =
+    JSON.stringify(data, null, 2);
+
+  document.getElementById("status").innerText = "Done";
+}
+</script>
+
+</body>
+</html>
