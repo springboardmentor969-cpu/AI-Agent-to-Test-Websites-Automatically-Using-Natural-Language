@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Web Testing Agent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #7f00ff, #e100ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6a00cc;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #e100ff;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background: #7f00ff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #5a00b3;
+        }
+
+        .output-section {
+            margin-top: 30px;
+        }
+
+        .output-section h3 {
+            margin-bottom: 10px;
+            color: #6a00cc;
+        }
+
+        pre {
+            background: #f4f6f8;
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Web Testing Agent</h1>
+    <p class="subtitle">Test websites using natural language instructions</p>
+
+    <label for="instruction">Enter Test Instruction</label>
+    <textarea id="instruction" placeholder="Example: Open login page, enter username and password, click login"></textarea>
+
+    <button onclick="runTest()">Run Test</button>
+
+    <div class="output-section">
+        <h3>Parsed Test Steps</h3>
+        <pre id="output">Waiting for input...</pre>
+    </div>
+</div>
+
+<script>
+    function runTest() {
+        const text = document.getElementById('instruction').value;
+        const output = document.getElementById('output');
+        output.textContent = 'Processing...';
+
+        fetch('/run-test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ instruction: text })
+        })
+        .then(res => res.json())
+        .then(data => {
+            output.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+            output.textContent = 'Error: ' + err;
+        });
+    }
+</script>
+
+</body>
+</html>
