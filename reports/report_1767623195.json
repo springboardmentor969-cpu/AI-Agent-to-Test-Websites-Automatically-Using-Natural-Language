@@ -1,0 +1,7 @@
+{
+    "input": "click success",
+    "status": "FAIL",
+    "steps": [],
+    "duration_seconds": 0,
+    "error": "Invalid Command"
+}

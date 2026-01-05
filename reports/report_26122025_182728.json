@@ -1,0 +1,12 @@
+{
+    "input": "click submit\n",
+    "parsed": {
+        "action": "unknown",
+        "target": null
+    },
+    "steps": [],
+    "status": "FAIL",
+    "error": "Invalid command",
+    "duration_seconds": 0,
+    "screenshot": null
+}

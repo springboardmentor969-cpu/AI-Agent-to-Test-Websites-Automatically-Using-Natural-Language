@@ -1,0 +1,15 @@
+{
+    "input": "click login",
+    "parsed": {
+        "action": "click",
+        "target": "login"
+    },
+    "steps": [
+        "Opened login page",
+        "Performed login"
+    ],
+    "status": "PASS",
+    "error": null,
+    "duration_seconds": 5.87,
+    "screenshot": null
+}

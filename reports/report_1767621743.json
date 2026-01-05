@@ -1,0 +1,10 @@
+{
+    "input": "click login",
+    "status": "PASS",
+    "steps": [
+        "Opened login page",
+        "Performed login"
+    ],
+    "duration_seconds": 17.03,
+    "error": null
+}

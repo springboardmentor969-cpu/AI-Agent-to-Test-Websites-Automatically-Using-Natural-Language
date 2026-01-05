@@ -1,0 +1,226 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Test Case Generator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    <h2>AI Test Case Generator</h2>
+    <p class="subtitle">
+        Convert natural language into automation commands
+    </p>
+
+    <label for="input">Enter Test Instruction</label>
+    <textarea id="input" placeholder="Example: Click the login button"></textarea>
+
+    <button onclick="send()">Generate Test Command</button>
+
+    <div id="output" class="output">
+        Output will appear here...
+    </div>
+
+    <div class="footer">
+        Powered by LangGraph + Flask
+    </div>
+</div>
+
+<script>
+    function send() {
+        const input = document.getElementById("input").value;
+
+        if (!input.trim()) {
+            alert("Please enter a test instruction.");
+            return;
+        }
+
+        fetch("/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ input })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("output").innerText =
+                JSON.stringify(data, null, 2);
+        });
+    }
+</script>
+
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Test Automation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body> -->
+<!-- 
+<div class="container">
+    <h2>AI Test Automation</h2>
+    <p class="subtitle">Enter your test command</p>
+
+    <textarea id="input" placeholder="Example: Click login"></textarea>
+    <button onclick="runTest()">Run Test</button>
+
+    <div id="output" class="output"></div>
+</div>
+
+<script> -->
+<!-- // function runTest() {
+//     const input = document.getElementById("input").value;
+//     document.getElementById("output").innerHTML = "Running test...";
+
+//     fetch("/run", {
+//         method: "POST",
+//         headers: {"Content-Type":"application/json"},
+//         body: JSON.stringify({input})
+//     })
+//     .then(res => res.json())
+//     .then(data => {
+//         let html = `
+//         <b>Status:</b> ${data.status}<br>
+//         <b>Duration:</b> ${data.duration_seconds} seconds<br>
+//         <b>Steps:</b><ul>${data.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
+//         ${data.error? "<b>Error:</b> "+data.error+"<br>":""}
+//         ${data.screenshot? `<img src="/${data.screenshot}" width="200"><br>`:""}
+//         <b>Report File:</b> ${data.report_file}
+//         `;
+//         document.getElementById("output").innerHTML = html;
+//     });
+// }
+// </script>
+<script>
+function runTest() {
+    const input = document.getElementById("input").value;
+    document.getElementById("output").innerHTML = "Running...";
+
+    fetch("/run", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({input})
+    })
+    .then(res => res.json())
+    .then(data => {
+        let html = `
+        <b>Status:</b> ${data.status}<br>
+        <b>Time:</b> ${data.duration_seconds}s<br>
+        <b>Steps:</b><ul>${data.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
+        <b>Report:</b> <a href="/download/${data.report_file}">Download</a>
+        `;
+        document.getElementById("output").innerHTML = html;
+    });
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Test Automation</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <button class="toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
+    <h3>Test History</h3>
+    <div id="history"></div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <h2>AI Test Automation</h2>
+
+    <textarea id="input" placeholder="Enter command like: Click login"></textarea>
+
+    <label class="headless">
+        <input type="checkbox" id="headless"> Headless Mode
+    </label>
+
+    <button class="run-btn" onclick="runTest()">Run Test</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Time (sec)</th>
+                <th>Steps</th>
+                <th>Report</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable"></tbody>
+    </table>
+
+</div>
+
+</div>
+
+<script>
+function runTest(){
+ fetch("/run",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+        input: input.value,
+        headless: headless.checked
+    })
+ })
+ .then(r=>r.json())
+ .then(d=>{
+    resultTable.innerHTML = `
+    <tr>
+        <td>${d.status}</td>
+        <td>${d.duration_seconds}</td>
+        <td><ul>${d.steps.map(s=>`<li>${s}</li>`).join("")}</ul></td>
+        <td><a href="/download/${d.report_file}">Download</a></td>
+    </tr>`;
+    loadHistory();   // 👈 load history immediately
+ });
+}
+
+function loadHistory(){
+ fetch("/history")
+ .then(r=>r.json())
+ .then(h=>{
+    console.log("HISTORY DATA:",h);   // 👈 debug
+    const hist = document.getElementById("history");
+    hist.innerHTML = "";
+    if(h.length==0){
+        hist.innerHTML = "<p>No history yet</p>";
+        return;
+    }
+    h.forEach(x=>{
+        const d = document.createElement("div");
+        d.className = "hist-item";
+        d.innerHTML = `<b>${x.input}</b><span style="float:right">${x.status}</span>`;
+        hist.appendChild(d);
+    });
+ });
+}
+
+loadHistory(); // load on page open
+
+function toggleTheme(){
+ document.body.classList.toggle("dark");
+}
+</script>
+
+
+</body>
+</html>
