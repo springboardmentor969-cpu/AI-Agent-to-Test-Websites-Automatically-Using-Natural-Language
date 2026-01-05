@@ -5,7 +5,6 @@
 
 Project: AI Agent to Test Websites Automatically Using Natural Language
 Milestone: 2 (Week 3-4)
-Date: December 2024
 
 ================================================================================
                               OVERVIEW

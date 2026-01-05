@@ -1,6 +1,6 @@
-# AI Web Testing Agent
+# AI Agent to Test Websites Automatically Using Natural Language
 
-An AI-powered web testing tool that allows users to test websites using natural language instructions. Built with **Flask**, **LangGraph**, and **Playwright**, featuring a stunning futuristic UI with glassmorphism effects and animations.
+An AI-powered web testing tool that allows users to test websites using natural language instructions. Built with **Flask**, **LangGraph**, and **Playwright**, the system provides a scalable foundation for automated browser testing using AI-driven workflows.
 
 ## 🎯 Project Overview
 
@@ -9,7 +9,6 @@ This project implements an intelligent agent capable of performing automated end
 - Parses and interprets test steps
 - Generates executable Playwright scripts
 - Provides structured test assertions
-- Features a premium cyberpunk-inspired web interface
 
 ## 🏗️ Architecture
 
