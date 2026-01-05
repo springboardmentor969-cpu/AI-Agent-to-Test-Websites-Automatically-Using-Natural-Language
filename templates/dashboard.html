@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Testing Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h2>🤖 AI Testing Agent</h2>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <button type="button">🔍</button>
+            </div>
+
+            <div class="navbar-menu">
+                <a href="{{ url_for('home') }}" class="nav-link">About</a>
+                <a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a>
+                
+                <div class="dropdown">
+                    <button class="dropdown-btn">👤 Profile ▼</button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('profile') }}">View Profile</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>
+                
+                <button class="hamburger-menu">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <div class="welcome-card">
+                <h1>Welcome to Dashboard</h1>
+                <p>Hello <strong>{{ user.username }}</strong>, welcome to your testing dashboard!</p>
+                
+                <div class="dashboard-info">
+                    <div class="info-box">
+                        <h3>Quick Stats</h3>
+                        <ul>
+                            <li><strong>Username:</strong> {{ user.username }}</li>
+                            <li><strong>Email:</strong> {{ user.email if user.email else 'Not provided' }}</li>
+                            <li><strong>Member Since:</strong> {{ user.created_at.strftime('%B %d, %Y') if user.created_at else 'N/A' }}</li>
+                            <li><strong>Last Login:</strong> {{ user.last_login.strftime('%B %d, %Y at %I:%M %p') if user.last_login else 'First login' }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>Dashboard Actions</h3>
+                        <ul>
+                            <li><a href="{{ url_for('profile') }}">📋 View Full Profile</a></li>
+                            <li><a href="#">⚙️ Settings</a></li>
+                            <li><a href="#">📊 Test Results</a></li>
+                            <li><a href="#">📝 Create New Test</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{{ url_for('profile') }}" class="btn-primary">View Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
