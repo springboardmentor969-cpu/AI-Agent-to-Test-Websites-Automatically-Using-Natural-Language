@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Web Testing Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Web Testing Agent</h1>
+
+    <textarea id="instruction" rows="4"
+    placeholder="Enter a test instruction (e.g. verify login page)"></textarea>
+
+    <button onclick="sendInstruction()">Run Agent</button>
+
+    <pre id="output">Waiting for instruction...</pre>
+</div>
+
+<script>
+function sendInstruction() {
+    const instruction = document.getElementById("instruction").value;
+    document.getElementById("output").innerText = "Processing...";
+
+    fetch("/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ instruction })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("output").innerText =
+            JSON.stringify(data, null, 2);
+    });
+}
+</script>
+
+</body>
+</html>
