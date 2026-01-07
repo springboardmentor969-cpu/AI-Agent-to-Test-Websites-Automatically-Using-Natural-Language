@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Website Testing Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <h1>AI Website Testing Agent</h1>
+
+</header>
+
+<div class="container">
+
+    <div class="input-section">
+        <label for="instruction">Enter Test Instruction</label>
+        <textarea id="instruction"
+            placeholder="Example: Open homepage and verify title"></textarea>
+
+        <button onclick="sendInstruction()">Run Test</button>
+    </div>
+
+    <div class="examples">
+        <h4>Sample Instructions</h4>
+        <ul>
+            <li>Open homepage</li>
+            <li>Check login page title</li>
+            <li>Verify signup button exists</li>
+        </ul>
+    </div>
+
+    <div class="output-section">
+        <div class="status">Agent Output</div>
+        <pre id="output">Waiting for instruction...</pre>
+    </div>
+
+</div>
+
+<script>
+function sendInstruction() {
+    const instruction = document.getElementById("instruction").value;
+    document.getElementById("output").textContent = "Processing...";
+
+    fetch("/test", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ instruction: instruction })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").textContent =
+            JSON.stringify(data, null, 2);
+    })
+    .catch(() => {
+        document.getElementById("output").textContent = "Error occurred";
+    });
+}
+</script>
+
+</body>
+</html>
