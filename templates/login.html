@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Login · AI Test Agent{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-5 col-lg-4">
+      <div class="aws-card shadow-lg">
+        <div class="aws-card-header text-center">
+          <h4 class="mb-1">AI Test Agent</h4>
+          <small class="text-muted">Demo Login (for testing)</small>
+        </div>
+        <div class="aws-card-body p-4">
+          <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input id="username" name="username" class="form-control aws-input" placeholder="alice">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" type="password" class="form-control aws-input" placeholder="1234">
+            </div>
+            <button type="submit" class="btn btn-aws-primary w-100">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Sign in
+            </button>
+          </form>
+          <div id="message" class="alert mt-3 d-none"></div>
+        </div>
+        <div class="text-center small text-muted pb-3">
+          This is a dummy page for the Playwright tests.
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-link text-muted">
+          Skip login → Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function handleLogin(event) {
+  event.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const msg = document.getElementById('message');
+  if (username) {
+    msg.className = 'alert alert-success mt-3';
+    msg.innerHTML = 'Welcome <strong>' + username + '</strong>! ' +
+                    '<a href="{{ url_for("dashboard") }}" class="btn btn-sm btn-success ms-2">Go to Dashboard →</a>';
+    msg.classList.remove('d-none');
+  } else {
+    msg.className = 'alert alert-danger mt-3';
+    msg.textContent = 'Please enter a username.';
+    msg.classList.remove('d-none');
+  }
+}
+</script>
+{% endblock %}

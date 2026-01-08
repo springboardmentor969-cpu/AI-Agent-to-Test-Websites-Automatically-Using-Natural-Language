@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard · AI Test Agent{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb aws-breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('login') }}">Login</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    </ol>
+  </nav>
+
+  <div class="row g-4">
+    <!-- Left: instruction input -->
+    <div class="col-lg-8">
+      <div class="aws-card">
+        <div class="aws-card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><i class="bi bi-robot me-2"></i>Natural Language Test</h5>
+          <span class="aws-badge bg-aws-blue">Groq · LangGraph · Playwright</span>
+        </div>
+        <div class="aws-card-body">
+          <form method="post" action="{{ url_for('run_test') }}">
+            <label class="form-label fw-semibold" for="instruction">Test instruction</label>
+            <textarea
+              id="instruction"
+              name="instruction"
+              class="aws-textarea"
+              rows="7"
+              placeholder="Examples:
+- Open the login page, enter username alice, password 1234, click login, verify welcome message.
+- Try logging in with empty username and check that an error appears.
+- Go to login, enter bob, click login, and confirm Welcome bob is shown."
+            >{{ last_instruction or "" }}</textarea>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+              
+              <div>
+                <button type="submit" class="btn btn-aws-primary">
+                  <i class="bi bi-play-fill me-1"></i> Run Test
+                </button>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light ms-2">
+                  Test Login Page
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: report -->
+    <div class="col-lg-4">
+      <div class="aws-card">
+        <div class="aws-card-header d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">Test Result</h6>
+          {% if report %}
+            <span class="aws-badge bg-aws-green">Latest run</span>
+          {% else %}
+            <span class="aws-badge bg-aws-orange">Idle</span>
+          {% endif %}
+        </div>
+        <div class="aws-card-body">
+          {% if report %}
+            <div class="aws-status-success mb-3">
+              <strong>Status:</strong>
+            </div>
+            <pre class="aws-console">{{ report }}</pre>
+          {% else %}
+            <div class="aws-empty-state">
+              <i class="bi bi-play-circle mb-2"></i>
+              <p class="mb-0">Run a test to see the Playwright + pytest output here.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

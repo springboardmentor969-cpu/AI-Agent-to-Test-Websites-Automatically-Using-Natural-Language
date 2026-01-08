@@ -1,0 +1,11 @@
+flask
+langgraph
+langchain
+langchain-openai
+python-dotenv
+pydantic
+playwright
+pytest
+pytest-playwright
+groq
+langchain-groq

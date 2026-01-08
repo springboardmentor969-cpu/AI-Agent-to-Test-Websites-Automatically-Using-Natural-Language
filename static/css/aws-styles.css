@@ -1,0 +1,235 @@
+/* Global AWS-like dark background */
+.aws-bg {
+  background: radial-gradient(circle at top, #1f2937 0, #020617 50%, #000000 100%);
+  min-height: 100vh;
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Top navbar */
+.aws-navbar {
+  background: rgba(15, 23, 42, 0.98);
+  border-bottom: 1px solid #374151;
+  padding: 0.75rem 1.25rem;
+}
+
+.aws-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #22c55e;
+  text-decoration: none;
+}
+
+.aws-logo:hover {
+  color: #4ade80;
+}
+
+/* Region + user menu */
+.aws-region {
+  background: #111827;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.aws-user-menu {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+/* Sidebar */
+.aws-sidebar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 220px;
+  bottom: 0;
+  background: #020617;
+  border-right: 1px solid #111827;
+  padding-top: 1rem;
+}
+
+.aws-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.aws-sidebar-item {
+  padding: 0.7rem 1.2rem;
+  color: #9ca3af;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-left: 3px solid transparent;
+  font-size: 0.9rem;
+}
+
+.aws-sidebar-item:hover {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.aws-sidebar-item.active {
+  background: #020617;
+  color: #22c55e;
+  border-left-color: #22c55e;
+}
+
+/* Main content area */
+.aws-main {
+  margin-left: 220px;
+  padding: 1.5rem 1.75rem;
+}
+
+/* Cards */
+.aws-card {
+  background: #020617;
+  border-radius: 0.8rem;
+  border: 1px solid #111827;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.aws-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #111827;
+}
+
+.aws-card-body {
+  padding: 1.25rem;
+}
+
+/* Badges */
+.aws-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.bg-aws-blue {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid #3b82f6;
+  color: #bfdbfe;
+}
+
+.bg-aws-green {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #bbf7d0;
+}
+
+.bg-aws-orange {
+  background: rgba(249, 115, 22, 0.15);
+  border: 1px solid #f97316;
+  color: #fed7aa;
+}
+
+/* Textarea + console */
+.aws-textarea {
+  width: 100%;
+  background: #020617;
+  border-radius: 0.6rem;
+  border: 1px solid #1f2937;
+  color: #e5e7eb;
+  padding: 0.75rem 0.9rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.aws-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.aws-console {
+  background: #020617;
+  border-radius: 0.6rem;
+  border: 1px solid #111827;
+  padding: 0.75rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+/* Buttons */
+.btn-aws-primary {
+  background: linear-gradient(135deg, #3b82f6, #22c55e);
+  border: none;
+  color: #f9fafb;
+  font-weight: 500;
+  border-radius: 9999px;
+  padding-inline: 1.5rem;
+}
+
+.btn-aws-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #16a34a);
+}
+
+/* Login inputs */
+.aws-input {
+  background: #020617;
+  border-radius: 0.6rem;
+  border: 1px solid #1f2937;
+  color: #e5e7eb;
+}
+
+.aws-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Empty state */
+.aws-empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #6b7280;
+}
+
+.aws-empty-state i {
+  font-size: 2rem;
+  display: block;
+}
+
+/* Status */
+.aws-status-success {
+  text-align: center;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  border-radius: 0.6rem;
+  border: 1px solid #166534;
+  padding: 0.75rem;
+}
+
+/* Breadcrumb */
+.aws-breadcrumb .breadcrumb {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.aws-breadcrumb .breadcrumb-item a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.aws-breadcrumb .breadcrumb-item.active {
+  color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .aws-sidebar {
+    display: none;
+  }
+  .aws-main {
+    margin-left: 0;
+  }
+}
