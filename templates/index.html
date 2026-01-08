@@ -2,26 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Agent Test Interface</title>
-
-    <!-- Link external CSS -->
+    <title>AI Website Testing Agent</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<header class="header">
+    <h1>AI Website Testing Agent</h1>
+    <p>Natural Language → Structured Test Commands</p>
+</header>
+
 <div class="container">
-    <h2>AI Agent Test Interface</h2>
 
-    <textarea id="instruction" placeholder="Enter instruction..."></textarea>
-    <br>
-    <button onclick="sendInstruction()">Submit</button>
+    <div class="input-section">
+        <label for="instruction">Enter Test Instruction</label>
+        <textarea id="instruction"
+            placeholder="Example: Open homepage and verify title"></textarea>
 
-    <pre id="output"></pre>
+        <button onclick="sendInstruction()">Run Test</button>
+    </div>
+
+    <div class="examples">
+        <h4>Sample Instructions</h4>
+        <ul>
+            <li>Open homepage</li>
+            <li>Check login page title</li>
+            <li>Verify signup button exists</li>
+        </ul>
+    </div>
+
+    <div class="output-section">
+        <div class="status">Agent Output</div>
+        <pre id="output">Waiting for instruction...</pre>
+    </div>
+
 </div>
 
 <script>
 function sendInstruction() {
     const instruction = document.getElementById("instruction").value;
+    document.getElementById("output").textContent = "Processing...";
 
     fetch("/test", {
         method: "POST",
@@ -35,7 +55,7 @@ function sendInstruction() {
         document.getElementById("output").textContent =
             JSON.stringify(data, null, 2);
     })
-    .catch(error => {
+    .catch(() => {
         document.getElementById("output").textContent = "Error occurred";
     });
 }
@@ -43,4 +63,3 @@ function sendInstruction() {
 
 </body>
 </html>
-
