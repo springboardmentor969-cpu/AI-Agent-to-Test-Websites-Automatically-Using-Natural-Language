@@ -5,13 +5,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    """Serves the static HTML test page. """
+    """
+    Serves the static HTML test page.
+    """
     return render_template("index.html")
 
 
 @app.route("/test", methods=["POST"])
 def test():
-    """ API endpoint to receive user instruction and pass it to the agent. """
+    """
+    API endpoint to receive user instruction
+    and pass it to the agent.
+    """
     data = request.get_json()
 
     if not data or "instruction" not in data:
@@ -34,4 +39,3 @@ def test():
 
 if __name__ == "__main__":
     app.run(debug=True)
-

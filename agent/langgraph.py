@@ -1,12 +1,18 @@
-
+"""
+langgraph.py
+Defines LangGraph workflow for processing
+natural language test instructions.
+"""
 
 from typing import Dict, List
 from langgraph.graph import StateGraph
-from .Parser import parse_instruction, generate_commands
+from .parser import parse_instruction, generate_commands
 
 
 class AgentState(dict):
-    # Shared state passed between LangGraph nodes
+    """
+    Shared state passed between LangGraph nodes
+    """
     instruction: str
     parsed_data: Dict
     commands: List
