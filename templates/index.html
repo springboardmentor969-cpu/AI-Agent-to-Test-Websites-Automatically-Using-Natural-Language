@@ -2,45 +2,295 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Agent Test Interface</title>
-
-    <!-- Link external CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Website Testing Agent</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-<div class="container">
-    <h2>AI Agent Test Interface</h2>
-
-    <textarea id="instruction" placeholder="Enter instruction..."></textarea>
-    <br>
-    <button onclick="sendInstruction()">Submit</button>
-
-    <pre id="output"></pre>
-</div>
-
-<script>
-function sendInstruction() {
-    const instruction = document.getElementById("instruction").value;
-
-    fetch("/test", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ instruction: instruction })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("output").textContent =
-            JSON.stringify(data, null, 2);
-    })
-    .catch(error => {
-        document.getElementById("output").textContent = "Error occurred";
-    });
-}
-</script>
-
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>🤖 AI Website Testing Agent</h1>
+            <p class="subtitle">Test websites using natural language instructions</p>
+            <div class="milestone-badge">Milestone 1: Week 1-2</div>
+        </header>
+        
+        <!-- Main Test Configuration Card -->
+        <div class="card main-card">
+            <h2>Test Configuration</h2>
+            
+            <!-- URL Input -->
+            <div class="form-group">
+                <label for="url">
+                    <span class="label-icon">🌐</span>
+                    Target URL
+                </label>
+                <input 
+                    type="text" 
+                    id="url" 
+                    value="http://localhost:5000/test-page" 
+                    placeholder="https://example.com"
+                >
+                <small class="help-text">The website you want to test</small>
+            </div>
+            
+            <!-- Test Instruction Input -->
+            <div class="form-group">
+                <label for="instruction">
+                    <span class="label-icon">📝</span>
+                    Test Instruction (Natural Language)
+                </label>
+                <textarea 
+                    id="instruction" 
+                    rows="4"
+                    placeholder="Example: Click the submit button and verify the form submits successfully"
+                ></textarea>
+                <small class="help-text">Describe what you want to test in plain English</small>
+            </div>
+            
+            <!-- Quick Test Examples -->
+            <div class="quick-tests">
+                <label class="quick-label">
+                    <span class="label-icon">⚡</span>
+                    Quick Test Examples
+                </label>
+                <div class="quick-buttons" id="quickButtons">
+                    <button class="quick-test-btn" onclick="setInstruction('Click the submit button')">
+                        Click Submit
+                    </button>
+                    <button class="quick-test-btn" onclick="setInstruction('Type testuser into the username field')">
+                        Fill Username
+                    </button>
+                    <button class="quick-test-btn" onclick="setInstruction('Verify that the form exists on the page')">
+                        Verify Form
+                    </button>
+                    <button class="quick-test-btn" onclick="setInstruction('Fill username with john, fill email with john@test.com, and click submit')">
+                        Complex Test
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Run Test Button -->
+            <button class="btn btn-primary" id="runTestBtn" onclick="runTest()">
+                <span class="btn-icon">▶️</span>
+                Run Test
+            </button>
+            
+            <!-- Status Message Area -->
+            <div id="status" class="status-message"></div>
+        </div>
+        
+        <!-- Information Cards -->
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>📊 Current Capabilities</h3>
+                <ul>
+                    <li>Basic keyword-based action detection</li>
+                    <li>Input validation and error handling</li>
+                    <li>LangGraph workflow: receive → validate → parse</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>🚀 Coming in Milestone 2</h3>
+                <ul>
+                    <li>Advanced LLM-powered instruction parsing</li>
+                    <li>Playwright browser automation</li>
+                    <li>Test execution and result reporting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /**
+         * Set instruction from quick test buttons
+         */
+        function setInstruction(text) {
+            document.getElementById('instruction').value = text;
+        }
+        
+        /**
+         * Load example tests from API
+         */
+        async function loadExamples() {
+            try {
+                const response = await fetch('/api/examples');
+                const data = await response.json();
+                // Could dynamically populate quick test buttons here
+                console.log('Examples loaded:', data);
+            } catch (error) {
+                console.log('Could not load examples:', error);
+            }
+        }
+        
+        /**
+         * Run the test by sending instruction to API
+         */
+        async function runTest() {
+            const url = document.getElementById('url').value.trim();
+            const instruction = document.getElementById('instruction').value.trim();
+            const statusDiv = document.getElementById('status');
+            const runBtn = document.getElementById('runTestBtn');
+            
+            // Validate input
+            if (!instruction) {
+                showStatus('Please enter a test instruction', 'error');
+                return;
+            }
+            
+            // Disable button and show processing status
+            runBtn.disabled = true;
+            runBtn.innerHTML = '<span class="btn-icon">⏳</span> Processing...';
+            showStatus('Processing your test instruction...', 'info');
+            
+            try {
+                // Send POST request to API
+                const response = await fetch('/api/test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        instruction: instruction
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('Test processed successfully!', 'success');
+                    displayResult(data.result);
+                } else {
+                    showStatus(`Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`Request failed: ${error.message}`, 'error');
+            } finally {
+                // Re-enable button
+                runBtn.disabled = false;
+                runBtn.innerHTML = '<span class="btn-icon">▶️</span> Run Test';
+            }
+        }
+        
+        /**
+         * Show status message with type (success, error, info)
+         */
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.innerHTML = `<strong>${getStatusIcon(type)}</strong> ${message}`;
+            statusDiv.style.display = 'block';
+        }
+        
+        /**
+         * Get icon for status type
+         */
+        function getStatusIcon(type) {
+            const icons = {
+                'success': '✅',
+                'error': '❌',
+                'info': 'ℹ️',
+                'warning': '⚠️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+        
+        /**
+         * Display detailed result from agent
+         */
+        function displayResult(result) {
+            const statusDiv = document.getElementById('status');
+            
+            let html = '<div class="result-details">';
+            html += '<h4>📊 Test Result Details</h4>';
+            
+            // Status
+            html += `<div class="result-item">
+                <strong>Status:</strong> 
+                <span class="badge badge-${result.status}">${result.status}</span>
+            </div>`;
+            
+            // Validation
+            if (result.validation_result) {
+                const valid = result.validation_result.valid;
+                html += `<div class="result-item">
+                    <strong>Validation:</strong> 
+                    <span class="badge badge-${valid ? 'success' : 'error'}">
+                        ${valid ? '✅ Passed' : '❌ Failed'}
+                    </span>
+                </div>`;
+                
+                if (!valid && result.validation_result.errors) {
+                    html += '<div class="result-item"><strong>Errors:</strong><ul>';
+                    result.validation_result.errors.forEach(err => {
+                        html += `<li>${err}</li>`;
+                    });
+                    html += '</ul></div>';
+                }
+            }
+            
+            // Parsed Actions
+            if (result.parsed_actions && result.parsed_actions.length > 0) {
+                html += '<div class="result-item"><strong>Parsed Actions:</strong></div>';
+                html += '<div class="actions-list">';
+                result.parsed_actions.forEach((action, idx) => {
+                    html += `<div class="action-item">
+                        <div class="action-number">${idx + 1}</div>
+                        <div class="action-content">
+                            <div><strong>Action:</strong> ${action.action}</div>
+                            ${action.target ? `<div><strong>Target:</strong> ${action.target}</div>` : ''}
+                            ${action.value ? `<div><strong>Value:</strong> ${action.value}</div>` : ''}
+                            <div><strong>Confidence:</strong> ${(action.confidence * 100).toFixed(0)}%</div>
+                        </div>
+                    </div>`;
+                });
+                html += '</div>';
+            }
+            
+            // Raw JSON (collapsible)
+            html += '<details class="json-details">';
+            html += '<summary>View Raw JSON</summary>';
+            html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+            html += '</details>';
+            
+            html += '</div>';
+            
+            statusDiv.innerHTML = html;
+            statusDiv.className = 'status-message status-success';
+            statusDiv.style.display = 'block';
+        }
+        
+        /**
+         * Check health on page load
+         */
+        async function checkHealth() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                console.log('Health check:', data);
+            } catch (error) {
+                console.error('Health check failed:', error);
+            }
+        }
+        
+        /**
+         * Initialize on page load
+         */
+        window.addEventListener('DOMContentLoaded', () => {
+            loadExamples();
+            checkHealth();
+        });
+        
+        /**
+         * Allow Ctrl+Enter or Cmd+Enter to submit from instruction textarea
+         */
+        document.getElementById('instruction').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                runTest();
+            }
+        });
+    </script>
 </body>
 </html>
-
