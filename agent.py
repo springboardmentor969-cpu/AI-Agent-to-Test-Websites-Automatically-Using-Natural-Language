@@ -1,25 +1,17 @@
+from workflow import agent_workflow
+
 def run_agent(instruction: str):
-    instruction = instruction.strip()
+    if instruction.strip() == "":
+        return {"status": "error", "message": "No instruction provided"}
 
-    if instruction == "":
-        return {
-            "status": "error",
-            "message": "No instruction provided"
-        }
+    result = agent_workflow.invoke({
+        "instruction": instruction,
+        "parsed_command": {},
+        "structured_command": {}
+    })
 
-    instruction_lower = instruction.lower()
-
-    if "login" in instruction_lower:
-        intent = "login_page_test"
-    elif "search" in instruction_lower:
-        intent = "search_page_test"
-    else:
-        intent = "generic_test"
-
-    response = {
+    return {
         "status": "success",
-        "detected_intent": intent,
-        "original_instruction": instruction
+        "parsed_action": result["parsed_command"],
+        "structured_command": result["structured_command"]
     }
-
-    return response
