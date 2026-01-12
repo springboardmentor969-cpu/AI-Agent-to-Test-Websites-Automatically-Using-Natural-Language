@@ -1,78 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Website Testing</title>
-
+ <html lang="en">
+     <head> 
+        <meta charset="UTF-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>AI Website Testing</title> 
 <style>
-    body{
+    body{ 
         background: linear-gradient(to right, violet, pink);
-        margin-top: 40px;
+        margin-top: 40px; 
+    } 
+    .boxes{ 
+        border: 1px solid black; 
+        width: 600px; 
+        height: 550px; 
+        margin: 0 auto; 
+        border-radius: 15px; 
+        background-color: white; 
     }
-    .boxes{
-        border: 1px solid black;
-        width: 600px;
-        height: 550px;
-        margin: 0 auto;
-        border-radius: 15px;
-        background-color: white;
-    }
-    .boxes h1{
-        color: black;
-        font-weight: bold;
-        font-family: helvetica;
-        text-align: center;
-    }
-    .det{
+    .boxes h1{ 
+        color: black; 
+        font-weight: bold; 
+        font-family: helvetica; 
+        text-align: center; 
+    } 
+    .det{ 
         padding: 30px;
-        font-size: 16px;
-        font-family: 'Times New Roman', Times, serif;
-    }
+        font-size: 16px; 
+        /* font-family: 'Times New Roman', Times, serif;  */
+        font-weight: bold;
+        font-family: Arial, Helvetica,;
+    } 
     textarea{
-        margin-top: 15px;
+         margin-top: 15px;
+    } 
+    button{ 
+        margin-top: 20px; 
+        font-family: 'Times New Roman', Times, serif; font-size: 15px;
+        background: linear-gradient(to right, violet, pink); 
+        padding: 5px;
+        border: none;
+        border-radius: 6px;
+        width: 100px;
     }
-    button{
-        margin-top: 20px;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 15px;
+    button:hover{
+        background: linear-gradient(to right,pink, violet); 
+    }
+    #output{
+        margin-top: 15px;
+        padding: 10px;
+        background: #f4f4f4;
+        border-radius: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 13px;
     }
 </style>
-</head>
-
+    </head> 
 <body>
     <div class="boxes">
-        <h1>AI Website Testing</h1>
-
-        <div class="det">
-            <form id="testForm">
-                <label>Text Message</label><br>
-                <textarea name="instruction" id="ta"cols="70" rows="5"placeholder="Enter test instruction here..."></textarea>
-                <br>
+         <h1>AI Website Testing</h1> 
+        <div class="det"> 
+            <form id="testForm"> 
+                <label>Text Message</label><br> 
+                <textarea name="instruction" id="ta"cols="70" rows="5" placeholder="Enter text instruction here..."></textarea> <br>
                 <button type="submit">Run Test</button>
-            </form>
+             </form>
+              <pre id="output"></pre>
+        </div> 
+    </div> 
+        <script> 
+            
+            document.getElementById("testForm").onsubmit = async (e) => { 
+            e.preventDefault(); 
+            const formData = new FormData(e.target); 
+            const res = await fetch("/run", { method: "POST", body: formData }); 
+            const data = await res.json(); 
+            document.getElementById("output").innerText = JSON.stringify(data, null, 2); 
+            };
 
-            <pre id="output"></pre>
-        </div>
-    </div>
-
-<script>
-    document.getElementById("testForm").onsubmit = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-
-        const res = await fetch("/run", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await res.json();
-        document.getElementById("output").innerText =
-            JSON.stringify(data, null, 2);
-    };
-</script>
-
-</body>
+        </script> 
+</body> 
 </html>

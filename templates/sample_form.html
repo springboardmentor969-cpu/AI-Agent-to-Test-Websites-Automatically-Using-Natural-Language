@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Test Form</title>
+<style>
+    body{
+        background: linear-gradient(to right, violet,pink);
+    }
+    .flog{
+        border: 1px solid white;
+        width: 500px;
+        height: 300px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 100px;
+        border-radius: 10px;
+        box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 255, 255, 0.5);
+    }
+    form{
+        padding: 30px;
+    }
+    label{
+        font-size: 18px;
+        padding: 20px;
+    }
+    input{
+        padding: 5px;
+        border-radius: 6px;
+        border: none;
+    }
+    #submit{
+        margin: 30px;
+        width: 80px;
+        height: 25px;
+        border-radius: 6px;
+        border: none;
+        background: linear-gradient(to right, violet,pink); 
+    }
+    #submit:hover{
+        background: linear-gradient(to right,pink, violet); 
+    }
+</style>
+</head>
+<body>
+    <div class="flog">
+        <h2>Login Form</h2>
+            <form>
+                <label for="text">UserName: </label><input type="text" placeholder="Enter name"><br><br>
+                <label for="text">E-mail: </label><input type="text" placeholder="Enter your mail"><br>
+                <button id="submit" type="button">Submit</button>
+            </form>
+    </div>
+</body>
+</html>

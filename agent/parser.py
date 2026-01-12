@@ -2,28 +2,28 @@ def parse_instruction(text):
     steps = []
     text = text.lower()
 
-    if "open" in text or "launch" in text:
-        steps.append({
-            "action": "open_browser",
-            "target": "url"
-        })
+    if "open" in text:
+        if "youtube" in text:
+            steps.append({
+                "action": "open_browser",
+                "url": "https://www.youtube.com"
+            })
+        else:
+            steps.append({
+                "action": "open_browser",
+                "url": "http://127.0.0.1:5000/sample_form.html"
+            })
 
     if "click" in text:
         steps.append({
             "action": "click",
-            "target": "button"
-        })
-
-    if "enter" in text or "type" in text:
-        steps.append({
-            "action": "input",
-            "target": "text_field"
+            "selector": "#submit"
         })
 
     if "submit" in text:
         steps.append({
             "action": "submit",
-            "target": "form"
+            "selector": "#submit"
         })
-        
+
     return steps
