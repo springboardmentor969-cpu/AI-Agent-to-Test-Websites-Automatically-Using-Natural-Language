@@ -117,6 +117,3 @@ http://127.0.0.1:5000
 ## Conclusion
 This project demonstrates how AI agents can automate website testing using natural language.
 It reduces manual effort, improves efficiency, and provides a strong foundation for intelligent testing systems.
-
-
-Cheppu 👍
