@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo Test Page</title>
+</head>
+<body>
+  <h2>Demo Form</h2>
+
+  <label>Email:</label>
+  <input id="email" type="email" />
+
+  <br><br>
+
+  <button id="submit" onclick="showSuccess()">Submit</button>
+
+  <p id="success" style="display:none;color:green;">
+    Success
+  </p>
+
+  <script>
+    function showSuccess() {
+      document.getElementById("success").style.display = "block";
+    }
+  </script>
+</body>
+</html>
