@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2026-01-14 20:41:56.273927",
+    "user_input": "open local page and click on submit",
+    "parsed_steps": [
+      {
+        "action": "open_browser",
+        "url": "http://127.0.0.1:5000/sample_form.html"
+      },
+      {
+        "action": "click",
+        "selector": "#submit"
+      },
+      {
+        "action": "submit",
+        "selector": "#submit"
+      }
+    ],
+    "result": "PASS",
+    "execution_log": [
+      "page.goto(\"http://127.0.0.1:5000/sample_form.html\")",
+      "page.click(\"#submit\")",
+      "page.click(\"#submit\")",
+      "assert page.title() != ''"
+    ],
+    "screenshot": null
+  },
+  {
+    "timestamp": "2026-01-14 20:42:55.338730",
+    "user_input": "open youtube",
+    "parsed_steps": [
+      {
+        "action": "open_browser",
+        "url": "https://www.youtube.com"
+      }
+    ],
+    "result": "PASS",
+    "execution_log": [
+      "page.goto(\"https://www.youtube.com\")",
+      "assert page.title() != ''"
+    ],
+    "screenshot": null
+  },
+  {
+    "timestamp": "2026-01-14 20:43:51.525503",
+    "user_input": "open youtube and click on submit",
+    "parsed_steps": [
+      {
+        "action": "open_browser",
+        "url": "https://www.youtube.com"
+      },
+      {
+        "action": "click",
+        "selector": "#submit"
+      },
+      {
+        "action": "submit",
+        "selector": "#submit"
+      }
+    ],
+    "result": "FAIL",
+    "execution_log": [
+      "page.goto(\"https://www.youtube.com\")",
+      "Page.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#submit\")\n"
+    ],
+    "screenshot": "screenshots/fail_20260114_204351.png"
+  },
+  {
+    "timestamp": "2026-01-14 20:44:09.756923",
+    "user_input": "open youtube and click on submit",
+    "parsed_steps": [
+      {
+        "action": "open_browser",
+        "url": "https://www.youtube.com"
+      },
+      {
+        "action": "click",
+        "selector": "#submit"
+      },
+      {
+        "action": "submit",
+        "selector": "#submit"
+      }
+    ],
+    "result": "FAIL",
+    "execution_log": [
+      "page.goto(\"https://www.youtube.com\")",
+      "Page.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#submit\")\n"
+    ],
+    "screenshot": "screenshots/fail_20260114_204409.png"
+  }
+]

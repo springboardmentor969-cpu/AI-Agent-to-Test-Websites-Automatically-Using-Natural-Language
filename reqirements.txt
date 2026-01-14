@@ -1,5 +1,5 @@
 flask
-playwright
 langgraph
-langchain-community
 langchain
+langchain-community
+playwright
