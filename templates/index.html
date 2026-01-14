@@ -1,0 +1,73 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Web Testing Agent</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Agent to Test Websites Automatically</h1>
+    <p class="subtitle">Enter natural language test instructions</p>
+
+    <textarea id="instruction"
+        placeholder="Example: open google.com click login and verify page"></textarea>
+
+    <button onclick="runTest()">Run Test</button>
+
+    <div id="loading" class="hidden">Running test... Please wait</div>
+
+    <div id="report" class="report hidden"></div>
+</div>
+
+<script>
+function runTest() {
+    const instruction = document.getElementById("instruction").value;
+
+    if (!instruction) {
+        alert("Please enter instruction");
+        return;
+    }
+
+    document.getElementById("loading").classList.remove("hidden");
+    document.getElementById("report").classList.add("hidden");
+
+    fetch("/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ instruction })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("loading").classList.add("hidden");
+
+        let html = `
+            <h2>Test Report</h2>
+            <p><b>Instruction:</b> ${data.instruction}</p>
+            <p><b>Status:</b>
+                <span class="${data.final_status === 'PASSED' ? 'passed' : 'failed'}">
+                ${data.final_status}
+                </span>
+            </p>
+            <p><b>Passed:</b> ${data.passed} | <b>Failed:</b> ${data.failed}</p>
+        `;
+
+        data.results.forEach(r => {
+            html += `
+                <div class="step ${r.status}">
+                    <b>Step:</b> ${r.step}<br>
+                    <b>Status:</b> ${r.status}<br>
+                    <b>Detail:</b> ${r.detail}
+                </div>
+            `;
+        });
+
+        document.getElementById("report").innerHTML = html;
+        document.getElementById("report").classList.remove("hidden");
+    });
+}
+</script>
+
+</body>
+</html>

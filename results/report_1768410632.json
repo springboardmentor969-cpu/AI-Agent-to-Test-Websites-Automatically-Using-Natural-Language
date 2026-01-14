@@ -1,0 +1,25 @@
+{
+    "instruction": "open google.com click login and verify page\n",
+    "total_steps": 3,
+    "passed": 3,
+    "failed": 0,
+    "final_status": "PASSED",
+    "results": [
+        {
+            "step": "goto",
+            "detail": "https://google.com",
+            "status": "passed"
+        },
+        {
+            "step": "click",
+            "detail": "a, button",
+            "status": "passed"
+        },
+        {
+            "step": "assert_page_loaded",
+            "detail": "page loaded successfully",
+            "status": "passed"
+        }
+    ],
+    "timestamp": "2026-01-14 22:40:32"
+}
