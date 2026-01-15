@@ -31,75 +31,68 @@
         h1 {
             text-align: center;
             color: #6a00cc;
-            margin-bottom: 10px;
         }
 
-        p.subtitle {
+        .subtitle {
             text-align: center;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         label {
             font-weight: 600;
-            display: block;
-            margin-bottom: 8px;
         }
 
         textarea {
             width: 100%;
             height: 120px;
             padding: 12px;
-            font-size: 15px;
             border-radius: 8px;
             border: 1px solid #ccc;
-            resize: none;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #e100ff;
+            font-size: 15px;
         }
 
         button {
-            margin-top: 20px;
             width: 100%;
+            margin-top: 20px;
             padding: 14px;
             background: #7f00ff;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
         button:hover {
             background: #5a00b3;
         }
 
-        .output-section {
-            margin-top: 30px;
+        .output {
+            margin-top: 25px;
         }
 
-        .output-section h3 {
-            margin-bottom: 10px;
-            color: #6a00cc;
-        }
-
-        pre {
+        .box {
             background: #f4f6f8;
             padding: 15px;
             border-radius: 8px;
+            font-size: 14px;
             max-height: 250px;
             overflow-y: auto;
-            font-size: 14px;
+            white-space: pre-wrap;
         }
 
+        .status {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .success { color: green; }
+        .error { color: red; }
+
         .footer {
-            margin-top: 20px;
             text-align: center;
+            margin-top: 25px;
             font-size: 13px;
             color: #777;
         }
@@ -111,36 +104,70 @@
     <h1>AI Web Testing Agent</h1>
     <p class="subtitle">Test websites using natural language instructions</p>
 
-    <label for="instruction">Enter Test Instruction</label>
-    <textarea id="instruction" placeholder="Example: Open login page, enter username and password, click login"></textarea>
+    <label>Enter Test Instruction</label>
+    <textarea id="instruction"
+        placeholder=></textarea>
 
-    <button onclick="runTest()">Run Test</button>
+    <button type="button" onclick="runTest()">Run Test</button>
 
-    <div class="output-section">
+    <div class="status" id="status"></div>
+
+    <div class="output">
         <h3>Parsed Test Steps</h3>
-        <pre id="output">Waiting for input...</pre>
+        <div class="box" id="steps">Waiting...</div>
     </div>
+
+    <div class="output">
+        <h3>Generated Playwright Code</h3>
+        <div class="box" id="code">Waiting...</div>
+    </div>
+
 </div>
 
 <script>
-    function runTest() {
-        const text = document.getElementById('instruction').value;
-        const output = document.getElementById('output');
-        output.textContent = 'Processing...';
+async function runTest() {
+    const instruction = document.getElementById("instruction").value.trim();
+    const status = document.getElementById("status");
+    const stepsBox = document.getElementById("steps");
+    const codeBox = document.getElementById("code");
 
-        fetch('/run-test', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ instruction: text })
-        })
-        .then(res => res.json())
-        .then(data => {
-            output.textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(err => {
-            output.textContent = 'Error: ' + err;
-        });
+    if (!instruction) {
+        status.textContent = "⚠️ Please enter an instruction.";
+        status.className = "status error";
+        return;
     }
+
+    status.textContent = "⏳ Running test...";
+    status.className = "status";
+
+    stepsBox.textContent = "Processing...";
+    codeBox.textContent = "Processing...";
+
+    try {
+        const response = await fetch("/run-test", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ instruction })
+        });
+
+        const data = await response.json();
+
+        if (data.status === "success") {
+            status.textContent = "✅ Test executed successfully";
+            status.className = "status success";
+
+            stepsBox.textContent = JSON.stringify(data.parsed_steps, null, 2);
+            codeBox.textContent = data.playwright_code || "No code generated";
+        } else {
+            status.textContent = "❌ " + data.message;
+            status.className = "status error";
+        }
+
+    } catch (error) {
+        status.textContent = "❌ Backend connection failed";
+        status.className = "status error";
+    }
+}
 </script>
 
 </body>
