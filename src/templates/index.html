@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI NLP Test Automation</title>
+</head>
+<body>
+    <h2>AI-Based Automated Test Case Generator</h2>
+
+    <form method="post" action="/run">
+        <textarea name="instruction" rows="6" cols="70"
+            placeholder="Example: Open google and search for Infosys"></textarea>
+        <br><br>
+        <button type="submit">Run NLP Test</button>
+    </form>
+
+    {% if result %}
+        <h3>Output</h3>
+        <pre>{{ result }}</pre>
+    {% endif %}
+</body>
+</html>
