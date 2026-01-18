@@ -1,34 +1,48 @@
 from typing import TypedDict
 from langgraph.graph import StateGraph
+from instruction_parser import parse_instruction
 
-# 1. Define state
 class TestState(TypedDict):
     instruction: str
     action_plan: dict
 
-# 2. Define node
 def planner_node(state: TestState):
-    instruction = state["instruction"]
+    parsed = parse_instruction(state["instruction"])
+    commands = parsed["commands"]
 
-    # Placeholder action plan (mentor-friendly)
-    action_plan = {
-        "intent": instruction,
-        "steps": [
+    steps = []
+
+    if "login" in commands:
+        steps = [
             "Open browser",
             "Navigate to login page",
             "Enter credentials",
             "Submit form",
             "Validate result"
         ]
+
+    elif "search" in commands:
+        steps = [
+            "Open browser",
+            "Navigate to search page",
+            "Enter search term",
+            "Submit search",
+            "Validate results"
+        ]
+
+    else:
+        steps = ["Unsupported instruction"]
+
+    return {
+        "action_plan": {
+            "intent": parsed["raw"],
+            "steps": steps
+        }
     }
 
-    return {"action_plan": action_plan}
-
-# 3. Build graph
 graph = StateGraph(TestState)
 graph.add_node("planner", planner_node)
 graph.set_entry_point("planner")
 graph.set_finish_point("planner")
 
-# 4. Compile graph
 langgraph_app = graph.compile()

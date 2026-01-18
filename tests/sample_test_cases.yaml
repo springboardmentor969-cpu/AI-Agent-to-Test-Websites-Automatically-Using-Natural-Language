@@ -1,0 +1,10 @@
+- test_name: login_test
+  instruction: "login to portal"
+  expected_commands:
+    - login
+
+- test_name: search_test
+  instruction: "search product"
+  expected_commands:
+    - search
+
