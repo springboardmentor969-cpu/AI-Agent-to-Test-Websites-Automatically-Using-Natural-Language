@@ -8,7 +8,11 @@ if sys.platform == 'win32':
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
-from agent.graph_batch import build_batch_graph
+# Try to import enhanced graph, fallback to original if not available
+try:
+    from agent.enhanced_graph import build_enhanced_batch_graph as build_batch_graph
+except ImportError:
+    from agent.graph_batch import build_batch_graph
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -192,39 +196,88 @@ if st.session_state.active_tab == "start":
     instructions = st.text_area(
         "Enter your steps", 
         height=180,
-        placeholder="Go to https://google.com then search for 'AI Testing'",
+        placeholder="Go to https://google.com then search for 'AI Testing'\\nClick the first result\\nVerify the page loaded",
         value=st.session_state.get("draft_instructions", ""),
         label_visibility="collapsed"
     )
     
+    # Advanced Settings Expander
+    with st.expander("⚙️ ADVANCED SETTINGS", expanded=False):
+        col_set1, col_set2 = st.columns(2)
+        
+        with col_set1:
+            use_ai_parsing = st.checkbox(
+                "🤖 AI-Powered Parsing", 
+                value=True,
+                help="Use Grok AI to understand complex instructions. Fallback to pattern matching if disabled."
+            )
+            
+            custom_timeout = st.number_input(
+                "Timeout (ms)",
+                min_value=1000,
+                max_value=60000,
+                value=10000,
+                step=1000,
+                help="Maximum time to wait for actions to complete"
+            )
+        
+        with col_set2:
+            screenshot_each_step = st.checkbox(
+                "📸 Screenshot Each Step",
+                value=False,
+                help="Capture screenshot after every action (increases execution time)"
+            )
+            
+            max_retries = st.number_input(
+                "Max Retries",
+                min_value=0,
+                max_value=5,
+                value=3,
+                help="Number of retry attempts for failed actions"
+            )
+    
     col_btn, _ = st.columns([1, 2])
     with col_btn:
-        run_btn = st.button("RUN  NOW")
+        run_btn = st.button("🚀 RUN NOW")
 
     if run_btn:
-        tests = [line.strip() for line in instructions.split("\n") if line.strip()]
+        # Combine all lines into a single instruction with 'then' separator
+        # This allows multi-line input while treating it as one test flow
+        lines = [line.strip() for line in instructions.split("\n") if line.strip()]
+        combined_instruction = " then ".join(lines)
+        tests = [combined_instruction] if combined_instruction else []
         
         if not tests:
             st.warning("Please enter at least one step.")
         else:
-            with st.status("🤖 GETTING THE AGENT READY...", expanded=True) as status:
-                st.write("📖 Reading your steps...")
+            with st.status("🤖 INITIALIZING AI AGENT...", expanded=True) as status:
+                st.write("📖 Parsing instructions with " + ("AI-powered understanding" if use_ai_parsing else "pattern matching") + "...")
                 graph = build_batch_graph()
                 app = graph.compile()
                 
-                st.write("🏃 Testing the website...")
+                st.write("🏃 Executing tests with enhanced capabilities...")
                 
+                # Enhanced settings
                 settings = {
                     "headless": headless,
-                    "timeout": timeout
+                    "timeout": custom_timeout
                 }
+                
+                # Import config to set runtime options
+                try:
+                    from agent.config import Config
+                    Config.SCREENSHOT_EACH_STEP = screenshot_each_step
+                    Config.MAX_RETRIES = max_retries
+                except:
+                    pass
                 
                 result = app.invoke({
                     "instructions": tests,
-                    "settings": settings
+                    "settings": settings,
+                    "use_ai_parsing": use_ai_parsing
                 })
                 
-                status.update(label="🎉 ALL TESTS FINISHED!", state="complete", expanded=False)
+                status.update(label="🎉 ALL TESTS COMPLETED!", state="complete", expanded=False)
 
             st.session_state.last_result = result
             st.session_state.active_tab = "results" # REDIRECT TO RESULTS
@@ -236,23 +289,32 @@ elif st.session_state.active_tab == "results":
         exec_results = st.session_state.last_result.get("exec_results", [])
         
         # --- SUMMARY DASHBOARD ---
-        total_tasks = len(exec_results)
+        total_tests = len(exec_results)
+        
+        # Calculate total steps (actions) across all tests
+        parsed_sets = st.session_state.last_result.get("parsed_sets", [])
+        total_steps = sum(len(actions) for actions in parsed_sets)
+        
         success_count = sum(1 for r in exec_results if r.get("success", False))
-        issue_count = total_tasks - success_count
+        failed_count = total_tests - success_count
         
         st.markdown(f"""
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
             <div class="glass-card" style="text-align: center; border-left: 4px solid #6366f1;">
-                <p style="color: #6366f1; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">📊 TOTAL OPERATIONS</p>
-                <h2 style="margin: 0; font-size: 2rem; font-family:'Orbitron'; font-weight:900; color:#fff;">{total_tasks}</h2>
+                <p style="color: #6366f1; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">📊 TOTAL TESTS</p>
+                <h2 style="margin: 0; font-size: 2rem; font-family:'Orbitron'; font-weight:900; color:#fff;">{total_tests}</h2>
+            </div>
+            <div class="glass-card" style="text-align: center; border-left: 4px solid #3b82f6;">
+                <p style="color: #3b82f6; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">👣 TOTAL STEPS</p>
+                <h2 style="margin: 0; font-size: 2rem; font-family:'Orbitron'; font-weight:900; color:#fff;">{total_steps}</h2>
             </div>
             <div class="glass-card" style="text-align: center; border-left: 4px solid #10b981;">
                 <p style="color: #10b981; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">✅ SUCCESS RATE</p>
-                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{int((success_count/total_tasks)*100) if total_tasks > 0 else 0}%</h2>
+                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{int((success_count/total_tests)*100) if total_tests > 0 else 0}%</h2>
             </div>
             <div class="glass-card" style="text-align: center; border-left: 4px solid #ef4444;">
-                <p style="color: #ef4444; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">⚠️ ANOMALIES</p>
-                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{issue_count}</h2>
+                <p style="color: #ef4444; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">⚠️ FAILURES</p>
+                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{failed_count}</h2>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -337,9 +399,18 @@ elif st.session_state.active_tab == "results":
                     if screenshots:
                         cols_sc = st.columns(len(screenshots) if len(screenshots) < 3 else 3)
                         for idx, sc in enumerate(screenshots):
-                            if idx < 3 and os.path.exists(sc):
+                            if idx < 3:
                                 with cols_sc[idx % len(cols_sc)]:
-                                    st.image(sc, use_container_width=True, caption=f"Capture {idx+1}")
+                                    if os.path.exists(sc):
+                                        # Read image bytes to ensure display works regardless of path issues
+                                        try:
+                                            with open(sc, "rb") as f:
+                                                image_bytes = f.read()
+                                            st.image(image_bytes, use_container_width=True, caption=f"Capture {idx+1}")
+                                        except Exception as e:
+                                            st.error(f"Error loading image: {e}")
+                                    else:
+                                        st.warning(f"Image not found: {sc}")
                     
                     if video_path and os.path.exists(video_path):
                         st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)

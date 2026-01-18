@@ -1,0 +1,16 @@
+{
+    "timestamp": "2026-01-18 23:47:44",
+    "success": false,
+    "logs": [
+        "[OK] Navigated to https://github.com",
+        "[WAIT] DOM ready & network idle",
+        "[HEURISTIC HEAL] Click selector healed to: head",
+        "[RETRY] Retrying action due to: Page.click: Timeout 10000ms exceeded.\nCall log:\n  ...",
+        "[HEURISTIC HEAL] Click selector healed to: head",
+        "[SCREENSHOT] tests/screenshots/error_d7d1c49b-e654-40dc-bdfa-1003457d9a9f.png",
+        "[ERROR] Page.click: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"head\")\n    - locator resolved to <head>\u2026</head>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    18 \u00d7 waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n"
+    ],
+    "screenshots": [
+        "tests/screenshots/error_d7d1c49b-e654-40dc-bdfa-1003457d9a9f.png"
+    ]
+}

@@ -1,0 +1,43 @@
+
+        <html>
+        <head>
+            <title>Test Result - ID-003</title>
+            <style>
+                body { font-family: sans-serif; margin: 10px; background: #f4f4f9; }
+                .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                .success { color: green; font-weight: bold; }
+                .failure { color: red; font-weight: bold; }
+                img { max-width: 600px; border: 1px solid #ccc; margin-top: 10px; display: block; }
+                pre { background: #eee; padding: 10px; border-radius: 4px; overflow-x: auto; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <h1>Test Result Summary</h1>
+                <p><b>Test ID:</b> ID-003</p>
+                <p><b>Time:</b> 2026-01-17 16:54:24</p>
+                <p><b>Outcome:</b> <span class="failure">ISSUE FOUND</span></p>
+
+                <h2>Step Details</h2>
+                <pre>[AI HEAL] Type selector healed to: input[placeholder*='Search'], input[name='q'], input[type='search']
+[RETRY] Retrying action due to: Page.click: Timeout 10000ms exceeded.
+Call log:
+  ...
+[AI HEAL] Type selector healed to: input[placeholder*='Search'], input[name='q'], input[type='search']
+[SCREENSHOT] tests/screenshots/error_ee98e879-1e5a-4fb4-a9ef-f153ab4fa9e2.png
+[ERROR] Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("input[placeholder*='Search'], input[name='q'], input[type='search']")
+
+</pre>
+
+                
+                <h2>Screenshots</h2>
+                
+                <img src="../tests/screenshots/error_ee98e879-1e5a-4fb4-a9ef-f153ab4fa9e2.png" alt="Screenshot">
+                
+                
+            </div>
+        </body>
+        </html>
+        

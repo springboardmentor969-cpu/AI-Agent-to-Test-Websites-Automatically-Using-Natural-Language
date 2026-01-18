@@ -1,0 +1,59 @@
+
+        <html>
+        <head>
+            <title>Test Result - ID-001</title>
+            <style>
+                body { font-family: sans-serif; margin: 10px; background: #f4f4f9; }
+                .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                .success { color: green; font-weight: bold; }
+                .failure { color: red; font-weight: bold; }
+                img { max-width: 600px; border: 1px solid #ccc; margin-top: 10px; display: block; }
+                pre { background: #eee; padding: 10px; border-radius: 4px; overflow-x: auto; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <h1>Test Result Summary</h1>
+                <p><b>Test ID:</b> ID-001</p>
+                <p><b>Time:</b> 2026-01-18 23:47:44</p>
+                <p><b>Outcome:</b> <span class="failure">ISSUE FOUND</span></p>
+
+                <h2>Step Details</h2>
+                <pre>[OK] Navigated to https://github.com
+[WAIT] DOM ready & network idle
+[HEURISTIC HEAL] Click selector healed to: head
+[RETRY] Retrying action due to: Page.click: Timeout 10000ms exceeded.
+Call log:
+  ...
+[HEURISTIC HEAL] Click selector healed to: head
+[SCREENSHOT] tests/screenshots/error_d7d1c49b-e654-40dc-bdfa-1003457d9a9f.png
+[ERROR] Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("head")
+    - locator resolved to <head>…</head>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    18 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+
+</pre>
+
+                
+                <h2>Screenshots</h2>
+                
+                <img src="../tests/screenshots/error_d7d1c49b-e654-40dc-bdfa-1003457d9a9f.png" alt="Screenshot">
+                
+                
+            </div>
+        </body>
+        </html>
+        

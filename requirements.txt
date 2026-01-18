@@ -2,5 +2,12 @@ playwright
 langgraph
 streamlit
 langchain-community
-asyncio
 fpdf2
+python-dotenv
+beautifulsoup4
+lxml
+pillow
+opencv-python
+requests
+jinja2
+pydantic
