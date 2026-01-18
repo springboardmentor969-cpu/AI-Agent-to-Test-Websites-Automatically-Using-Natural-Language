@@ -18,121 +18,251 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# --- ULTRA-FUTURISTIC CYBERPUNK CSS ---
+# --- PREMIUM CYBER-NOIR THEME WITH HOLOGRAPHIC EFFECTS ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Exo+2:wght@400;700;900&family=Share+Tech+Mono&display=swap');
     
-    /* Vibrant Futuristic Background */
-    .stApp {
-        background: #0f172a;
-        background-image: 
-            linear-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(99, 102, 241, 0.15) 1px, transparent 1px);
-        background-size: 50px 50px;
-        background-attachment: fixed;
+    /* Cyber Matrix Background with Animated Grid */
+    @keyframes gridPulse {
+        0%, 100% { opacity: 0.15; }
+        50% { opacity: 0.25; }
     }
     
-    .stApp::after {
+    @keyframes holographicShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100vh); }
+    }
+    
+    .stApp {
+        background: linear-gradient(135deg, #0a0e1a 0%, #1a0f2e 50%, #0d1b2a 100%);
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    /* Animated Cyber Grid Overlay */
+    .stApp::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(15, 23, 42, 0.4) 100%);
-        pointer-events: none;
+        background-image: 
+            linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 0, 255, 0.05) 1px, transparent 1px);
+        background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        animation: gridPulse 4s ease-in-out infinite;
         z-index: 0;
+        pointer-events: none;
+    }
+    
+    /* Holographic Scanline Effect */
+    .stApp::after {
+        content: "";
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 255, 255, 0.5) 50%, 
+            transparent 100%);
+        animation: scanline 8s linear infinite;
+        z-index: 1;
+        pointer-events: none;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
     }
 
-    /* Premium Typography */
+    /* Premium Cyber Typography */
     html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
-        color: #f8fafc;
-        letter-spacing: -0.01em;
+        font-family: 'Rajdhani', sans-serif;
+        color: #e0f2ff;
+        letter-spacing: 0.5px;
     }
 
-    /* Tactical Header */
+    /* Holographic Title with Glitch Effect */
+    @keyframes glitchText {
+        0% { text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.6); }
+        25% { text-shadow: -2px 0 rgba(0, 255, 255, 0.8), 2px 0 rgba(255, 0, 255, 0.6); }
+        50% { text-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 50px rgba(255, 0, 255, 0.7); }
+        75% { text-shadow: 2px 0 rgba(0, 255, 255, 0.8), -2px 0 rgba(255, 0, 255, 0.6); }
+        100% { text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.6); }
+    }
+    
     .neon-title {
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Exo 2', sans-serif;
         font-weight: 900;
-        font-size: 3rem !important;
+        font-size: 3.5rem !important;
         text-transform: uppercase;
-        letter-spacing: 3px;
-        background: linear-gradient(to right, #fff 0%, #818cf8 50%, #c084fc 100%);
+        letter-spacing: 6px;
+        background: linear-gradient(135deg, #00ffff 0%, #ff00ff 50%, #00ffff 100%);
+        background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        animation: holographicShift 3s ease infinite, glitchText 5s ease-in-out infinite;
         margin: 0;
         padding-top: 10px;
+        filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.6));
     }
 
-    /* Tactical Display Modules (Brightened Glass) */
+    /* HUD-Style Glass Cards with Holographic Border */
+    @keyframes borderGlow {
+        0%, 100% { border-color: rgba(0, 255, 255, 0.4); box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); }
+        50% { border-color: rgba(255, 0, 255, 0.6); box-shadow: 0 0 30px rgba(255, 0, 255, 0.3); }
+    }
+    
     .glass-card {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        border-radius: 16px;
-        padding: 1.8rem;
-        margin-bottom: 1.2rem;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(135deg, rgba(10, 14, 26, 0.85) 0%, rgba(26, 15, 46, 0.85) 100%);
+        backdrop-filter: blur(30px) saturate(180%);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
+        overflow: hidden;
     }
     
-    .glass-card:hover {
-        border-color: #818cf8;
-        background: rgba(30, 41, 59, 0.85);
-        box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
-        transform: translateY(-2px);
-    }
-    
+    /* Corner Brackets for HUD Effect */
     .glass-card::before {
         content: "";
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 3px;
-        background: linear-gradient(90deg, transparent, #818cf8, #c084fc, transparent);
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            #00ffff 25%, 
+            #ff00ff 50%, 
+            #00ffff 75%, 
+            transparent 100%);
+        animation: borderGlow 3s ease-in-out infinite;
+    }
+    
+    .glass-card::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 30px; height: 30px;
+        border-top: 3px solid #00ffff;
+        border-left: 3px solid #00ffff;
+        border-radius: 20px 0 0 0;
         opacity: 0.6;
     }
+    
+    .glass-card:hover {
+        border-color: rgba(0, 255, 255, 0.7);
+        background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 15, 46, 0.95) 100%);
+        box-shadow: 
+            0 0 40px rgba(0, 255, 255, 0.4),
+            0 0 60px rgba(255, 0, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px) scale(1.01);
+    }
 
-    /* Luminous Cyber Buttons */
+    /* Cyber Neon Buttons with Pulse Effect */
+    @keyframes buttonPulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
+        50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.5); }
+    }
+    
     .stButton button {
-        background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%) !important;
+        background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 50%, #f21170 100%) !important;
+        background-size: 200% 200% !important;
         color: #fff !important;
-        border: none !important;
-        border-radius: 12px !important;
-        font-family: 'Orbitron', sans-serif !important;
-        font-weight: 800 !important;
+        border: 2px solid rgba(0, 255, 255, 0.5) !important;
+        border-radius: 15px !important;
+        font-family: 'Exo 2', sans-serif !important;
+        font-weight: 700 !important;
         text-transform: uppercase !important;
-        letter-spacing: 2px !important;
-        transition: all 0.4s !important;
-        height: 55px !important;
+        letter-spacing: 3px !important;
+        transition: all 0.4s ease !important;
+        height: 60px !important;
         margin-top: 15px !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        animation: buttonPulse 3s ease-in-out infinite;
+    }
+    
+    .stButton button::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 0 !important; left: -100% !important;
+        width: 100% !important; height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+        transition: left 0.5s !important;
+    }
+    
+    .stButton button:hover::before {
+        left: 100% !important;
     }
     
     .stButton button:hover {
-        box-shadow: 0 0 25px rgba(99, 102, 241, 0.8) !important;
-        transform: scale(1.03) translateY(-2px);
-        background: linear-gradient(90deg, #818cf8 0%, #c084fc 100%) !important;
+        box-shadow: 
+            0 0 40px rgba(0, 255, 255, 0.8),
+            0 0 60px rgba(255, 0, 255, 0.6),
+            inset 0 0 20px rgba(255, 255, 255, 0.2) !important;
+        transform: scale(1.05) translateY(-3px) !important;
+        border-color: rgba(255, 0, 255, 0.8) !important;
+        background-position: 100% 100% !important;
     }
 
-    /* Navigation Tabs Restructured */
+    /* Navigation Tabs with Cyber Style */
     .stButton button[kind="secondary"] {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        color: #cbd5e1 !important;
+        background: rgba(0, 20, 40, 0.6) !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        color: #00ffff !important;
+        animation: none !important;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2) !important;
+    }
+    
+    .stButton button[kind="secondary"]:hover {
+        background: rgba(0, 20, 40, 0.8) !important;
+        border-color: rgba(0, 255, 255, 0.6) !important;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5) !important;
     }
     
     .stButton button[kind="primary"] {
-        background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%) !important;
+        background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%) !important;
+        border-color: rgba(0, 255, 255, 0.8) !important;
     }
 
-    /* Input Fields */
+    /* Holographic Input Fields */
     .stTextArea textarea {
-        background: rgba(15, 23, 42, 0.5) !important;
-        border: 1px solid rgba(99, 102, 241, 0.3) !important;
-        color: #f8fafc !important;
-        border-radius: 12px !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        font-size: 1rem !important;
+        background: rgba(0, 10, 20, 0.7) !important;
+        border: 2px solid rgba(0, 255, 255, 0.4) !important;
+        color: #00ffff !important;
+        border-radius: 15px !important;
+        font-family: 'Share Tech Mono', monospace !important;
+        font-size: 1.1rem !important;
+        box-shadow: 
+            inset 0 0 20px rgba(0, 255, 255, 0.1),
+            0 0 15px rgba(0, 255, 255, 0.2) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stTextArea textarea:focus {
+        border-color: rgba(255, 0, 255, 0.6) !important;
+        box-shadow: 
+            inset 0 0 30px rgba(0, 255, 255, 0.2),
+            0 0 25px rgba(0, 255, 255, 0.4),
+            0 0 40px rgba(255, 0, 255, 0.3) !important;
+        background: rgba(0, 10, 20, 0.9) !important;
+    }
+    
+    /* Toggle Switch Cyber Style */
+    .stCheckbox, .stToggle {
+        color: #00ffff !important;
     }
 
     /* Hide standard UI elements */
@@ -143,11 +273,64 @@ st.markdown("""
     footer { visibility: hidden; }
     .stDeployButton { display: none; }
     
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #020617; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+    /* Cyber Scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { 
+        background: #0a0e1a; 
+        border-left: 1px solid rgba(0, 255, 255, 0.2);
+    }
+    ::-webkit-scrollbar-thumb { 
+        background: linear-gradient(180deg, #00ffff 0%, #ff00ff 100%); 
+        border-radius: 10px; 
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    ::-webkit-scrollbar-thumb:hover { 
+        background: linear-gradient(180deg, #00d4ff 0%, #f21170 100%);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    
+    /* Expander Cyber Style */
+    .streamlit-expanderHeader {
+        background: rgba(0, 20, 40, 0.5) !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        border-radius: 10px !important;
+        color: #00ffff !important;
+    }
+    
+    .streamlit-expanderHeader:hover {
+        border-color: rgba(0, 255, 255, 0.6) !important;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
+    }
+    
+    /* Success/Error Messages Cyber Style */
+    .stSuccess, .stError, .stWarning, .stInfo {
+        border-radius: 12px !important;
+        border-left: 4px solid !important;
+    }
+    
+    .stSuccess {
+        background: rgba(0, 255, 136, 0.1) !important;
+        border-left-color: #00ff88 !important;
+        color: #00ff88 !important;
+    }
+    
+    .stError {
+        background: rgba(255, 0, 100, 0.1) !important;
+        border-left-color: #ff0064 !important;
+        color: #ff0064 !important;
+    }
+    
+    .stWarning {
+        background: rgba(255, 200, 0, 0.1) !important;
+        border-left-color: #ffc800 !important;
+        color: #ffc800 !important;
+    }
+    
+    .stInfo {
+        background: rgba(0, 200, 255, 0.1) !important;
+        border-left-color: #00c8ff !important;
+        color: #00c8ff !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -185,7 +368,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 if st.session_state.active_tab == "start":
     st.markdown("""
     <div class="glass-card">
-        <h3 style="margin-top:0; font-family:'Orbitron', sans-serif; font-size:1.2rem; color:#6366f1; margin-bottom:0;">ENTER YOUR INSTRUCTIONS BELOW</h3>
+        <h3 style="margin-top:0; font-family:'Exo 2', sans-serif; font-size:1.3rem; color:#00ffff; margin-bottom:0; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);">⚡ ENTER YOUR TESTING PROTOCOL</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -241,18 +424,18 @@ elif st.session_state.active_tab == "results":
         issue_count = total_tasks - success_count
         
         st.markdown(f"""
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
-            <div class="glass-card" style="text-align: center; border-left: 4px solid #6366f1;">
-                <p style="color: #6366f1; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">📊 TOTAL OPERATIONS</p>
-                <h2 style="margin: 0; font-size: 2rem; font-family:'Orbitron'; font-weight:900; color:#fff;">{total_tasks}</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
+            <div class="glass-card" style="text-align: center; border-left: 5px solid #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);">
+                <p style="color: #00ffff; font-size: 0.7rem; text-transform: uppercase; letter-spacing:3px; font-weight:700; margin-bottom:8px; font-family:'Exo 2';">📊 TOTAL OPERATIONS</p>
+                <h2 style="margin: 0; font-size: 2.5rem; font-family:'Exo 2'; font-weight:900; color:#00ffff; text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);">{total_tasks}</h2>
             </div>
-            <div class="glass-card" style="text-align: center; border-left: 4px solid #10b981;">
-                <p style="color: #10b981; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">✅ SUCCESS RATE</p>
-                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{int((success_count/total_tasks)*100) if total_tasks > 0 else 0}%</h2>
+            <div class="glass-card" style="text-align: center; border-left: 5px solid #00ff88; box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);">
+                <p style="color: #00ff88; font-size: 0.7rem; text-transform: uppercase; letter-spacing:3px; font-weight:700; margin-bottom:8px; font-family:'Exo 2';">✅ SUCCESS RATE</p>
+                <h2 style="margin: 0; font-size: 2.5rem; color: #00ff88; font-family:'Exo 2'; font-weight:900; text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);">{int((success_count/total_tasks)*100) if total_tasks > 0 else 0}%</h2>
             </div>
-            <div class="glass-card" style="text-align: center; border-left: 4px solid #ef4444;">
-                <p style="color: #ef4444; font-size: 0.65rem; text-transform: uppercase; letter-spacing:2px; font-weight:800; margin-bottom:5px;">⚠️ ANOMALIES</p>
-                <h2 style="margin: 0; font-size: 2rem; color: #fff; font-family:'Orbitron'; font-weight:900;">{issue_count}</h2>
+            <div class="glass-card" style="text-align: center; border-left: 5px solid #ff0064; box-shadow: 0 0 20px rgba(255, 0, 100, 0.2);">
+                <p style="color: #ff0064; font-size: 0.7rem; text-transform: uppercase; letter-spacing:3px; font-weight:700; margin-bottom:8px; font-family:'Exo 2';">⚠️ ANOMALIES</p>
+                <h2 style="margin: 0; font-size: 2.5rem; color: #ff0064; font-family:'Exo 2'; font-weight:900; text-shadow: 0 0 15px rgba(255, 0, 100, 0.6);">{issue_count}</h2>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -267,11 +450,11 @@ elif st.session_state.active_tab == "results":
             with st.container():
                 # HEADER CARD
                 st.markdown(f"""
-                <div style="background: rgba(255,255,255,0.03); border-left: 5px solid {'#10b981' if success else '#ef4444'}; padding: 20px; border-radius: 12px; margin-bottom: 20px; backdrop-filter: blur(10px);">
+                <div style="background: linear-gradient(135deg, rgba(0, 15, 30, 0.8), rgba(10, 0, 20, 0.8)); border-left: 5px solid {'#00ff88' if success else '#ff0064'}; padding: 25px; border-radius: 15px; margin-bottom: 25px; backdrop-filter: blur(20px); box-shadow: 0 0 30px {'rgba(0, 255, 136, 0.3)' if success else 'rgba(255, 0, 100, 0.3)'};">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0; color: white; font-family:'Orbitron'; letter-spacing:1px;">TEST #{i+1} SUMMARY</h3>
-                        <span style="background: {'rgba(16, 185, 129, 0.1)' if success else 'rgba(239, 68, 68, 0.1)'}; color: {'#10b981' if success else '#ef4444'}; padding: 6px 16px; border-radius: 999px; font-size: 0.75rem; font-weight: 800; border: 1px solid {'#10b981' if success else '#ef4444'}; letter-spacing:1px;">
-                            {'PASSED' if success else 'FAILED'}
+                        <h3 style="margin: 0; color: #00ffff; font-family:'Exo 2'; letter-spacing:2px; font-size: 1.3rem; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);">⚡ TEST PROTOCOL #{i+1}</h3>
+                        <span style="background: {'rgba(0, 255, 136, 0.15)' if success else 'rgba(255, 0, 100, 0.15)'}; color: {'#00ff88' if success else '#ff0064'}; padding: 8px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; border: 2px solid {'#00ff88' if success else '#ff0064'}; letter-spacing:2px; font-family:'Exo 2'; box-shadow: 0 0 15px {'rgba(0, 255, 136, 0.4)' if success else 'rgba(255, 0, 100, 0.4)'};">
+                            {'✓ PASSED' if success else '✗ FAILED'}
                         </span>
                     </div>
                 </div>
@@ -281,7 +464,7 @@ elif st.session_state.active_tab == "results":
                 col_left, col_right = st.columns([1.2, 1], gap="medium")
                 
                 with col_left:
-                    st.markdown("<h4 style='font-family:Orbitron; font-size:0.9rem; color:#6366f1; margin-bottom:15px;'>📋 PROCESS DETAILS</h4>", unsafe_allow_html=True)
+                    st.markdown("<h4 style='font-family:Exo 2; font-size:1rem; color:#00ffff; margin-bottom:15px; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);'>� EXECUTION LOGS</h4>", unsafe_allow_html=True)
                     with st.expander("SEE STEP-BY-STEP LOGS", expanded=not success):
                         for log in logs:
                             if "[ERROR]" in log or "FAILED" in log:
@@ -332,7 +515,7 @@ elif st.session_state.active_tab == "results":
                         st.error("Extended report file missing.")
 
                 with col_right:
-                    st.markdown("<h4 style='font-family:Orbitron; font-size:0.9rem; color:#6366f1; margin-bottom:15px;'>🖼️ VISUAL EVIDENCE</h4>", unsafe_allow_html=True)
+                    st.markdown("<h4 style='font-family:Exo 2; font-size:1rem; color:#00ffff; margin-bottom:15px; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);'>� VISUAL DATA</h4>", unsafe_allow_html=True)
                     
                     if screenshots:
                         cols_sc = st.columns(len(screenshots) if len(screenshots) < 3 else 3)
@@ -343,7 +526,7 @@ elif st.session_state.active_tab == "results":
                     
                     if video_path and os.path.exists(video_path):
                         st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
-                        st.markdown("<p style='font-size:0.8rem; color:#94a3b8; font-family:Orbitron;'>VIDEO RECORDING</p>", unsafe_allow_html=True)
+                        st.markdown("<p style='font-size:0.85rem; color:#00ffff; font-family:Exo 2; text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);'>🎬 VIDEO PLAYBACK</p>", unsafe_allow_html=True)
                         st.video(video_path)
                     elif not screenshots:
                         st.info("No visual data collected for this test.")
@@ -352,6 +535,6 @@ elif st.session_state.active_tab == "results":
     else:
         st.markdown("""
         <div class="glass-card" style="text-align:center; padding:100px 0;">
-            <p style="color:#94a3b8;">NO TESTS RUN YET. START TESTING TO SEE RESULTS.</p>
+            <p style="color:#00ffff; font-family:'Exo 2'; font-size:1.1rem; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);">⚠️ NO DATA AVAILABLE • INITIATE TESTING PROTOCOL</p>
         </div>
         """, unsafe_allow_html=True)
