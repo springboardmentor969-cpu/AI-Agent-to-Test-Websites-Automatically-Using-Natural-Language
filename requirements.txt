@@ -1,0 +1,6 @@
+playwright
+langgraph
+streamlit
+langchain-community
+asyncio
+fpdf2

@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+PROJENV310/
+
+# Test Artifacts
+tests/videos/
+tests/screenshots/
+tests/*.html
+tests/*.json
+tests/*.mp4
+
+# IDEs
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
