@@ -59,7 +59,7 @@ st.markdown("""
         background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
         background-position: 0 0, 0 0, 0 0, 0 0;
         animation: gridPulse 4s ease-in-out infinite;
-        z-index: 0;
+        z-index: -1;
         pointer-events: none;
     }
     
@@ -76,7 +76,7 @@ st.markdown("""
             rgba(0, 255, 255, 0.5) 50%, 
             transparent 100%);
         animation: scanline 8s linear infinite;
-        z-index: 1;
+        z-index: 999;
         pointer-events: none;
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
     }
