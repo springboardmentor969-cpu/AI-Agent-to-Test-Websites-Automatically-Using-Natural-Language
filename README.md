@@ -30,7 +30,6 @@
 ![Test Reports](ui%20ss/Screenshot%202026-01-16%20175345.png)
 *Test Reports View*
 
-*Detailed Test Report Display*
 
 ---
 
