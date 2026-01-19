@@ -1,4 +1,5 @@
-from langgraph.graph import StateGraph
+from langgraph.graph.state import StateGraph
+from langgraph.graph import END
 
 from agent.instruction_parser import parse_instruction
 from agent.code_generator import generate_steps
@@ -7,65 +8,53 @@ from executor.runner import run_test
 from reporting.report_manager import generate_report
 
 
-class WorkflowState(dict):
-    pass
+def execute_workflow(instruction: str):
+    # Initial state
+    state = {
+        "instruction": instruction,
+        "intent": None,
+        "steps": None,
+        "assertions": None,
+        "results": None,
+        "report": None
+    }
 
+    graph = StateGraph(dict)
 
-def parse_node(state: WorkflowState):
-    instruction = state.get("instruction", "")
-    state["intent"] = parse_instruction(instruction)
-    return state
-
-
-def generate_node(state: WorkflowState):
-    intent = state.get("intent")
-
-    # SAFE GUARD (prevents KeyError)
-    if not intent:
-        state["steps"] = []
-        state["assertions"] = []
+    # ---------- Nodes ----------
+    def parse_node(state):
+        state["intent"] = parse_instruction(state["instruction"])
         return state
 
-    state["steps"] = generate_steps(intent)
-    state["assertions"] = generate_assertions()
-    return state
+    def generate_node(state):
+        state["steps"] = generate_steps(state["intent"])
+        state["assertions"] = generate_assertions()
+        return state
 
+    def execute_node(state):
+        state["results"] = run_test(
+            state["steps"],
+            state["assertions"]
+        )
+        return state
 
-def execute_node(state: WorkflowState):
-    steps = state.get("steps", [])
-    assertions = state.get("assertions", [])
-    state["results"] = run_test(steps, assertions)
-    return state
+    def report_node(state):
+        state["report"] = generate_report(state["results"])
+        return state
 
+    # ---------- Graph ----------
+    graph.add_node("parse", parse_node)
+    graph.add_node("generate", generate_node)
+    graph.add_node("execute", execute_node)
+    graph.add_node("report", report_node)
 
-def report_node(state: WorkflowState):
-    results = state.get("results", [])
-    state["report"] = generate_report(results)
-    return state
+    graph.set_entry_point("parse")
+    graph.add_edge("parse", "generate")
+    graph.add_edge("generate", "execute")
+    graph.add_edge("execute", "report")
+    graph.add_edge("report", END)
 
+    app = graph.compile()
 
-# Build LangGraph
-graph = StateGraph(WorkflowState)
-graph.add_node("parse", parse_node)
-graph.add_node("generate", generate_node)
-graph.add_node("execute", execute_node)
-graph.add_node("report", report_node)
-
-graph.set_entry_point("parse")
-graph.add_edge("parse", "generate")
-graph.add_edge("generate", "execute")
-graph.add_edge("execute", "report")
-
-workflow_app = graph.compile()
-
-
-def execute_workflow(instruction: str):
-    initial_state = {"instruction": instruction}
-    final_state = workflow_app.invoke(initial_state)
-
-    return final_state.get("report", {
-        "total": 0,
-        "passed": 0,
-        "failed": 1,
-        "details": [{"action": "Workflow failed", "status": "FAIL"}]
-    })
+    final_state = app.invoke(state)
+    return final_state["report"]

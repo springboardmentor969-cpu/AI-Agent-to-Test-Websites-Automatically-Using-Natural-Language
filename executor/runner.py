@@ -1,5 +1,6 @@
 import asyncio
 import sys
+import time
 
 # FIX: Required for Playwright on Windows
 if sys.platform.startswith("win"):
@@ -38,6 +39,11 @@ def run_test(steps, assertions):
                         selector = step["selector"]
                         page.click(selector, timeout=10000)
                         results.append({"action": f"Click: {selector}", "status": "PASS"})
+                    
+                    elif step["type"] == "wait":
+                        duration = step.get("duration", 3)
+                        time.sleep(duration)
+                        results.append({"action": f"Wait {duration}s", "status": "PASS"})
 
                 except Exception as e:
                     results.append({"action": step.get("type", "unknown"), "status": "FAIL", "error": str(e)})
