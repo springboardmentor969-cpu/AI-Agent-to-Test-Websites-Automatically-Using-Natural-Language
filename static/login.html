@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #7f00ff, #e100ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6a00cc;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: #7f00ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5a00b3;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .success { color: green; }
+        .error { color: red; }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <p class="subtitle">Enter your credentials to access</p>
+
+        <input id="username" type="text" placeholder="Username">
+        <input id="password" type="text" placeholder="Password">
+        <button id="login-btn" onclick="login()">Login</button>
+
+        <p id="success" class="status success" style="display:none;">Login Successful!</p>
+        <p id="error" class="status error" style="display:none;">Invalid username or password</p>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const successMsg = document.getElementById("success");
+            const errorMsg = document.getElementById("error");
+
+            successMsg.style.display = "none";
+            errorMsg.style.display = "none";
+
+            if(username === "" || password === "") {
+                errorMsg.innerText = "Please enter username and password";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // Match with your AI test credentials
+            if(username === "Kaya Dhankar" && password === "12345") {
+                successMsg.style.display = "block";
+            } else {
+                errorMsg.innerText = "Invalid username or password";
+                errorMsg.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -29,14 +29,7 @@ def parse_instruction(text):
         actions.append({
             "action": "fill",
             "selector": "#username",
-            "text": "admin"
-        })
-
-    if "email" in text:
-        actions.append({
-            "action": "fill",
-            "selector": "#email",
-            "text": "admin@test.com"
+            "text": "Kaya Dhankar"
         })
 
     # ---------------------------------
@@ -46,7 +39,7 @@ def parse_instruction(text):
         actions.append({
             "action": "fill",
             "selector": "#password",
-            "text": "1234"
+            "text": "12345"
         })
 
     # ---------------------------------

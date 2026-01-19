@@ -106,7 +106,7 @@
 
     <label>Enter Test Instruction</label>
     <textarea id="instruction"
-        placeholder=></textarea>
+        placeholder="Open login page, enter username and password, click login"></textarea>
 
     <button type="button" onclick="runTest()">Run Test</button>
 
@@ -122,6 +122,11 @@
         <div class="box" id="code">Waiting...</div>
     </div>
 
+    <!-- ✅ NEW: TEST REPORT -->
+    <div class="output">
+        <h3>Final Test Report</h3>
+        <div class="box" id="report">Waiting...</div>
+    </div>
 </div>
 
 <script>
@@ -130,6 +135,7 @@ async function runTest() {
     const status = document.getElementById("status");
     const stepsBox = document.getElementById("steps");
     const codeBox = document.getElementById("code");
+    const reportBox = document.getElementById("report");
 
     if (!instruction) {
         status.textContent = "⚠️ Please enter an instruction.";
@@ -142,6 +148,7 @@ async function runTest() {
 
     stepsBox.textContent = "Processing...";
     codeBox.textContent = "Processing...";
+    reportBox.textContent = "Processing...";
 
     try {
         const response = await fetch("/run-test", {
@@ -158,14 +165,17 @@ async function runTest() {
 
             stepsBox.textContent = JSON.stringify(data.parsed_steps, null, 2);
             codeBox.textContent = data.playwright_code || "No code generated";
+            reportBox.textContent = JSON.stringify(data.report || {}, null, 2);
         } else {
             status.textContent = "❌ " + data.message;
             status.className = "status error";
+            reportBox.textContent = "Test failed.";
         }
 
     } catch (error) {
         status.textContent = "❌ Backend connection failed";
         status.className = "status error";
+        reportBox.textContent = "Unable to fetch report.";
     }
 }
 </script>
