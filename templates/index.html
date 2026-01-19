@@ -123,7 +123,7 @@ function runTest() {
 </body>
 </html> -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -134,16 +134,16 @@ function runTest() {
 <body>
 
 <div class="layout">
-
+-->
 <!-- Sidebar -->
-<div class="sidebar">
+<!-- <div class="sidebar">
     <button class="toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
     <h3>Test History</h3>
     <div id="history"></div>
-</div>
+</div> -->
 
 <!-- Main -->
-<div class="main">
+<!-- <div class="main">
 
     <h2>AI Test Automation</h2>
 
@@ -169,7 +169,7 @@ function runTest() {
 
 </div>
 
-</div>
+</div> 
 
 <script>
 function runTest(){
@@ -221,6 +221,129 @@ function toggleTheme(){
 }
 </script>
 
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Test Automation</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <button class="toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
+    <h3>Test History</h3>
+    <div id="history"></div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <h2>AI Test Automation</h2>
+
+    <textarea id="input" placeholder="Enter command like: Click login"></textarea>
+
+    <label class="headless">
+        <input type="checkbox" id="headless"> Headless Mode
+    </label>
+
+    <button class="run-btn" onclick="runTest()">Run Test</button>
+
+    <!-- RESULT TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Time (sec)</th>
+                <th>Steps</th>
+                <th>Report</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable"></tbody>
+    </table>
+
+    <!-- 🔹 NEW: EXECUTION STEPS -->
+    <h3 style="margin-top:20px;">Internal Execution Steps</h3>
+    <ul id="stepList"></ul>
+
+    <!-- 🔹 NEW: GENERATED PLAYWRIGHT CODE -->
+    
+
+</div>
+</div>
+
+<script>
+function runTest(){
+
+ fetch("/run",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+        input: input.value,
+        headless: headless.checked
+    })
+ })
+ .then(r=>r.json())
+ .then(d=>{
+
+    // Result table
+    resultTable.innerHTML = `
+    <tr>
+        <td>${d.status}</td>
+        <td>${d.duration_seconds}</td>
+        <td><ul>${d.steps.map(s=>`<li>${s}</li>`).join("")}</ul></td>
+        <td>${d.report_file ? `<a href="/download/${d.report_file}">Download</a>` : "-"}</td>
+    </tr>`;
+
+    // 🔹 Internal Steps
+    const stepList = document.getElementById("stepList");
+    stepList.innerHTML = "";
+    d.steps.forEach(step=>{
+        const li = document.createElement("li");
+        li.innerText = step;
+        stepList.appendChild(li);
+    });
+
+    // 🔹 Generated Code
+    document.getElementById("codeBox").innerText = d.generated_code || "No code generated";
+
+    loadHistory();
+ });
+}
+
+function loadHistory(){
+ fetch("/history")
+ .then(r=>r.json())
+ .then(h=>{
+    const hist = document.getElementById("history");
+    hist.innerHTML = "";
+    if(h.length===0){
+        hist.innerHTML = "<p>No history yet</p>";
+        return;
+    }
+    h.forEach(x=>{
+        const d = document.createElement("div");
+        d.className = "hist-item";
+        d.innerHTML = `<b>${x.input}</b><span style="float:right">${x.status}</span>`;
+        hist.appendChild(d);
+    });
+ });
+}
+
+loadHistory();
+
+function toggleTheme(){
+ document.body.classList.toggle("dark");
+}
+</script>
 
 </body>
 </html>
