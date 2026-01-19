@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- LEFT: INPUT -->
+    <div class="col-lg-8 mb-4">
+        <div class="card p-4">
+            <h4 class="mb-3">🧠 AI Test Instruction</h4>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Target URL</label>
+                <input id="targetUrl" class="form-control"
+                       placeholder="http://localhost:5000 (or any website)">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Instruction</label>
+                <textarea id="instruction" rows="4" class="form-control"
+                    placeholder="Fill the form with name John, email john@gmail.com and submit"></textarea>
+            </div>
+
+            <button id="runTest" class="btn btn-primary w-100">
+                ▶ Run AI Test
+            </button>
+        </div>
+    </div>
+
+    <!-- RIGHT: STATUS -->
+    <div class="col-lg-4 mb-4">
+        <div class="card p-4 text-center">
+            <h5>Status</h5>
+            <div id="statusBox" class="mt-3 text-muted">
+                Waiting for input…
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RESULTS -->
+<div class="card mt-3">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#parsed">Parsed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#code">Playwright Code</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#result">Result</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#shot">Screenshot</a>
+        </li>
+    </ul>
+
+    <div class="tab-content p-4">
+        <div class="tab-pane fade show active" id="parsed">
+            <pre><code id="parsedJson" class="language-json">{}</code></pre>
+        </div>
+
+        <div class="tab-pane fade" id="code">
+            <pre><code id="codeBlock" class="language-python"></code></pre>
+        </div>
+
+        <div class="tab-pane fade" id="result">
+            <pre id="resultBlock"></pre>
+        </div>
+
+        <div class="tab-pane fade text-center" id="shot">
+            <img id="screenshotImg" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("runTest").onclick = async () => {
+    const instruction = document.getElementById("instruction").value.trim();
+    const targetUrl = document.getElementById("targetUrl").value.trim();
+
+    if (!instruction) {
+        alert("Enter instruction");
+        return;
+    }
+
+    document.getElementById("statusBox").innerHTML =
+        '<div class="spinner-border text-primary"></div><p>Running AI...</p>';
+
+    const res = await fetch("/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            instruction: instruction,
+            target_url: targetUrl
+        })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("parsedJson").textContent =
+        JSON.stringify(data.parsed_action, null, 2);
+
+    document.getElementById("codeBlock").textContent =
+        data.full_playwright_script || "";
+
+    document.getElementById("resultBlock").textContent =
+        JSON.stringify(data.execution_result, null, 2);
+
+    if (data.screenshot) {
+        document.getElementById("screenshotImg").src =
+            data.screenshot + "?t=" + Date.now();
+    }
+
+    document.getElementById("statusBox").innerHTML =
+        data.status === "PASSED"
+        ? "<span class='text-success fw-bold'>✔ PASSED</span>"
+        : "<span class='text-danger fw-bold'>✖ FAILED</span>";
+
+    Prism.highlightAll();
+};
+</script>
+{% endblock %}

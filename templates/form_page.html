@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h3 class="text-center mb-3">Demo Form Page</h3>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Name</label>
+                    <input id="name_field" class="form-control" placeholder="John Doe">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <input id="email_field" class="form-control" placeholder="john@example.com">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Gender</label><br>
+                <input type="radio" id="gender_male" name="gender"> Male
+                <input type="radio" id="gender_female" name="gender"> Female
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select id="role_select" class="form-select">
+                    <option value="">Select role</option>
+                    <option value="student">Student</option>
+                    <option value="developer">Developer</option>
+                    <option value="tester">Tester</option>
+                </select>
+            </div>
+
+            <button id="submit_button" class="btn btn-success w-100">
+                Submit
+            </button>
+
+            <div id="successMsg" class="alert alert-success mt-3 d-none">
+                Form submitted successfully!
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-link">← Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("submit_button").onclick = (e) => {
+    e.preventDefault();
+    document.getElementById("successMsg").classList.remove("d-none");
+};
+</script>
+{% endblock %}

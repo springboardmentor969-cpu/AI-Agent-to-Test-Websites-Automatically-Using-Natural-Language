@@ -1,0 +1,59 @@
+/* Global */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cards */
+.card {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.15);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(45deg, #0d6efd, #6610f2);
+    border: none;
+}
+
+.btn-success {
+    border: none;
+}
+
+/* Inputs */
+.form-control:focus,
+.form-select:focus {
+    border-color: #6610f2;
+    box-shadow: 0 0 0 0.2rem rgba(102,16,242,0.25);
+}
+
+/* Status */
+#statusBox {
+    font-size: 1.2rem;
+}
+
+/* Code blocks */
+pre {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Screenshot */
+#screenshotImg {
+    max-height: 500px;
+    margin-top: 10px;
+}
+
+/* Tabs */
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+}

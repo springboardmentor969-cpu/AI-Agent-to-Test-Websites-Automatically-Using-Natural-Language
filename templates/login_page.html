@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="text-center mb-3">Demo Login Page</h3>
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input id="username_field" class="form-control" placeholder="admin">
+            </div>
+
+            <button id="submit_button" class="btn btn-primary w-100">
+                Login
+            </button>
+
+            <div id="successMsg" class="alert alert-success mt-3 d-none">
+                Login successful!
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-link">← Dashboard</a>
+            <a href="/form_page" class="btn btn-link">Form Page →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("submit_button").onclick = (e) => {
+    e.preventDefault();
+    document.getElementById("successMsg").classList.remove("d-none");
+};
+</script>
+{% endblock %}
