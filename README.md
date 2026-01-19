@@ -177,6 +177,10 @@ It successfully integrates instruction parsing, test execution, and reporting in
 ---
 
 ## 11. Author
+## Author
 
-**Project Name:** AI Website Testing Agent
-**Purpose:** Academic Project (Infosys / University Submission)
+**Ayan Hamdan** is the developer of the project *AI Website Testing Agent*.
+This project was developed as an academic submission to demonstrate the use of natural language processing and browser automation for automated website testing.
+
+The work focuses on converting user-defined natural language instructions into automated Playwright test executions, validating results, and presenting structured pass/fail reports through an integrated system. The project reflects practical understanding of software testing concepts, backend integration, and end-to-end system design.
+
