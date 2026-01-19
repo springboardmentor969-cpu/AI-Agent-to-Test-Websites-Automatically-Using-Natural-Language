@@ -1,6 +1,7 @@
 from typing import TypedDict, List, Dict, Optional, Any
 from dataclasses import dataclass
 import re
+from playwright_executor import generate_assertions
 
 try:
     from langgraph.graph import StateGraph, END
@@ -22,6 +23,7 @@ class AgentState(TypedDict):
     input: str
     actions: List[str]  # Legacy: human-readable actions
     commands: List[Dict[str, Any]]  # Structured commands
+    assertions: List[Dict[str, Any]]  # Generated assertions
     response: str
     generated_code: str  # Playwright code output
 
@@ -250,9 +252,13 @@ def _map_commands(state: AgentState) -> AgentState:
             }
             validated_commands.append(validated_cmd)
     
+    # Generate assertions for validation
+    assertions = generate_assertions(validated_commands)
+    
     return {
         **state,
-        "commands": validated_commands
+        "commands": validated_commands,
+        "assertions": assertions
     }
 
 
@@ -267,7 +273,8 @@ def _generate_code(state: AgentState) -> AgentState:
         return {
             **state,
             "generated_code": "# No commands to generate code for.",
-            "response": "No structured commands available for code generation."
+            "response": "No structured commands available for code generation.",
+            "assertions": []
         }
     
     # Extract test name from input for function naming
@@ -360,11 +367,10 @@ def _generate_code(state: AgentState) -> AgentState:
                 code_lines.append("            current_url = page.url")
                 if "|" in str(value):
                     urls = [u.strip() for u in str(value).split("|")]
-                    code_lines.append("            assert any(")
-                    for i, url in enumerate(urls):
-                        comma = "," if i < len(urls) - 1 else ""
-                        code_lines.append(f'                "{url}" in current_url{comma}')
-                    code_lines.append(f'            ), f"Expected URL to contain one of {urls}, got {{current_url}}"')
+                    # Generate proper any() with generator expression
+                    url_list_str = "[" + ", ".join([f'"{url}"' for url in urls]) + "]"
+                    code_lines.append(f'            assert any(url in current_url for url in {url_list_str}), \\')
+                    code_lines.append(f'                f"Expected URL to contain one of {urls}, got {{current_url}}"')
                 else:
                     safe_value = str(value).replace('"', '\\"')
                     code_lines.append(f'            assert "{safe_value}" in current_url, \\')
@@ -377,7 +383,9 @@ def _generate_code(state: AgentState) -> AgentState:
                     code_lines.append("            content = element.text_content()")
                     if "|" in str(value):
                         values = [v.strip() for v in str(value).split("|")]
-                        code_lines.append(f"            assert any(v in content for v in {values}), \\")
+                        # Generate proper any() with generator expression
+                        value_list_str = "[" + ", ".join([f'"{v}"' for v in values]) + "]"
+                        code_lines.append(f'            assert any(v in content for v in {value_list_str}), \\')
                         code_lines.append(f'                f"Expected content to contain one of {values}, got {{content}}"')
                     else:
                         safe_value = str(value).replace('"', '\\"')
@@ -418,10 +426,13 @@ def _generate_code(state: AgentState) -> AgentState:
     response_lines.append("")
     response_lines.append("💻 Generated Playwright code is ready for execution.")
     
+    assertions = state.get("assertions", [])
+    
     return {
         **state,
         "generated_code": generated_code,
-        "response": "\n".join(response_lines)
+        "response": "\n".join(response_lines),
+        "assertions": assertions
     }
 
 
@@ -467,6 +478,7 @@ def run_agent(user_input: str) -> AgentState:
             "input": "",
             "actions": [],
             "commands": [],
+            "assertions": [],
             "response": "No instruction provided.",
             "generated_code": ""
         }
@@ -476,6 +488,7 @@ def run_agent(user_input: str) -> AgentState:
             "input": user_input,
             "actions": [],
             "commands": [],
+            "assertions": [],
             "response": (
                 "LangGraph is not installed. Install it with "
                 "`pip install langgraph` to enable agent planning."
@@ -487,6 +500,7 @@ def run_agent(user_input: str) -> AgentState:
         "input": user_input,
         "actions": [],
         "commands": [],
+        "assertions": [],
         "response": "",
         "generated_code": ""
     }

@@ -1,8 +1,3 @@
-"""
-Validation script for Milestone 2: Test case conversion output validation.
-Tests the instruction parser, command mapping, and code generation.
-"""
-
 from agent import run_agent
 
 
