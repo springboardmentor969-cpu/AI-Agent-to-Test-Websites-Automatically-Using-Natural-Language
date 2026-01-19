@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Language Test Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+        }
+        .command-item {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #92487A;
+        }
+        .command-type {
+            font-weight: 600;
+            color: #540863;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .command-details {
+            margin-top: 0.5rem;
+            font-size: 14px;
+            color: #333;
+        }
+        .section-title {
+            color: #540863;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .assertion-item {
+            background: #e8f5e9;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #4caf50;
+        }
+        .execution-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .execution-result.success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        .execution-result.failed {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        .execution-result.running {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+        .btn-execute {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .btn-execute:hover {
+            background: #45a049;
+        }
+        .btn-execute:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 0.5rem;
+            align-items: center;
+        }
+        .button-grid button {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .button-grid button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .status-span {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="card">
+        <h1>🤖 Natural Language Test Agent</h1>
+        <p>Describe the web test you want to run. The agent will parse, map, generate code, and execute tests.</p>
+
+        <form method="POST" class="form" id="testForm">
+            <label for="instruction">Test Instruction</label>
+            <textarea id="instruction" name="instruction" rows="3" placeholder="Describe your test, e.g. 'Login with admin and check dashboard'" required>{% if request.method == 'POST' %}{{ request.form.get('instruction', '') }}{% endif %}</textarea>
+            <button type="submit" class="btn">Generate Test Plan & Code</button>
+        </form>
+
+        {% if result %}
+            <div class="message success">
+                <strong>📋 Agent Response</strong>
+                <pre style="white-space: pre-wrap; margin-top: 0.5rem;">{{ result }}</pre>
+            </div>
+        {% endif %}
+
+        {% if actions %}
+            <div class="section-title">📝 Planned Actions (Human-Readable)</div>
+            <div class="card" style="margin-top: 0.5rem;">
+                <ul style="padding-left: 20px; margin: 0;">
+                    {% for action in actions %}
+                        <li style="margin: 0.5rem 0;">{{ action }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if commands %}
+            <div class="section-title">🔧 Structured Commands (Parsed & Mapped)</div>
+            <div style="margin-top: 0.5rem;">
+                {% for cmd in commands %}
+                    <div class="command-item">
+                        <div class="command-type">{{ cmd.action_type }}</div>
+                        <div class="command-details">
+                            <strong>Description:</strong> {{ cmd.description }}<br>
+                            {% if cmd.target %}
+                                <strong>Target:</strong> <code>{{ cmd.target }}</code><br>
+                            {% endif %}
+                            {% if cmd.value %}
+                                <strong>Value:</strong> <code>{{ cmd.value }}</code>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if assertions %}
+            <div class="section-title">✅ Generated Assertions (Result Validation)</div>
+            <div style="margin-top: 0.5rem;">
+                {% for assertion in assertions %}
+                    <div class="assertion-item">
+                        <div class="command-type">{{ assertion.type }}</div>
+                        <div class="command-details">
+                            <strong>Step {{ assertion.step }}:</strong> {{ assertion.description }}<br>
+                            {% if assertion.target %}
+                                <strong>Target:</strong> <code>{{ assertion.target }}</code><br>
+                            {% endif %}
+                            {% if assertion.expected %}
+                                <strong>Expected:</strong> <code>{{ assertion.expected }}</code>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if generated_code %}
+            <div class="section-title">💻 Generated Playwright Code</div>
+            <div class="card" style="margin-top: 0.5rem; padding: 0;">
+                <div class="code-block" id="codeBlock">{{ generated_code }}</div>
+            </div>
+            <div class="button-grid">
+                <button onclick="copyCode()" style="background: #92487A; color: white;">📋 Copy Code</button>
+                <button onclick="executeTest()" class="btn-execute" id="executeBtn" style="background: #4caf50; color: white;">▶️ Execute Test</button>
+                <span id="executionStatus" class="status-span"></span>
+            </div>
+            
+            <div id="executionResult" style="display: none;"></div>
+        {% endif %}
+
+        <div class="links" style="margin-top: 2rem;">
+            <a href="{{ url_for('home') }}">Home</a> |
+            <a href="{{ url_for('dashboard') }}">Dashboard</a> |
+            <a href="{{ url_for('testpage') }}">Static Test Page</a>
+        </div>
+    </div>
+
+    <script>
+        function copyCode() {
+            const codeBlock = document.getElementById('codeBlock');
+            if (codeBlock) {
+                const text = codeBlock.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Code copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+        }
+
+        function executeTest() {
+            const codeBlock = document.getElementById('codeBlock');
+            const executeBtn = document.getElementById('executeBtn');
+            const statusSpan = document.getElementById('executionStatus');
+            const resultDiv = document.getElementById('executionResult');
+            
+            if (!codeBlock) {
+                alert('Code block not found');
+                return;
+            }
+            
+            const code = codeBlock.textContent.trim();
+            const testName = 'test_automated';
+            
+            if (!code || code.length < 50) {
+                alert('No valid code to execute. Please generate test code first.');
+                return;
+            }
+            
+            // Disable button and show status
+            executeBtn.disabled = true;
+            statusSpan.textContent = '⏳ Executing test...';
+            statusSpan.style.color = '#ff9800';
+            resultDiv.style.display = 'none';
+            
+            // Check server health first
+            fetch('/health')
+                .then(response => response.json())
+                .catch(() => {
+                    executeBtn.disabled = false;
+                    statusSpan.textContent = '❌ Server not responding';
+                    statusSpan.style.color = '#f44336';
+                    resultDiv.innerHTML = '<div class="execution-result failed"><h3>❌ Server Error</h3><p>Cannot connect to server. Make sure Flask app is running on http://127.0.0.1:5000</p></div>';
+                    resultDiv.style.display = 'block';
+                });
+            
+            // Get instruction and commands from the page
+            const instruction = document.getElementById('instruction')?.value || '';
+            const commands = {% if commands %}{{ commands|tojson|safe }}{% else %}[]{% endif %};
+            
+            // Execute test
+            fetch('/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    code: code,
+                    test_name: testName,
+                    instruction: instruction,
+                    commands: commands
+                }),
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                executeBtn.disabled = false;
+                
+                // If we have report HTML, use it (polished report)
+                if (data.report_html) {
+                    let reportHTML = data.report_html;
+                    // Add download buttons in grid at the top of the report
+                    if (data.report_id) {
+                        reportHTML = '<div class="button-grid" style="margin-bottom: 15px;">' +
+                            '<button onclick="downloadReport(\'' + data.report_id + '\', \'json\')" style="background: #92487A; color: white;">📥 Download JSON</button>' +
+                            '<button onclick="downloadReport(\'' + data.report_id + '\', \'html\')" style="background: #540863; color: white;">📄 Download HTML</button>' +
+                            '</div>' + reportHTML;
+                    }
+                    resultDiv.innerHTML = reportHTML;
+                    resultDiv.style.display = 'block';
+                } else {
+                    // Fallback to basic results display
+                    let resultHTML = '<div class="execution-result ' + (data.success ? 'success' : 'failed') + '">';
+                    resultHTML += '<h3>' + (data.success ? '✅ Test Passed' : '❌ Test Failed') + '</h3>';
+                    resultHTML += '<p><strong>Status:</strong> ' + data.status + '</p>';
+                    
+                    if (data.execution_time !== undefined) {
+                        resultHTML += '<p><strong>Execution Time:</strong> ' + data.execution_time + 's</p>';
+                    }
+                    if (data.assertions_passed !== undefined) {
+                        resultHTML += '<p><strong>Assertions Passed:</strong> ' + data.assertions_passed + '</p>';
+                    }
+                    if (data.assertions_failed !== undefined) {
+                        resultHTML += '<p><strong>Assertions Failed:</strong> ' + data.assertions_failed + '</p>';
+                    }
+                    
+                    // Enhanced error display
+                    if (data.enhanced_error) {
+                        resultHTML += '<div style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 6px; margin: 15px 0;">';
+                        resultHTML += '<h4 style="margin-top: 0;">⚠️ Error Analysis</h4>';
+                        resultHTML += '<pre style="background: white; padding: 10px; border-radius: 4px; white-space: pre-wrap;">' + escapeHtml(data.enhanced_error) + '</pre>';
+                        resultHTML += '</div>';
+                    }
+                    
+                    // Check if browsers need to be installed
+                    if (data.requires_browser_install || data.status === 'browser_not_installed') {
+                        resultHTML += '<div style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 6px; margin: 15px 0;">';
+                        resultHTML += '<h4 style="margin-top: 0; color: #856404;">⚠️ Playwright Browsers Not Installed</h4>';
+                        resultHTML += '<p><strong>To fix this, run the following command in your terminal:</strong></p>';
+                        resultHTML += '<pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0;">python -m playwright install chromium</pre>';
+                        resultHTML += '<p>Or click the button below to install automatically:</p>';
+                        resultHTML += '<button onclick="installBrowsers()" class="btn-execute" style="margin-top: 10px;">🔧 Install Browsers</button>';
+                        resultHTML += '<span id="installStatus" style="margin-left: 10px;"></span>';
+                        resultHTML += '</div>';
+                    }
+                    
+                    if (data.output) {
+                        resultHTML += '<h4>Output:</h4><pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto;">' + escapeHtml(data.output) + '</pre>';
+                    }
+                    
+                    if (data.error || data.error_output) {
+                        resultHTML += '<h4>Error:</h4><pre style="background: #ffebee; padding: 10px; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto;">' + escapeHtml(data.error || data.error_output || '') + '</pre>';
+                    }
+                    
+                    if (data.recovery_suggestion) {
+                        resultHTML += '<div style="background: #e3f2fd; border: 1px solid #2196f3; padding: 15px; border-radius: 6px; margin: 15px 0;">';
+                        resultHTML += '<h4 style="margin-top: 0; color: #1565c0;">💡 Recovery Suggestion</h4>';
+                        resultHTML += '<pre style="background: white; padding: 10px; border-radius: 4px; white-space: pre-wrap;">' + escapeHtml(data.recovery_suggestion) + '</pre>';
+                        resultHTML += '</div>';
+                    }
+                    
+                    resultHTML += '</div>';
+                    
+                    // Add download buttons in grid if report is available
+                    if (data.report_id) {
+                        resultHTML = '<div class="button-grid" style="margin-bottom: 15px;">' +
+                            '<button onclick="downloadReport(\'' + data.report_id + '\', \'json\')" style="background: #92487A; color: white;">📥 Download JSON</button>' +
+                            '<button onclick="downloadReport(\'' + data.report_id + '\', \'html\')" style="background: #540863; color: white;">📄 Download HTML</button>' +
+                            '</div>' + resultHTML;
+                    }
+                    
+                    resultDiv.innerHTML = resultHTML;
+                }
+                
+                resultDiv.style.display = 'block';
+                
+                // Update status
+                if (data.success) {
+                    statusSpan.textContent = '✅ Test completed successfully';
+                    statusSpan.style.color = '#4caf50';
+                } else {
+                    statusSpan.textContent = '❌ Test failed';
+                    statusSpan.style.color = '#f44336';
+                }
+                
+                // Show report ID if available
+                if (data.report_id) {
+                    statusSpan.textContent += ' | Report ID: ' + data.report_id;
+                }
+                
+                // Store report data for download
+                if (data.report_id) {
+                    window.lastReportId = data.report_id;
+                    window.lastReportData = data;
+                }
+            })
+            .catch(error => {
+                executeBtn.disabled = false;
+                statusSpan.textContent = '❌ Execution error';
+                statusSpan.style.color = '#f44336';
+                
+                let errorMsg = error.message || 'Unknown error occurred';
+                if (errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError')) {
+                    errorMsg = 'Network error: Could not connect to server. Make sure Flask app is running on http://127.0.0.1:5000';
+                }
+                
+                resultDiv.innerHTML = '<div class="execution-result failed"><h3>❌ Execution Error</h3><p><strong>Error:</strong> ' + escapeHtml(errorMsg) + '</p><p style="margin-top: 10px; font-size: 12px; color: #666;">Tip: Make sure the Flask server is running and try again.</p></div>';
+                resultDiv.style.display = 'block';
+                
+                console.error('Execution error:', error);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function downloadReport(reportId, format) {
+            if (!reportId) {
+                alert('No report available to download');
+                return;
+            }
+            
+            const url = `/download-report/${reportId}?format=${format}`;
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `test_report_${reportId}.${format === 'html' ? 'html' : 'json'}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function installBrowsers() {
+            const installStatus = document.getElementById('installStatus');
+            const installBtn = event.target;
+            
+            if (installBtn.disabled) return;
+            
+            installBtn.disabled = true;
+            installStatus.textContent = '⏳ Installing browsers...';
+            installStatus.style.color = '#ff9800';
+            
+            fetch('/install-browsers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    installStatus.textContent = '✅ Browsers installed successfully!';
+                    installStatus.style.color = '#4caf50';
+                    installBtn.textContent = '✅ Installed';
+                    setTimeout(() => {
+                        alert('Browsers installed! You can now execute tests.');
+                    }, 500);
+                } else {
+                    installStatus.textContent = '❌ Installation failed';
+                    installStatus.style.color = '#f44336';
+                    installBtn.disabled = false;
+                    alert('Installation failed: ' + (data.message || data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                installStatus.textContent = '❌ Error';
+                installStatus.style.color = '#f44336';
+                installBtn.disabled = false;
+                alert('Error installing browsers: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

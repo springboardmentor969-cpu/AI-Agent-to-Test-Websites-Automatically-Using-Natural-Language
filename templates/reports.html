@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Reports - Milestone 4</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .reports-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .report-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #92487A;
+        }
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-passed {
+            background: #4caf50;
+            color: white;
+        }
+        .status-failed {
+            background: #f44336;
+            color: white;
+        }
+        .status-error {
+            background: #ff9800;
+            color: white;
+        }
+        .report-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .summary-item {
+            text-align: center;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 6px;
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #540863;
+        }
+        .summary-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="reports-container">
+        <div class="card">
+            <h1>📊 Test Reports - Milestone 4</h1>
+            <p>Comprehensive test execution reports with detailed analysis</p>
+            
+            {% if reports %}
+                <div style="margin-top: 20px;">
+                    <h2>Recent Reports ({{ reports|length }})</h2>
+                    {% for report in reports %}
+                        <div class="report-card">
+                            <div class="report-header">
+                                <div>
+                                    <h3 style="margin: 0;">{{ report.test_name }}</h3>
+                                    <p style="margin: 5px 0; color: #666; font-size: 14px;">{{ report.instruction }}</p>
+                                </div>
+                                <span class="status-badge status-{{ report.status }}">
+                                    {{ report.status }}
+                                </span>
+                            </div>
+                            
+                            <div class="report-summary">
+                                <div class="summary-item">
+                                    <div class="summary-value">{{ "%.2f"|format(report.duration) }}s</div>
+                                    <div class="summary-label">Duration</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-value">{{ report.summary.passed_steps }}/{{ report.summary.total_steps }}</div>
+                                    <div class="summary-label">Steps Passed</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-value">{{ report.summary.assertions_passed }}</div>
+                                    <div class="summary-label">Assertions</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-value">{{ report.start_time[:10] }}</div>
+                                    <div class="summary-label">Date</div>
+                                </div>
+                            </div>
+                            
+                            {% if report.error_message %}
+                                <div style="margin-top: 15px; padding: 10px; background: #ffebee; border-radius: 4px;">
+                                    <strong>Error:</strong> {{ report.error_message[:200] }}{% if report.error_message|length > 200 %}...{% endif %}
+                                </div>
+                            {% endif %}
+                            
+                            <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center;">
+                                <a href="/report/{{ report.test_id }}" style="color: #540863; text-decoration: none; font-weight: 600;">View Full Report →</a>
+                                <button onclick="downloadReport('{{ report.test_id }}', 'json')" style="background: #92487A; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">📥 JSON</button>
+                                <button onclick="downloadReport('{{ report.test_id }}', 'html')" style="background: #540863; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">📄 HTML</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <p>No test reports available yet.</p>
+                    <p>Execute some tests from the <a href="{{ url_for('agent_view') }}">Agent page</a> to generate reports.</p>
+                </div>
+            {% endif %}
+            
+            <div class="links" style="margin-top: 2rem;">
+                <a href="{{ url_for('home') }}">Home</a> |
+                <a href="{{ url_for('agent_view') }}">Agent</a> |
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadReport(reportId, format) {
+            if (!reportId) {
+                alert('No report available to download');
+                return;
+            }
+            
+            const url = `/download-report/${reportId}?format=${format}`;
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `test_report_${reportId}.${format === 'html' ? 'html' : 'json'}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
+

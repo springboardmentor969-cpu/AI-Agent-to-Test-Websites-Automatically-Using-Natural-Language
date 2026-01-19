@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Dashboard - Flask Auth</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>Flask Auth</h2>
+            </div>
+            <div class="navbar-menu">
+                {% if session.get('user') %}
+                    <span class="welcome-text">Welcome, {{ session.get('user') }}</span>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+                {% else %}
+                    <span class="welcome-text">Welcome to Main Page</span>
+                    <a href="{{ url_for('login') }}" class="btn-logout">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <div class="dashboard-content">
+            <div class="welcome-card">
+                <h1>Welcome to Flask Authentication System</h1>
+                <p>This is a professional Flask login and authentication system with database integration.</p>
+                
+                <div class="dashboard-info">
+                    <div class="info-box">
+                        <h3>Features</h3>
+                        <ul>
+                            <li>User Registration & Login</li>
+                            <li>SQLite Database Integration</li>
+                            <li>Session Management</li>
+                            <li>Password Reset</li>
+                            <li>User Profiles</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>Get Started</h3>
+                        <ul>
+                            <li><a href="{{ url_for('login') }}">Login to Account</a></li>
+                            <li><a href="{{ url_for('signup') }}">Create New Account</a></li>
+                            <li><a href="{{ url_for('forgot') }}">Forgot Password</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{{ url_for('signup') }}" class="btn-signup">Sign Up Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
