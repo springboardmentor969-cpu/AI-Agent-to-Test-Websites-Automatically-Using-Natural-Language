@@ -1,6 +1,5 @@
-flask
 streamlit
 playwright
-requests
-langchain
 langgraph
+langchain
+langchain-community
