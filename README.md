@@ -4,7 +4,7 @@
 
 ### Main Application Interface
 
-![Agent Interface](ui%20ss/Screenshot%202026-01-17%20095436.png)
+![Detailed Report](ui%20ss/Screenshot%202026-01-16%20175356.png)
 *Natural Language Test Agent Interface*
 
 ![Test Execution](ui%20ss/Screenshot%202026-01-17%20095427.png)
@@ -30,7 +30,6 @@
 ![Test Reports](ui%20ss/Screenshot%202026-01-16%20175345.png)
 *Test Reports View*
 
-![Detailed Report](ui%20ss/Screenshot%202026-01-16%20175356.png)
 *Detailed Test Report Display*
 
 ---
