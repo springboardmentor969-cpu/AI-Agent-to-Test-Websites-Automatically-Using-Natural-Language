@@ -113,27 +113,6 @@ infosys-project/
 ├── requirements.txt
 ├── README.md
 └── app.py
-```
-
----
-
-## 4. Project Structure
-
-```
-infosys-project/
-│
-├── agent/                  # Instruction parsing, code generation, assertions
-├── executor/               # Test execution logic
-├── report/                 # Test reporting module
-├── samples/                # Sample HTML pages for testing
-├── src/                     # Main application files
-│   ├── app.py               # Backend controller (Flask)
-│   ├── ui.py                # User Interface (Streamlit)
-│   └── workflow.py          # Workflow logic
-├── requirements.txt         # Project dependencies
-├── Readme.md                # Project documentation
-```
-
 ---
 
 ## 5. Milestone Implementation
