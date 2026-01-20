@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Agent – Natural Language Automation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+        }
+
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .container {
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode h1 {
+            color: #e2e8f0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        body.dark-mode .subtitle {
+            color: #a0aec0;
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #5a67d8;
+        }
+
+        body.dark-mode .theme-toggle {
+            background: #4a5568;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        body.dark-mode textarea {
+            background: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+
+        textarea:focus {
+            border-color: #667eea;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        body.dark-mode .checkbox-group label {
+            color: #cbd5e0;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .status.success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: 1px solid #2f855a;
+            animation: successPulse 0.5s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.waiting {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        body.dark-mode .status.success {
+            background: #22543d;
+            color: #9ae6b4;
+            border-color: #68d391;
+        }
+
+        body.dark-mode .status.error {
+            background: #742a2a;
+            color: #feb2b2;
+            border-color: #fc8181;
+        }
+
+        body.dark-mode .status.waiting {
+            background: #744210;
+            color: #fbd38d;
+            border-color: #f6ad55;
+        }
+
+        .details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode .details {
+            background: #4a5568;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-mode .section h3 {
+            color: #e2e8f0;
+        }
+
+        .section ul {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .section ul {
+            background: #2d3748;
+        }
+
+        .section li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode .section li {
+            border-bottom-color: #4a5568;
+        }
+
+        .section li:last-child {
+            border-bottom: none;
+        }
+
+        .action-item, .assertion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-type, .assertion-type {
+            font-weight: 600;
+            color: #667eea;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .action-details, .assertion-details {
+            color: #666;
+            font-size: 14px;
+        }
+
+        body.dark-mode .action-details,
+        body.dark-mode .assertion-details {
+            color: #cbd5e0;
+        }
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #444;
+        }
+
+        body.dark-mode .label {
+            color: #e2e8f0;
+        }
+
+        .logs-container {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .log-line {
+            margin-bottom: 2px;
+            white-space: pre-wrap;
+        }
+
+        .log-line.error {
+            color: #ff6b6b;
+        }
+
+        .log-line.success {
+            color: #51cf66;
+        }
+
+        .log-line.warning {
+            color: #ffd43b;
+        }
+
+        .screenshots-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .screenshot-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .screenshot-item {
+            background: #2d3748;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 10px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        body.dark-mode .screenshot-caption {
+            color: #cbd5e0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        body.dark-mode .footer {
+            color: #a0aec0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        body.dark-mode .progress-bar {
+            background: #4a5568;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .screenshots-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-controls">
+        <div></div>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <h1>🤖 AI Agent Command Interface</h1>
+    <div class="subtitle">Convert Natural Language into Playwright Automation</div>
+
+    <div class="input-group">
+        <label class="label">Enter instruction in natural language</label>
+        <textarea id="instruction" placeholder="Examples:
+• open google, search for python
+• open github, search for machine learning
+• open login page, enter john username, enter password123 password, click login
+
+⚠️ Note: YouTube/Facebook may be slow or timeout due to anti-bot measures"></textarea>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="use-langchain">
+            <label for="use-langchain">Use AI Agent (requires OpenAI API key)</label>
+        </div>
+    </div>
+
+    <button id="runButton" onclick="runAgent()">🚀 Run Agent</button>
+    <div class="progress-bar" id="progressBar" style="display: none;">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="result">
+        <label class="label">Execution Result</label>
+        <div id="result-container">
+            <div id="status" class="status">Waiting for instruction...</div>
+            <div id="details" class="details" style="display: none;">
+                <div class="section">
+                    <h3>📋 Actions Executed</h3>
+                    <ul id="actions-list"></ul>
+                </div>
+                <div class="section">
+                    <h3>✅ Assertions Checked</h3>
+                    <ul id="assertions-list"></ul>
+                </div>
+                <div class="section">
+                    <h3>📜 Real-time Logs</h3>
+                    <div id="logs-container" class="logs-container" style="display: none;"></div>
+                </div>
+                <div class="section">
+                    <h3>📸 Screenshots</h3>
+                    <div id="screenshots-container" class="screenshots-container" style="display: none;"></div>
+                </div>
+                <div class="section">
+                    <h3>📊 Test Result</h3>
+                    <div id="result-status"></div>
+                </div>
+                <div class="section">
+                    <h3>⏰ Timestamp</h3>
+                    <div id="timestamp"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let isDarkMode = false;
+
+    function toggleTheme() {
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-mode');
+        const themeBtn = document.querySelector('.theme-toggle');
+        themeBtn.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    function runAgent() {
+        const instruction = document.getElementById('instruction').value;
+        const useLangChain = document.getElementById('use-langchain').checked;
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+        const runButton = document.getElementById('runButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+
+        if (!instruction.trim()) {
+            statusDiv.textContent = "⚠️ Please enter an instruction.";
+            statusDiv.className = "status error";
+            detailsDiv.style.display = "none";
+            return;
+        }
+
+        const endpoint = useLangChain ? '/run-langchain' : '/run-playwright';
+
+        // Update UI for processing
+        runButton.disabled = true;
+        runButton.innerHTML = '<div class="loading-spinner"></div>Processing...';
+        progressBar.style.display = 'block';
+        progressFill.style.width = '0%';
+
+        statusDiv.textContent = useLangChain ? "🤖 Processing with AI Agent..." : "⏳ Processing instruction...";
+        statusDiv.className = "status waiting";
+        detailsDiv.style.display = "none";
+
+        // Simulate progress
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90;
+            progressFill.style.width = progress + '%';
+        }, 200);
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ instruction })
+        })
+        .then(res => res.json())
+        .then(data => {
+            clearInterval(progressInterval);
+            progressFill.style.width = '100%';
+            setTimeout(() => {
+                progressBar.style.display = 'none';
+                runButton.disabled = false;
+                runButton.innerHTML = '🚀 Run Agent';
+                displayResult(data, useLangChain);
+            }, 500);
+        })
+        .catch(err => {
+            clearInterval(progressInterval);
+            progressBar.style.display = 'none';
+            runButton.disabled = false;
+            runButton.innerHTML = '🚀 Run Agent';
+
+            statusDiv.textContent = "❌ Error: " + err.message;
+            statusDiv.className = "status error";
+            detailsDiv.style.display = "none";
+        });
+    }
+
+    function displayResult(data, useLangChain = false) {
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+        const actionsList = document.getElementById('actions-list');
+        const assertionsList = document.getElementById('assertions-list');
+        const logsContainer = document.getElementById('logs-container');
+        const screenshotsContainer = document.getElementById('screenshots-container');
+        const resultStatus = document.getElementById('result-status');
+        const timestampDiv = document.getElementById('timestamp');
+
+        if (useLangChain) {
+            // Handle LangChain results
+            if (data.result && data.result.success) {
+                statusDiv.textContent = "🤖 AI Agent Completed Successfully!";
+                statusDiv.className = "status success";
+            } else {
+                statusDiv.textContent = "❌ AI Agent Failed";
+                statusDiv.className = "status error";
+            }
+
+            detailsDiv.style.display = "block";
+
+            // For LangChain, show different structure
+            actionsList.innerHTML = '<li>AI Agent executed complex actions</li>';
+            assertionsList.innerHTML = '<li>Dynamic validation performed</li>';
+            logsContainer.style.display = 'none';
+            screenshotsContainer.style.display = 'none';
+
+            const errorMsg = data.result.error || '';
+            if (errorMsg.includes('OpenAI API key')) {
+                resultStatus.innerHTML = `
+                    <strong>Status:</strong> API Key Required<br>
+                    <strong>Message:</strong> ${errorMsg}<br>
+                    <small>Set OPENAI_API_KEY environment variable to enable AI Agent mode</small>
+                `;
+            } else {
+                resultStatus.innerHTML = `
+                    <strong>Status:</strong> ${data.result.success ? 'COMPLETED' : 'FAILED'}<br>
+                    <strong>Response:</strong> ${data.result.result || data.result.error}
+                `;
+            }
+
+            timestampDiv.textContent = data.timestamp || 'N/A';
+        } else {
+            // Handle custom agent results
+            const executionResult = data.result || {};
+
+            if (executionResult.success) {
+                statusDiv.textContent = "🎉 Test Executed Successfully!";
+                statusDiv.className = "status success";
+            } else {
+                statusDiv.textContent = "❌ Test Failed";
+                statusDiv.className = "status error";
+            }
+
+            detailsDiv.style.display = "block";
+
+            // Populate actions
+            actionsList.innerHTML = '';
+            if (data.actions && data.actions.length > 0) {
+                data.actions.forEach(action => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="action-item">
+                            <span class="action-type">${action.action.toUpperCase()}</span>
+                            <span class="action-details">${getActionDetails(action)}</span>
+                        </div>
+                    `;
+                    actionsList.appendChild(li);
+                });
+            } else {
+                actionsList.innerHTML = '<li>No actions executed</li>';
+            }
+
+            // Populate assertions
+            assertionsList.innerHTML = '';
+            if (data.assertions && data.assertions.length > 0) {
+                data.assertions.forEach(assertion => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="assertion-item">
+                            <span class="assertion-type">${assertion.type.replace('_', ' ').toUpperCase()}</span>
+                            <span class="assertion-details">${assertion.value}</span>
+                        </div>
+                    `;
+                    assertionsList.appendChild(li);
+                });
+            } else {
+                assertionsList.innerHTML = '<li>No assertions checked</li>';
+            }
+
+            // Display logs
+            if (executionResult.logs && executionResult.logs.length > 0) {
+                logsContainer.style.display = 'block';
+                logsContainer.innerHTML = '';
+                executionResult.logs.forEach(log => {
+                    const logLine = document.createElement('div');
+                    logLine.className = 'log-line';
+                    logLine.textContent = log;
+
+                    // Color code logs
+                    if (log.includes('[ERROR]') || log.includes('❌')) {
+                        logLine.classList.add('error');
+                    } else if (log.includes('[OK]') || log.includes('✅')) {
+                        logLine.classList.add('success');
+                    } else if (log.includes('[WARN]') || log.includes('⚠️')) {
+                        logLine.classList.add('warning');
+                    }
+
+                    logsContainer.appendChild(logLine);
+                });
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+            } else {
+                logsContainer.style.display = 'none';
+            }
+
+            // Display screenshots
+            if (executionResult.screenshots && executionResult.screenshots.length > 0) {
+                screenshotsContainer.style.display = 'grid';
+                screenshotsContainer.innerHTML = '';
+                executionResult.screenshots.forEach(screenshot => {
+                    const screenshotDiv = document.createElement('div');
+                    screenshotDiv.className = 'screenshot-item';
+                    const fileName = screenshot.split('/').pop();
+                    const isSuccess = fileName.includes('success');
+                    const imgSrc = `/static/${screenshot}`;
+                    screenshotDiv.innerHTML = `
+                        <img src="${imgSrc}" alt="Screenshot" onerror="console.log('Failed to load image:', '${imgSrc}'); this.style.display='none'; this.nextElementSibling.textContent='❌ Image failed to load'">
+                        <div class="screenshot-caption">${isSuccess ? '✅ Final Result' : '❌ Error State'}</div>
+                    `;
+                    screenshotsContainer.appendChild(screenshotDiv);
+                });
+            } else {
+                screenshotsContainer.style.display = 'none';
+            }
+
+            // Result status
+            resultStatus.innerHTML = `
+                <strong>Status:</strong> ${executionResult.success ? 'PASSED' : 'FAILED'}<br>
+                <strong>Message:</strong> ${executionResult.message || executionResult.error || 'N/A'}
+            `;
+
+            timestampDiv.textContent = data.timestamp || 'N/A';
+        }
+    }
+
+    function getActionDetails(action) {
+        switch(action.action) {
+            case 'navigate':
+                return `URL: ${action.url}`;
+            case 'fill':
+                return `Field: ${action.field}, Value: ${action.value}`;
+            case 'click':
+                return `Element: ${action.element}`;
+            case 'wait':
+                return `Element: ${action.element}`;
+            case 'assert':
+                return `Text: ${action.text}`;
+            case 'press_enter':
+                if (action.value) {
+                    return `Search: "${action.value}"`;
+                }
+                return `Field: ${action.field}`;
+            default:
+                return JSON.stringify(action);
+        }
+    }
+
+    // Load theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        toggleTheme();
+    }
+
+    // Save theme preference
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('theme-toggle')) {
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<<<<<<< HEAD
+{
+    "timestamp": "2026-01-20 14:55:16.745097",
+    "actions": [
+        {
+            "action": "navigate",
+            "url": "https://www.youtube.com"
+        },
+        {
+            "action": "press_enter",
+            "field": "q",
+            "value": "python"
+        }
+    ],
+    "assertions": [
+        {
+            "type": "url_contains",
+            "value": "youtube"
+        }
+    ],
+    "result": {
+        "success": true,
+        "message": "",
+        "logs": [
+            "Executing: {'action': 'navigate', 'url': 'https://www.youtube.com'}",
+            "[INFO] Using full page load for https://www.youtube.com (may take longer)",
+            "[OK] Navigated to https://www.youtube.com",
+            "[WAIT] DOM ready & network idle",
+            "Executing: {'action': 'press_enter', 'field': 'q', 'value': 'python'}",
+            "[OK] Filled 'python' in input[type=\"text\"]",
+            "[OK] Pressed Enter in input[type=\"text\"]",
+            "[WAIT] Search results loaded",
+            "Checking assertion: {'type': 'url_contains', 'value': 'youtube'}",
+            "[ASSERT OK] URL contains 'youtube'",
+            "[SCREENSHOT] Final result: C:\\Users\\HP\\OneDrive\\Desktop\\AI_Agent_NL\\tests\\screenshots\\success_d4725a4c-893b-47a9-ae42-65c99d6a0c8c.png",
+            "[SCREENSHOT] File exists: True"
+        ],
+        "screenshots": [
+            "screenshots/success_d4725a4c-893b-47a9-ae42-65c99d6a0c8c.png"
+        ],
+        "video": "C:\\Users\\HP\\OneDrive\\Desktop\\AI_Agent_NL\\tests\\videos\\fd8563f439de36546ed7c151ce609e1e.webm",
+        "error": ""
+    }
+=======
+{
+    "timestamp": "2026-01-20 14:55:16.745097",
+    "actions": [
+        {
+            "action": "navigate",
+            "url": "https://www.youtube.com"
+        },
+        {
+            "action": "press_enter",
+            "field": "q",
+            "value": "python"
+        }
+    ],
+    "assertions": [
+        {
+            "type": "url_contains",
+            "value": "youtube"
+        }
+    ],
+    "result": {
+        "success": true,
+        "message": "",
+        "logs": [
+            "Executing: {'action': 'navigate', 'url': 'https://www.youtube.com'}",
+            "[INFO] Using full page load for https://www.youtube.com (may take longer)",
+            "[OK] Navigated to https://www.youtube.com",
+            "[WAIT] DOM ready & network idle",
+            "Executing: {'action': 'press_enter', 'field': 'q', 'value': 'python'}",
+            "[OK] Filled 'python' in input[type=\"text\"]",
+            "[OK] Pressed Enter in input[type=\"text\"]",
+            "[WAIT] Search results loaded",
+            "Checking assertion: {'type': 'url_contains', 'value': 'youtube'}",
+            "[ASSERT OK] URL contains 'youtube'",
+            "[SCREENSHOT] Final result: C:\\Users\\HP\\OneDrive\\Desktop\\AI_Agent_NL\\tests\\screenshots\\success_d4725a4c-893b-47a9-ae42-65c99d6a0c8c.png",
+            "[SCREENSHOT] File exists: True"
+        ],
+        "screenshots": [
+            "screenshots/success_d4725a4c-893b-47a9-ae42-65c99d6a0c8c.png"
+        ],
+        "video": "C:\\Users\\HP\\OneDrive\\Desktop\\AI_Agent_NL\\tests\\videos\\fd8563f439de36546ed7c151ce609e1e.webm",
+        "error": ""
+    }
+>>>>>>> bffad3ff33921300ebc538d6e7d6bc5cacdbd732
+}

@@ -1,0 +1,8 @@
+{
+    "editor.inlineSuggest.enabled": false,
+    "editor.renderLineHighlight": "none",
+    "editor.occurrencesHighlight": "off",
+    "editor.selectionHighlight": false,
+    "editor.codeLens": false,
+    "editor.lightbulb.enabled": "off"
+}
