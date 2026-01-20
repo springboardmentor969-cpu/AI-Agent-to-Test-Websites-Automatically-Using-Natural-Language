@@ -95,3 +95,7 @@ ai_agent_web_testing/
 pip install -r requirements.txt
 playwright install
 python app.py
+
+## 👩‍💻 Developed By
+Kaya Dhankar
+B.Tech CSE (AI)
