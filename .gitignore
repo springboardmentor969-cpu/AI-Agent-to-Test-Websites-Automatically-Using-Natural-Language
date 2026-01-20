@@ -1,0 +1,6 @@
+# Python virtual environment
+.venv/
+
+# Demo files / folders
+demo/
+demo.*
