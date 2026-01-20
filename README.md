@@ -98,5 +98,5 @@ python app.py
 ```
 
 ## 👩‍💻 Developed By
-Kaya Dhankar
-B.Tech CSE (AI)
+-Kaya Dhankar
+-B.Tech CSE (AI)
