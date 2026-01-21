@@ -2,64 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Website Testing Agent</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Web Testing Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+     <!-- <script src="/static/js/main.js"></script> -->
+     
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <h1>🤖 AI Web Testing Agent</h1>
+            <p>Automated E2E testing with natural language</p>
+        </header>
 
-<header class="header">
-    <h1>AI Website Testing Agent</h1>
-    <p>Natural Language → Structured Test Commands</p>
-</header>
+        <main class="main-content">
+            <div class="input-section">
+                <h2>Describe Your Test</h2>
+                <p class="subtitle">Write your test case in natural language, and the AI will execute it automatically.</p>
+                
+                <textarea 
+                    id="testDescription" 
+                    placeholder="Example:
+Go to http://localhost:5000/test-page
+Type 'john@example.com' in the email field
+Type 'password123' in the password field
+Click the 'Login' button
+Verify that the page contains 'Welcome back'"></textarea>
 
-<div class="container">
+                <div class="options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="useCodeGen">
+                        <span>Generate Playwright code </span>
+                    </label>
+                </div>
 
-    <div class="input-section">
-        <label for="instruction">Enter Test Instruction</label>
-        <textarea id="instruction"
-            placeholder="Example: Open homepage and verify title"></textarea>
+                <div class="button-group">
+                    <button id="parseBtn" class="btn btn-secondary">
+                        <span>📝 Preview Test Steps</span>
+                    </button>
+                    <button id="runBtn" class="btn btn-primary">
+                        <span>🚀 Run Test</span>
+                    </button>
+                </div>
+            </div>
 
-        <button onclick="sendInstruction()">Run Test</button>
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <h3>📋 Parsed Test Steps</h3>
+                <div id="previewContent"></div>
+            </div>
+
+            <div id="statusSection" class="status-section" style="display: none;">
+                <h3>⚙️ Test Status</h3>
+                <div id="statusContent" class="status-content">
+                    <div class="spinner"></div>
+                    <p id="statusText">Initializing...</p>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <h3>📊 Test Results</h3>
+                <div id="resultsContent"></div>
+            </div>
+
+            <div class="examples-section">
+                <h3>💡 Example Test Cases</h3>
+                <div class="examples-grid">
+                    <div class="example-card" data-example="login">
+                        <h4>Login Test</h4>
+                        <p>Test a login form with email and password validation</p>
+                    </div>
+                    <div class="example-card" data-example="search">
+                        <h4>Search Test</h4>
+                        <p>Test search functionality and results display</p>
+                    </div>
+                    <div class="example-card" data-example="form">
+                        <h4>Form Submission</h4>
+                        <p>Test form filling and submission workflow</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reports-section">
+                <h3>📁 Recent Test Reports</h3>
+                <div id="reportsList" class="reports-list">
+                    <p class="loading">Loading reports...</p>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="examples">
-        <h4>Sample Instructions</h4>
-        <ul>
-            <li>Open homepage</li>
-            <li>Check login page title</li>
-            <li>Verify signup button exists</li>
-        </ul>
-    </div>
-
-    <div class="output-section">
-        <div class="status">Agent Output</div>
-        <pre id="output">Waiting for instruction...</pre>
-    </div>
-
-</div>
-
-<script>
-function sendInstruction() {
-    const instruction = document.getElementById("instruction").value;
-    document.getElementById("output").textContent = "Processing...";
-
-    fetch("/test", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ instruction: instruction })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("output").textContent =
-            JSON.stringify(data, null, 2);
-    })
-    .catch(() => {
-        document.getElementById("output").textContent = "Error occurred";
-    });
-}
-</script>
-
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
