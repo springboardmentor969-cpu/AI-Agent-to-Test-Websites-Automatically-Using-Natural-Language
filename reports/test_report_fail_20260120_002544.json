@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-01-20T00:25:44.866778",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 7,
+    "passed": 4,
+    "failed": 3,
+    "execution_time_sec": 46.17
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_002454_044065.png",
+      "timestamp": "2026-01-20T00:24:58.481931",
+      "execution_time_ms": 7988
+    },
+    {
+      "step_number": 2,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:25:00.517865",
+      "execution_time_ms": 2034
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Start Learning')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_002503_112438.png",
+      "timestamp": "2026-01-20T00:25:05.153075",
+      "execution_time_ms": 4635
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": "1000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:25:06.188706",
+      "execution_time_ms": 1035
+    },
+    {
+      "step_number": 5,
+      "action_type": "fill",
+      "selector": "input[type='email']",
+      "value": "deepshika0408@gmail.com",
+      "success": false,
+      "error": "Timeout: Element 'input[type='email']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260120_002516_437242.png",
+      "timestamp": "2026-01-20T00:25:16.712673",
+      "execution_time_ms": 10248
+    },
+    {
+      "step_number": 6,
+      "action_type": "fill",
+      "selector": "input[type='password']",
+      "value": "hello",
+      "success": false,
+      "error": "Timeout: Element 'input[type='password']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260120_002526_821130.png",
+      "timestamp": "2026-01-20T00:25:27.029874",
+      "execution_time_ms": 10108
+    },
+    {
+      "step_number": 7,
+      "action_type": "click",
+      "selector": "button[type='submit']",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element 'button[type='submit']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_click_20260120_002537_151065.png",
+      "timestamp": "2026-01-20T00:25:37.390933",
+      "execution_time_ms": 10120
+    }
+  ]
+}

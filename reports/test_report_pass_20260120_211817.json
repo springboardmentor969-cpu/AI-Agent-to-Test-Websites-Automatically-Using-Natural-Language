@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-01-20T21:18:17.609916",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 5,
+    "passed": 5,
+    "failed": 0,
+    "execution_time_sec": 5.87
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.wikipedia.org",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_211807_084909.png",
+      "timestamp": "2026-01-20T21:18:07.276634",
+      "execution_time_ms": 1943
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[type='search']",
+      "value": "Allu Arjun",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_211807_490354.png",
+      "timestamp": "2026-01-20T21:18:07.585916",
+      "execution_time_ms": 309
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Search')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_211808_353704.png",
+      "timestamp": "2026-01-20T21:18:08.796460",
+      "execution_time_ms": 1210
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T21:18:10.815779",
+      "execution_time_ms": 2019
+    },
+    {
+      "step_number": 5,
+      "action_type": "click",
+      "selector": "a:has-text('Filmography')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_211811_012999.png",
+      "timestamp": "2026-01-20T21:18:11.209553",
+      "execution_time_ms": 393
+    }
+  ]
+}

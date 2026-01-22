@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-20T01:46:35.124924",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 6,
+    "passed": 6,
+    "failed": 0,
+    "execution_time_sec": 8.26
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_014620_914278.png",
+      "timestamp": "2026-01-20T01:46:22.120751",
+      "execution_time_ms": 2303
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#reg-name",
+      "value": "John Doe",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_014622_651361.png",
+      "timestamp": "2026-01-20T01:46:23.725017",
+      "execution_time_ms": 1604
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "#reg-email",
+      "value": "john@test.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_014624_018022.png",
+      "timestamp": "2026-01-20T01:46:25.240215",
+      "execution_time_ms": 1515
+    },
+    {
+      "step_number": 4,
+      "action_type": "select_dropdown",
+      "selector": "#country",
+      "value": "United States",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\select_dropdown_20260120_014625_476396.png",
+      "timestamp": "2026-01-20T01:46:26.632861",
+      "execution_time_ms": 1391
+    },
+    {
+      "step_number": 5,
+      "action_type": "check_checkbox",
+      "selector": "#terms",
+      "value": "true",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\check_checkbox_20260120_014626_833801.png",
+      "timestamp": "2026-01-20T01:46:27.365960",
+      "execution_time_ms": 733
+    },
+    {
+      "step_number": 6,
+      "action_type": "click",
+      "selector": "#register-btn",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_014627_555276.png",
+      "timestamp": "2026-01-20T01:46:28.080946",
+      "execution_time_ms": 714
+    }
+  ]
+}

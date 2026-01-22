@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-01-21T18:34:53.997194",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 2,
+    "passed": 1,
+    "failed": 1,
+    "execution_time_sec": 14.26
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://twitter.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260121_183432_592612.png",
+      "timestamp": "2026-01-21T18:34:33.251019",
+      "execution_time_ms": 4104
+    },
+    {
+      "step_number": 2,
+      "action_type": "assert_visible",
+      "selector": "button:has-text('Log in')",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element 'button:has-text('Log in')' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_assert_visible_20260121_183443_408477.png",
+      "timestamp": "2026-01-21T18:34:43.523968",
+      "execution_time_ms": 10157
+    }
+  ]
+}

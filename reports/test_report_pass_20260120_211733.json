@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-01-20T21:17:33.880918",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 1,
+    "passed": 1,
+    "failed": 0,
+    "execution_time_sec": 2.14
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://mydramalist.com/",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_211727_044149.png",
+      "timestamp": "2026-01-20T21:17:27.294401",
+      "execution_time_ms": 2140
+    }
+  ]
+}

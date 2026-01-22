@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-01-20T01:11:43.095033",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 5,
+    "passed": 5,
+    "failed": 0,
+    "execution_time_sec": 7.76
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_011129_063879.png",
+      "timestamp": "2026-01-20T01:11:30.689259",
+      "execution_time_ms": 2488
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#username",
+      "value": "admin",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_011131_203957.png",
+      "timestamp": "2026-01-20T01:11:32.216887",
+      "execution_time_ms": 1527
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "#password",
+      "value": "secret",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_011132_846543.png",
+      "timestamp": "2026-01-20T01:11:33.770981",
+      "execution_time_ms": 1554
+    },
+    {
+      "step_number": 4,
+      "action_type": "check_checkbox",
+      "selector": "#remember",
+      "value": "true",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\check_checkbox_20260120_011134_076605.png",
+      "timestamp": "2026-01-20T01:11:34.898583",
+      "execution_time_ms": 1126
+    },
+    {
+      "step_number": 5,
+      "action_type": "click",
+      "selector": "#login-btn",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_011135_180016.png",
+      "timestamp": "2026-01-20T01:11:35.963828",
+      "execution_time_ms": 1065
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-20T20:58:14.935708",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 4,
+    "passed": 4,
+    "failed": 0,
+    "execution_time_sec": 3.73
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.google.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_205805_989944.png",
+      "timestamp": "2026-01-20T20:58:06.342134",
+      "execution_time_ms": 1584
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "textarea[name='q']",
+      "value": "parasite in my drama list",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_205806_554793.png",
+      "timestamp": "2026-01-20T20:58:06.973634",
+      "execution_time_ms": 631
+    },
+    {
+      "step_number": 3,
+      "action_type": "wait",
+      "selector": null,
+      "value": "1000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T20:58:07.986752",
+      "execution_time_ms": 1013
+    },
+    {
+      "step_number": 4,
+      "action_type": "click",
+      "selector": "input[name='btnK']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_205808_210874.png",
+      "timestamp": "2026-01-20T20:58:08.483943",
+      "execution_time_ms": 497
+    }
+  ]
+}

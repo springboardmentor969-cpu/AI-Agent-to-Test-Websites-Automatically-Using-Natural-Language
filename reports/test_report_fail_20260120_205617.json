@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-01-20T20:56:17.975075",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 5,
+    "passed": 4,
+    "failed": 1,
+    "execution_time_sec": 12.87
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.google.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_205559_735946.png",
+      "timestamp": "2026-01-20T20:56:00.258703",
+      "execution_time_ms": 1703
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "textarea[name='q']",
+      "value": "deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_205600_455707.png",
+      "timestamp": "2026-01-20T20:56:00.597517",
+      "execution_time_ms": 337
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "input[name='btnK']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_205600_891998.png",
+      "timestamp": "2026-01-20T20:56:01.432594",
+      "execution_time_ms": 835
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T20:56:03.441431",
+      "execution_time_ms": 2008
+    },
+    {
+      "step_number": 5,
+      "action_type": "click",
+      "selector": "button:has-text('Start Learning')",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.click: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"text=Start Learning\")\n    - locator resolved to 3 elements. Proceeding with the first one: <b>You can start learning from DeepLearning.AI on Co\u2026</b>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    15 \u00d7 waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n",
+      "screenshot": null,
+      "timestamp": "2026-01-20T20:56:11.439409",
+      "execution_time_ms": 7984
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T01:16:15.517553",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_time_sec": 7.62
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.wikipedia.org",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_011604_912766.png",
+      "timestamp": "2026-01-20T01:16:05.306491",
+      "execution_time_ms": 3737
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[type='search']",
+      "value": "machine learning",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_011605_673740.png",
+      "timestamp": "2026-01-20T01:16:05.932934",
+      "execution_time_ms": 626
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Search')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_011606_858404.png",
+      "timestamp": "2026-01-20T01:16:09.190532",
+      "execution_time_ms": 3256
+    }
+  ]
+}

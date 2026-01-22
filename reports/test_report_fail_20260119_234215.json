@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-19T23:42:15.364322",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 1,
+    "failed": 2,
+    "execution_time_sec": 22.6
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260119_234154_616509.png",
+      "timestamp": "2026-01-19T23:41:55.027324",
+      "execution_time_ms": 7253
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[name='username']",
+      "value": "deepshika0408",
+      "success": false,
+      "error": "Timeout: Element 'input[name='username']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260119_234205_272040.png",
+      "timestamp": "2026-01-19T23:42:05.736404",
+      "execution_time_ms": 10244
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "input[name='password']",
+      "value": "hello",
+      "success": false,
+      "error": "TargetClosedError: Page.fill: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"input[name='password']\")\n    - waiting for\" https://bit.ly/3JrQXri\" navigation to finish...\n    - navigated to \"https://learn.deeplearning.ai/login?callbackUrl=%2Fmy%2Flearning%3Futm_medium%3Dnavbar-cta%26utm_source%3Ddlai-homepage\"\n    - locator resolved to 2 elements. Proceeding with the first one: <input type=\"password\" name=\"password\" aria-label=\"Password\" data-testid=\"password-input\" class=\"input input-md w-full text-base-content\"/>\n    - fill(\"\")\n  - attempting fill action\n    2 \u00d7 waiting for element to be visible, enabled and editable\n      - element is not visible\n    - retrying fill action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and editable\n      - element is not visible\n    - retrying fill action\n      - waiting 100ms\n    4 \u00d7 waiting for element to be visible, enabled and editable\n      - element is not visible\n    - retrying fill action\n      - waiting 500ms\n",
+      "screenshot": null,
+      "timestamp": "2026-01-19T23:42:10.846621",
+      "execution_time_ms": 5101
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-21T19:43:46.552577",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 6,
+    "passed": 1,
+    "failed": 5,
+    "execution_time_sec": 12.47
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260121_194324_249918.png",
+      "timestamp": "2026-01-21T19:43:24.912388",
+      "execution_time_ms": 1447
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#reg-name",
+      "value": "John Doe",
+      "success": false,
+      "error": "Timeout: Element '#reg-name' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260121_194335_009776.png",
+      "timestamp": "2026-01-21T19:43:35.349502",
+      "execution_time_ms": 10097
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "#reg-email",
+      "value": "john@example.com",
+      "success": false,
+      "error": "TargetClosedError: Page.fill: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"#reg-email\")\n",
+      "screenshot": null,
+      "timestamp": "2026-01-21T19:43:36.224850",
+      "execution_time_ms": 862
+    },
+    {
+      "step_number": 4,
+      "action_type": "select_dropdown",
+      "selector": "#country",
+      "value": "USA",
+      "success": false,
+      "error": "TargetClosedError: Page.select_option: Target page, context or browser has been closed",
+      "screenshot": null,
+      "timestamp": "2026-01-21T19:43:36.252132",
+      "execution_time_ms": 20
+    },
+    {
+      "step_number": 5,
+      "action_type": "check_checkbox",
+      "selector": "#terms",
+      "value": "true",
+      "success": false,
+      "error": "TargetClosedError: Page.check: Target page, context or browser has been closed",
+      "screenshot": null,
+      "timestamp": "2026-01-21T19:43:36.285338",
+      "execution_time_ms": 20
+    },
+    {
+      "step_number": 6,
+      "action_type": "click",
+      "selector": "#register-btn",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.click: Target page, context or browser has been closed",
+      "screenshot": null,
+      "timestamp": "2026-01-21T19:43:36.320072",
+      "execution_time_ms": 22
+    }
+  ]
+}

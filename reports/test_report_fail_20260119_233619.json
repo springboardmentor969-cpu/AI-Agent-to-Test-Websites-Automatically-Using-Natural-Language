@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-19T23:36:19.613321",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 2,
+    "failed": 1,
+    "execution_time_sec": 13.53
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260119_233602_290834.png",
+      "timestamp": "2026-01-19T23:36:03.421728",
+      "execution_time_ms": 2082
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[name='search']",
+      "value": "AI testing",
+      "success": false,
+      "error": "Timeout: Element 'input[name='search']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260119_233613_898086.png",
+      "timestamp": "2026-01-19T23:36:14.578736",
+      "execution_time_ms": 10475
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button[type='submit']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260119_233614_922125.png",
+      "timestamp": "2026-01-19T23:36:15.548693",
+      "execution_time_ms": 968
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T21:05:16.254396",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_time_sec": 52.66
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://mydramalist.com/",
+      "success": false,
+      "error": "Timeout: Element 'None' not found or not interactable within 10s",
+      "screenshot": null,
+      "timestamp": "2026-01-20T21:04:09.820166",
+      "execution_time_ms": 32104
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#search-input",
+      "value": "parasite",
+      "success": false,
+      "error": "Timeout: Element '#search-input' not found or not interactable within 10s",
+      "screenshot": null,
+      "timestamp": "2026-01-20T21:04:50.265149",
+      "execution_time_ms": 10311
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "#search-btn",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element '#search-btn' not found or not interactable within 10s",
+      "screenshot": null,
+      "timestamp": "2026-01-20T21:05:09.748782",
+      "execution_time_ms": 10240
+    }
+  ]
+}

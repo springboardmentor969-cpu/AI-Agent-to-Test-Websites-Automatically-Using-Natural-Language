@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T20:57:31.833308",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_time_sec": 4.37
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.wikipedia.org",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_205722_804778.png",
+      "timestamp": "2026-01-20T20:57:23.016246",
+      "execution_time_ms": 1974
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[type='search']",
+      "value": "poisonous mushrooms",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_205723_191813.png",
+      "timestamp": "2026-01-20T20:57:23.341357",
+      "execution_time_ms": 325
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Search')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_205724_511200.png",
+      "timestamp": "2026-01-20T20:57:25.413750",
+      "execution_time_ms": 2072
+    }
+  ]
+}

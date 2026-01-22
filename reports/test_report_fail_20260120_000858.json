@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T00:08:58.862246",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 2,
+    "failed": 1,
+    "execution_time_sec": 32.81
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": false,
+      "error": "Timeout: Element 'None' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_navigate_20260120_000742_233932.png",
+      "timestamp": "2026-01-20T00:08:03.591848",
+      "execution_time_ms": 30088
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#search-input",
+      "value": "AI testing",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_000803_926732.png",
+      "timestamp": "2026-01-20T00:08:04.992638",
+      "execution_time_ms": 1399
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "#search-btn",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_000805_207465.png",
+      "timestamp": "2026-01-20T00:08:06.313063",
+      "execution_time_ms": 1319
+    }
+  ]
+}

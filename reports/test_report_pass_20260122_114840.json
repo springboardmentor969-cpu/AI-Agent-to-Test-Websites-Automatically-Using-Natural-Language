@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-01-22T11:48:40.880694",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 5,
+    "passed": 5,
+    "failed": 0,
+    "execution_time_sec": 7.3
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.amazon.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260122_114824_544984.png",
+      "timestamp": "2026-01-22T11:48:26.457339",
+      "execution_time_ms": 3509
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#twotabsearchtextbox",
+      "value": "laptop",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260122_114826_735205.png",
+      "timestamp": "2026-01-22T11:48:27.007307",
+      "execution_time_ms": 549
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "#nav-search-submit-button",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260122_114827_478881.png",
+      "timestamp": "2026-01-22T11:48:27.774821",
+      "execution_time_ms": 766
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-22T11:48:29.790594",
+      "execution_time_ms": 2015
+    },
+    {
+      "step_number": 5,
+      "action_type": "click",
+      "selector": "div[data-component-type='s-search-result'] div.a-section:first-child",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260122_114830_033590.png",
+      "timestamp": "2026-01-22T11:48:30.256521",
+      "execution_time_ms": 465
+    }
+  ]
+}

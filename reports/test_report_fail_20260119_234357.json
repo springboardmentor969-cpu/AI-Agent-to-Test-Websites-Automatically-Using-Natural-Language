@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-19T23:43:57.615409",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 4,
+    "passed": 2,
+    "failed": 2,
+    "execution_time_sec": 32.63
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260119_234330_628331.png",
+      "timestamp": "2026-01-19T23:43:31.427874",
+      "execution_time_ms": 11241
+    },
+    {
+      "step_number": 2,
+      "action_type": "click",
+      "selector": "button[type='submit']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260119_234331_770644.png",
+      "timestamp": "2026-01-19T23:43:32.136723",
+      "execution_time_ms": 708
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "input[name='username']",
+      "value": "deepshika0408",
+      "success": false,
+      "error": "Timeout: Element 'input[name='username']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260119_234342_583537.png",
+      "timestamp": "2026-01-19T23:43:42.909137",
+      "execution_time_ms": 10446
+    },
+    {
+      "step_number": 4,
+      "action_type": "fill",
+      "selector": "input[name='password']",
+      "value": "hello",
+      "success": false,
+      "error": "Timeout: Element 'input[name='password']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260119_234353_143403.png",
+      "timestamp": "2026-01-19T23:43:53.379357",
+      "execution_time_ms": 10234
+    }
+  ]
+}

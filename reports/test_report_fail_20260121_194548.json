@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-21T19:45:48.644437",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 4,
+    "passed": 3,
+    "failed": 1,
+    "execution_time_sec": 12.8
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260121_194525_812297.png",
+      "timestamp": "2026-01-21T19:45:26.631914",
+      "execution_time_ms": 1443
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#username",
+      "value": "testuser",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260121_194526_852172.png",
+      "timestamp": "2026-01-21T19:45:27.343777",
+      "execution_time_ms": 711
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "#password",
+      "value": "testpass123",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260121_194527_505138.png",
+      "timestamp": "2026-01-21T19:45:27.903131",
+      "execution_time_ms": 559
+    },
+    {
+      "step_number": 4,
+      "action_type": "click",
+      "selector": "#login-btn",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element '#login-btn' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_click_20260121_194537_995101.png",
+      "timestamp": "2026-01-21T19:45:38.318713",
+      "execution_time_ms": 10091
+    }
+  ]
+}

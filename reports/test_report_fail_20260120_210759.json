@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-01-20T21:07:59.364970",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 1,
+    "passed": 0,
+    "failed": 1,
+    "execution_time_sec": 32.45
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://mydramalist.com",
+      "success": false,
+      "error": "TargetClosedError: Page.screenshot: Target page, context or browser has been closed\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n",
+      "screenshot": null,
+      "timestamp": "2026-01-20T21:07:53.065686",
+      "execution_time_ms": 32447
+    }
+  ]
+}

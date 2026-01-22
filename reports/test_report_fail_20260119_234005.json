@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-19T23:40:05.332372",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 1,
+    "failed": 2,
+    "execution_time_sec": 14.44
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://google.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260119_233948_725606.png",
+      "timestamp": "2026-01-19T23:39:48.897290",
+      "execution_time_ms": 1918
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[name='q']",
+      "value": "machine learning",
+      "success": false,
+      "error": "Timeout: Element 'input[name='q']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260119_233959_080924.png",
+      "timestamp": "2026-01-19T23:39:59.281080",
+      "execution_time_ms": 10183
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "input[type='submit']",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.click: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"input[type='submit']\")\n    - locator resolved to 4 elements. Proceeding with the first one: <input name=\"btnK\" tabindex=\"0\" role=\"button\" type=\"submit\" class=\"gNO89b\" value=\"Google Search\" aria-label=\"Google Search\" data-ved=\"0ahUKEwi_wJPFmZiSAxVxR2wGHQXtBwUQ4dUDCBY\"/>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    4 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 500ms\n",
+      "screenshot": null,
+      "timestamp": "2026-01-19T23:40:01.625238",
+      "execution_time_ms": 2334
+    }
+  ]
+}

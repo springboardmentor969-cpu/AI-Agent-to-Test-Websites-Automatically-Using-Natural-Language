@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-21T18:29:14.913737",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 1,
+    "failed": 2,
+    "execution_time_sec": 25.99
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://github.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260121_182839_197267.png",
+      "timestamp": "2026-01-21T18:28:40.393734",
+      "execution_time_ms": 4532
+    },
+    {
+      "step_number": 2,
+      "action_type": "click",
+      "selector": "button:has-text('Sign in')",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element 'button:has-text('Sign in')' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_click_20260121_182851_825673.png",
+      "timestamp": "2026-01-21T18:28:52.604871",
+      "execution_time_ms": 11431
+    },
+    {
+      "step_number": 3,
+      "action_type": "assert_visible",
+      "selector": "#username",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element '#username' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_assert_visible_20260121_182902_629935.png",
+      "timestamp": "2026-01-21T18:29:03.805090",
+      "execution_time_ms": 10025
+    }
+  ]
+}

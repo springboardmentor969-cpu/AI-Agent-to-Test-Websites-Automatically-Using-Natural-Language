@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T20:54:29.684128",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_time_sec": 2.44
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_205421_582711.png",
+      "timestamp": "2026-01-20T20:54:22.184159",
+      "execution_time_ms": 1284
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#search-input",
+      "value": "AI testing",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_205422_379838.png",
+      "timestamp": "2026-01-20T20:54:22.869323",
+      "execution_time_ms": 685
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "#search-btn",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_205423_020005.png",
+      "timestamp": "2026-01-20T20:54:23.336345",
+      "execution_time_ms": 466
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-20T00:16:53.260280",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 4,
+    "passed": 4,
+    "failed": 0,
+    "execution_time_sec": 4.65
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.google.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_001643_176658.png",
+      "timestamp": "2026-01-20T00:16:43.734687",
+      "execution_time_ms": 1950
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "textarea[name='q']",
+      "value": "machinelearning",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_001643_984461.png",
+      "timestamp": "2026-01-20T00:16:44.506871",
+      "execution_time_ms": 772
+    },
+    {
+      "step_number": 3,
+      "action_type": "wait",
+      "selector": null,
+      "value": "1000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:16:45.527500",
+      "execution_time_ms": 1020
+    },
+    {
+      "step_number": 4,
+      "action_type": "click",
+      "selector": "input[name='btnK']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_001645_825031.png",
+      "timestamp": "2026-01-20T00:16:46.433365",
+      "execution_time_ms": 905
+    }
+  ]
+}

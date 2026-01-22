@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-21T17:53:33.647252",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 1,
+    "failed": 2,
+    "execution_time_sec": 14.37
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://github.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260121_175314_848724.png",
+      "timestamp": "2026-01-21T17:53:17.904349",
+      "execution_time_ms": 5291
+    },
+    {
+      "step_number": 2,
+      "action_type": "click",
+      "selector": "button:has-text('Sign in')",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.click: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"button:has-text('Sign in')\")\n",
+      "screenshot": null,
+      "timestamp": "2026-01-21T17:53:26.975274",
+      "execution_time_ms": 9063
+    },
+    {
+      "step_number": 3,
+      "action_type": "assert_visible",
+      "selector": "#username",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.wait_for_selector: Target page, context or browser has been closed",
+      "screenshot": null,
+      "timestamp": "2026-01-21T17:53:26.996939",
+      "execution_time_ms": 15
+    }
+  ]
+}

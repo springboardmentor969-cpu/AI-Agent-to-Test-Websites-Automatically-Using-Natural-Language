@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-01-20T20:56:45.730972",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_time_sec": 6.58
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_205634_893667.png",
+      "timestamp": "2026-01-20T20:56:35.474795",
+      "execution_time_ms": 2740
+    },
+    {
+      "step_number": 2,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T20:56:37.489844",
+      "execution_time_ms": 2015
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Start Learning')",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260120_205638_973728.png",
+      "timestamp": "2026-01-20T20:56:39.320643",
+      "execution_time_ms": 1830
+    }
+  ]
+}

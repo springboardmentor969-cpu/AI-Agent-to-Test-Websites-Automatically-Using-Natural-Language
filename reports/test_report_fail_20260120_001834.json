@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-20T00:18:34.241343",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 6,
+    "passed": 4,
+    "failed": 2,
+    "execution_time_sec": 20.66
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_001808_052263.png",
+      "timestamp": "2026-01-20T00:18:09.186655",
+      "execution_time_ms": 3912
+    },
+    {
+      "step_number": 2,
+      "action_type": "wait",
+      "selector": null,
+      "value": 2000,
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:18:11.223862",
+      "execution_time_ms": 2037
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button[type='submit']:contains(Start Learning)",
+      "value": null,
+      "success": false,
+      "error": "Error: Page.click: SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'button[type=\"submit\"]:contains(Start Learning)' is not a valid selector.\n    at query (<anonymous>:5120:41)\n    at <anonymous>:5130:7\n    at SelectorEvaluatorImpl._cached (<anonymous>:4907:20)\n    at SelectorEvaluatorImpl._queryCSS (<anonymous>:5117:17)\n    at SelectorEvaluatorImpl._querySimple (<anonymous>:4997:19)\n    at <anonymous>:4945:29\n    at SelectorEvaluatorImpl._cached (<anonymous>:4907:20)\n    at SelectorEvaluatorImpl.query (<anonymous>:4938:19)\n    at Object.query (<anonymous>:5152:44)\n    at <anonymous>:5110:21\nCall log:\n  - waiting for locator(\"button[type='submit']:contains(Start Learning)\")\n",
+      "screenshot": "screenshots\\error_click_20260120_001813_475253.png",
+      "timestamp": "2026-01-20T00:18:14.178579",
+      "execution_time_ms": 2250
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": 1000,
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:18:15.208929",
+      "execution_time_ms": 1029
+    },
+    {
+      "step_number": 5,
+      "action_type": "fill",
+      "selector": "input[type='email']",
+      "value": "deepshika0408@gmail.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_001815_547848.png",
+      "timestamp": "2026-01-20T00:18:16.073810",
+      "execution_time_ms": 864
+    },
+    {
+      "step_number": 6,
+      "action_type": "fill",
+      "selector": "input[type='password']",
+      "value": "hello",
+      "success": false,
+      "error": "Timeout: Element 'input[type='password']' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_fill_20260120_001826_642899.png",
+      "timestamp": "2026-01-20T00:18:26.985852",
+      "execution_time_ms": 10569
+    }
+  ]
+}

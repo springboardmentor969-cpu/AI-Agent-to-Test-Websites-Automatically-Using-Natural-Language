@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Website Testing Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <h1>AI Website Testing Agent</h1>
+                </div>
+                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    🌙
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h2 class="hero-title">Test Websites with Natural Language</h2>
+                <p class="hero-subtitle">Describe what you want to test, and let AI handle the rest</p>
+            </section>
+
+            <!-- Test Input Form -->
+            <section class="test-section">
+                <div class="card">
+                    <h3 class="section-title">✨ Enter Your Test Instruction</h3>
+                    <form id="testForm" onsubmit="submitTest(event)">
+                        <textarea 
+                            id="instruction" 
+                            class="test-input" 
+                            placeholder="Example: Open google.com, search for 'AI testing', and click the first result"
+                            rows="4"
+                            required
+                        ></textarea>
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span class="btn-icon">▶️</span>
+                            <span class="btn-text">Run Test</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Example Inputs -->
+            <section class="examples-section">
+                <h3 class="section-title">💡 Example Test Cases (Click to Use)</h3>
+                <div class="examples-grid">
+                    <div class="example-card" data-example="Navigate to http://127.0.0.1:5000/static/test_page.html and take a screenshot">
+                        <div class="example-icon">📸</div>
+                        <div class="example-text">Navigate to test page and take a screenshot</div>
+                    </div>
+                    <div class="example-card" data-example="Navigate to http://127.0.0.1:5000/static/test_page.html, fill username with 'testuser', fill password with 'testpass123', and click the login button">
+                        <div class="example-icon">🔐</div>
+                        <div class="example-text">Login form test with credentials</div>
+                    </div>
+                    <div class="example-card" data-example="Navigate to http://127.0.0.1:5000/static/test_page.html, fill name with 'John Doe', fill email with 'john@example.com', select country 'USA', check the terms checkbox, and click register">
+                        <div class="example-icon">📝</div>
+                        <div class="example-text">Complete registration form test</div>
+                    </div>
+                    <div class="example-card" data-example="Navigate to google.com, fill the search box with 'AI testing tools', and click the search button">
+                        <div class="example-icon">🔍</div>
+                        <div class="example-text">Search functionality test</div>
+                    </div>
+                    <div class="example-card" data-example="Navigate to http://127.0.0.1:5000/static/test_page.html and verify that the login button is visible">
+                        <div class="example-icon">👁️</div>
+                        <div class="example-text">Verify element visibility</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <div class="card">
+                    <!-- Statistics Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalSteps">0</div>
+                            <div class="stat-label">TOTAL STEPS</div>
+                        </div>
+                        <div class="stat-card stat-success">
+                            <div class="stat-value" id="passedSteps">0</div>
+                            <div class="stat-label">PASSED</div>
+                        </div>
+                        <div class="stat-card stat-error">
+                            <div class="stat-value" id="failedSteps">0</div>
+                            <div class="stat-label">FAILED</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="executionTime">0s</div>
+                            <div class="stat-label">EXECUTION TIME</div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button onclick="downloadReport()" class="btn-secondary">
+                            <span class="btn-icon">📄</span>
+                            <span class="btn-text">Download Report</span>
+                        </button>
+                        <button onclick="downloadJSON()" class="btn-secondary">
+                            <span class="btn-icon">📦</span>
+                            <span class="btn-text">Download JSON</span>
+                        </button>
+                    </div>
+
+                    <!-- Execution Steps -->
+                    <div id="stepsSection" class="steps-section">
+                        <h4 class="subsection-title">Execution Steps (Click to Expand/Collapse)</h4>
+                        <div id="stepsList" class="steps-list"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Built with AI • Powered by Playwright & LangChain</p>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

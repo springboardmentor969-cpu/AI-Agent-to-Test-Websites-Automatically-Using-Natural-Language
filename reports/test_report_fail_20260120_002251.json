@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-01-20T00:22:51.080341",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 7,
+    "passed": 4,
+    "failed": 3,
+    "execution_time_sec": 21.73
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "https://www.deeplearning.ai",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260120_002224_753019.png",
+      "timestamp": "2026-01-20T00:22:25.402446",
+      "execution_time_ms": 2660
+    },
+    {
+      "step_number": 2,
+      "action_type": "wait",
+      "selector": null,
+      "value": "2000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:22:27.430044",
+      "execution_time_ms": 2027
+    },
+    {
+      "step_number": 3,
+      "action_type": "click",
+      "selector": "button:has-text('Start Learning')",
+      "value": null,
+      "success": false,
+      "error": "Timeout: Element 'button:has-text('Start Learning')' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_click_20260120_002237_723012.png",
+      "timestamp": "2026-01-20T00:22:37.935861",
+      "execution_time_ms": 10292
+    },
+    {
+      "step_number": 4,
+      "action_type": "wait",
+      "selector": null,
+      "value": "1000",
+      "success": true,
+      "error": null,
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:22:38.950645",
+      "execution_time_ms": 1014
+    },
+    {
+      "step_number": 5,
+      "action_type": "fill",
+      "selector": "input[type='email']",
+      "value": "deepshika0408@gmail.com",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260120_002239_244863.png",
+      "timestamp": "2026-01-20T00:22:39.572365",
+      "execution_time_ms": 621
+    },
+    {
+      "step_number": 6,
+      "action_type": "fill",
+      "selector": "input[type='password']",
+      "value": "hello",
+      "success": false,
+      "error": "TargetClosedError: Page.fill: Target page, context or browser has been closed\nCall log:\n  - waiting for locator(\"input[type='password']\")\n",
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:22:44.584936",
+      "execution_time_ms": 5000
+    },
+    {
+      "step_number": 7,
+      "action_type": "click",
+      "selector": "button[type='submit']",
+      "value": null,
+      "success": false,
+      "error": "TargetClosedError: Page.click: Target page, context or browser has been closed",
+      "screenshot": null,
+      "timestamp": "2026-01-20T00:22:44.711006",
+      "execution_time_ms": 115
+    }
+  ]
+}

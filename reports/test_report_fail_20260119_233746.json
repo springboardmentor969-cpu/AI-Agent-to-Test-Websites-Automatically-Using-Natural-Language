@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-01-19T23:37:46.181334",
+  "status": "FAIL",
+  "statistics": {
+    "total_steps": 5,
+    "passed": 4,
+    "failed": 1,
+    "execution_time_sec": 16.37
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260119_233725_733362.png",
+      "timestamp": "2026-01-19T23:37:27.457758",
+      "execution_time_ms": 2389
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "input[name='username']",
+      "value": "admin",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260119_233727_866608.png",
+      "timestamp": "2026-01-19T23:37:28.742488",
+      "execution_time_ms": 1284
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "input[name='password']",
+      "value": "secret",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260119_233729_081596.png",
+      "timestamp": "2026-01-19T23:37:29.801890",
+      "execution_time_ms": 1059
+    },
+    {
+      "step_number": 4,
+      "action_type": "check_checkbox",
+      "selector": "#remember-me",
+      "value": "true",
+      "success": false,
+      "error": "Timeout: Element '#remember-me' not found or not interactable within 10s",
+      "screenshot": "screenshots\\error_check_checkbox_20260119_233740_534058.png",
+      "timestamp": "2026-01-19T23:37:41.179531",
+      "execution_time_ms": 10731
+    },
+    {
+      "step_number": 5,
+      "action_type": "click",
+      "selector": "button[type='submit']",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260119_233741_450664.png",
+      "timestamp": "2026-01-19T23:37:42.091086",
+      "execution_time_ms": 911
+    }
+  ]
+}

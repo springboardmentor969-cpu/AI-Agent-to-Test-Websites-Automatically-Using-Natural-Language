@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-22T11:37:29.757968",
+  "status": "PASS",
+  "statistics": {
+    "total_steps": 4,
+    "passed": 4,
+    "failed": 0,
+    "execution_time_sec": 4.21
+  },
+  "execution_steps": [
+    {
+      "step_number": 1,
+      "action_type": "navigate",
+      "selector": null,
+      "value": "http://127.0.0.1:5000/static/test_page.html",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\navigate_20260122_113715_615759.png",
+      "timestamp": "2026-01-22T11:37:16.466350",
+      "execution_time_ms": 1486
+    },
+    {
+      "step_number": 2,
+      "action_type": "fill",
+      "selector": "#username",
+      "value": "testuser",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260122_113716_684667.png",
+      "timestamp": "2026-01-22T11:37:17.919488",
+      "execution_time_ms": 1453
+    },
+    {
+      "step_number": 3,
+      "action_type": "fill",
+      "selector": "#password",
+      "value": "testpass123",
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\fill_20260122_113718_133039.png",
+      "timestamp": "2026-01-22T11:37:18.576771",
+      "execution_time_ms": 657
+    },
+    {
+      "step_number": 4,
+      "action_type": "click",
+      "selector": "#loginBtn",
+      "value": null,
+      "success": true,
+      "error": null,
+      "screenshot": "screenshots\\click_20260122_113718_753773.png",
+      "timestamp": "2026-01-22T11:37:19.186186",
+      "execution_time_ms": 609
+    }
+  ]
+}
