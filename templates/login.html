@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+</head>
+<body>
+<h2>Login Page</h2>
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button id="login-btn" onclick="doLogin()">Login</button>
+<p id="login-status"></p>
+<script>
+function doLogin() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    if (user === "testuser" && pass === "password") {
+        document.getElementById("login-status").innerText = "Successful Login";
+    } else {
+        document.getElementById("login-status").innerText = "Login Failed";
+    }
+}
+</script>
+</body>
+</html>

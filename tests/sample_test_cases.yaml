@@ -1,0 +1,8 @@
+- instruction: "login to account"
+  expected_commands: ["login"]
+
+- instruction: "search for laptop"
+  expected_commands: ["search"]
+
+- instruction: "open search page and search books"
+  expected_commands: ["search"]

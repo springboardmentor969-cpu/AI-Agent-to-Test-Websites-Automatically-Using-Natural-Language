@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Test</title>
+</head>
+<body>
+<h2>Search Page</h2>
+<input id="query" placeholder="Search something"><br><br>
+<button id="search-btn" onclick="doSearch()">Search</button>
+<p id="search-status"></p>
+<script>
+function doSearch() {
+    const q = document.getElementById("query").value;
+    if (q.length > 0) {
+        document.getElementById("search-status").innerText =
+            "Results found for: " + q;
+    } else {
+        document.getElementById("search-status").innerText =
+            "No Results";
+    }
+}
+</script>
+</body>
+</html>

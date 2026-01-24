@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Test Agent</title>
+  <meta charset="UTF-8">
+
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #eef3ff;
+      --card: white;
+      --text: #111;
+      --code: #f4f4f4;
+    }
+
+    .dark {
+      --bg: #151822;
+      --card: #1f2330;
+      --text: #e8ecff;
+      --code: #0f111a;
+    }
+
+    body {
+      font-family: Arial;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+      color: var(--text);
+    }
+
+    .container {
+      background: var(--card);
+      padding: 22px;
+      width: 620px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      animation: fade .4s ease;
+    }
+
+    textarea {
+      width: 100%;
+      height: 70px;
+      padding: 10px;
+      border: 1px solid #aac;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 8px;
+      background: #4b7cff;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2f5de8;
+    }
+
+    pre {
+      background: var(--code);
+      padding: 12px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .section {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--card);
+      animation: fadeUp .3s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(6px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      background: #24d67c;
+      color: white;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    #loader {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .toggle-btn {
+      float: right;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 14px;
+      background: #2f5de8;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <button class="toggle-btn" onclick="toggleTheme()">🌙</button>
+  <h2>🤖 AI Test Agent</h2>
+
+  <textarea id="instruction" placeholder="Enter test instruction..."></textarea>
+
+  <button onclick="runAgent()">Run Agent</button>
+
+  <div id="loader" style="display:none;">⏳ Running tests...</div>
+  <div id="status"></div>
+
+  <div id="result-area" style="display:none;">
+    <div class="section">
+      <h3>🧭 Test Plan</h3>
+      <div id="plan"></div>
+    </div>
+
+    <div class="section">
+      <h3>💻 Generated Code</h3>
+      <pre id="code"></pre>
+    </div>
+
+    <div class="section">
+      <h3>📊 Execution Report</h3>
+      <div id="report"></div>
+      <div id="success"></div>
+    </div>
+
+    <button onclick="exportPDF()">📄 Export PDF</button>
+    <button onclick="downloadJSON()">💾 Download JSON</button>
+  </div>
+
+</div>
+
+<script>
+let data = {};
+
+async function runAgent() {
+  const instruction = document.getElementById("instruction").value;
+  const loader = document.getElementById("loader");
+  const status = document.getElementById("status");
+  const resultArea = document.getElementById("result-area");
+
+  loader.style.display = "block";
+  resultArea.style.display = "none";
+  status.innerText = "";
+
+  const response = await fetch("/api/submit_test", {
+    method:"POST",
+    body:instruction
+  });
+
+  data = await response.json();
+  data.target = instruction
+
+  loader.style.display = "none";
+  status.innerText = "Done ✓";
+  resultArea.style.display = "block";
+
+  document.getElementById("plan").innerHTML =
+    data.action_plan.steps.map(s => `<div>${s}</div>`).join("");
+
+  document.getElementById("code").innerText =
+    data.generated_code.join("\n");
+
+  let passed = data.report.filter(r => r.passed).length;
+  let total = data.report.length;
+  let pct = Math.round((passed/total)*100);
+
+  document.getElementById("report").innerHTML =
+    data.report.map(r =>
+      `<div>${r.command.toUpperCase()} → ${r.passed ? "✅ PASS" : "❌ FAIL"}</div>`
+    ).join("");
+
+  document.getElementById("success").innerHTML =
+    `<div class="badge">${pct}% Success</div>`;
+}
+
+// PDF
+async function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 12;
+
+  doc.text("AI Test Execution Report", 10, y);
+  y += 10;
+
+  doc.setFontSize(11);
+  doc.text("Instruction: " + document.getElementById("instruction").value, 10, y);
+  y += 10;
+
+  doc.text("Test Plan:", 10, y); y+=8;
+  data.action_plan.steps.forEach(s => { doc.text("- "+s, 14,y); y+=7; });
+
+  y+=4; doc.text("Results:",10,y); y+=8;
+  data.report.forEach(r => { doc.text(`${r.command}: ${r.passed?"PASS":"FAIL"}`,14,y); y+=7; });
+
+  doc.save("test_report.pdf");
+}
+
+// JSON Download
+function downloadJSON() {
+  let blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "test_report.json";
+  a.click();
+}
+
+// theme
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>

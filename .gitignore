@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+env/
+
+# Playwright
+playwright/.cache/
+ms-playwright/
+*.log
+
+# Node/JS
+node_modules/
+dist/
+build/
+
+# OS stuff
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Test caches
+.pytest_cache/
+coverage/
+
+# Browser download artifacts
+*.woff
+*.woff2
+*.ttf
+*.map
