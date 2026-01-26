@@ -1,0 +1,30 @@
+Input:
+Go to https://www.amazon.in/
+Type "Iphone pro max" in search
+Select first product
+View details
+Add to cart
+
+Actions:
+1. {
+  "action": "goto",
+  "value": "https://www.amazon.in/"
+}
+2. {
+  "action": "type",
+  "field": "input[placeholder*='Search'], input[name='q'], input[type='search']",
+  "value": "iphone pro max",
+  "press_enter": true
+}
+3. {
+  "action": "select_product",
+  "position": 1
+}
+4. {
+  "action": "view_details"
+}
+5. {
+  "action": "add_to_cart"
+}
+
+Total actions: 5

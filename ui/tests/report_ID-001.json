@@ -1,11 +1,31 @@
 {
-    "timestamp": "2026-01-16 20:20:53",
+    "timestamp": "2026-01-26 17:25:47",
     "success": true,
     "logs": [
-        "[OK] Navigated to https://www.ebay.com",
-        "[WAIT] DOM ready & network idle",
-        "[OK] Typed 'mechanical keyboard'",
-        "[ASSERT OK] Found text: results"
+        "[INFO] Starting execution with 1 actions",
+        "[INFO] Action 1: get_directions - {'action': 'get_directions', 'destination': 'to lalbagh botanical garden bangalo",
+        "\n[STEP 1] GET_DIRECTIONS",
+        "[INFO] Getting directions to: to lalbagh botanical garden bangalore",
+        "[INFO] Navigating to Google Maps...",
+        "[INFO] Searching for: to lalbagh botanical garden bangalore",
+        "[OK] Typed destination: to lalbagh botanical garden bangalore",
+        "[OK] Pressed Enter to search",
+        "[SCREENSHOT] Location: tests/screenshots/maps_location_bb114a.png",
+        "[INFO] Looking for Directions button...",
+        "[WARNING] Could not find Directions button, trying alternate method",
+        "[OK] Navigated to directions URL directly",
+        "[INFO] Setting starting point...",
+        "[OK] Set starting point to: My location",
+        "[SCREENSHOT] Directions: tests/screenshots/maps_directions_08f9e2.png",
+        "[INFO] Looking for Start/Navigate button...",
+        "[SCREENSHOT] Navigation: tests/screenshots/maps_navigation_17a99d.png",
+        "[OK] Directions completed",
+        "[SCREENSHOT] Final: tests/screenshots/final_fbcf45.png"
     ],
-    "screenshots": []
+    "screenshots": [
+        "tests/screenshots/maps_location_bb114a.png",
+        "tests/screenshots/maps_directions_08f9e2.png",
+        "tests/screenshots/maps_navigation_17a99d.png",
+        "tests/screenshots/final_fbcf45.png"
+    ]
 }
