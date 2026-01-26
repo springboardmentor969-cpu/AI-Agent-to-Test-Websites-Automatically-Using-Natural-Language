@@ -64,7 +64,7 @@ No more writing complex test scripts manually - just describe what you want to t
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/ai-web-testing-agent.git
+git clone https://github.com/vinu3783/ai-web-testing-agent.git
 cd ai-web-testing-agent
 ```
 
