@@ -4,3 +4,8 @@
 # Demo files / folders
 demo/
 demo.*
+venv/
+.vscode/
+__pycache__/
+.pytest_cache/
+.env

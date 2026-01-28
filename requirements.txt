@@ -1,10 +1,4 @@
 langgraph
 playwright
 flask
-langchain
-langchain-community
-langchain-openai
-requests
-python-dotenv
-fpdf2
-jinja2
+streamlit

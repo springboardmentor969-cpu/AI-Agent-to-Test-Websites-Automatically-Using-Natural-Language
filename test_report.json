@@ -1,0 +1,31 @@
+{
+    "timestamp": "2026-01-24 16:14:36.755625",
+    "actions": [
+        {
+            "action": "navigate",
+            "url": "https://www.google.com"
+        },
+        {
+            "action": "press_enter",
+            "field": "q",
+            "value": "python"
+        }
+    ],
+    "assertions": [
+        {
+            "type": "url_contains",
+            "value": "google"
+        }
+    ],
+    "result": {
+        "success": false,
+        "message": "",
+        "logs": [
+            "Executing: {'action': 'navigate', 'url': 'https://www.google.com'}",
+            "[RETRY] Retrying action due to: Page.goto: Timeout 5000ms exceeded.\nCall log:\n  - ..."
+        ],
+        "screenshots": [],
+        "video": null,
+        "error": "local variable 'time' referenced before assignment"
+    }
+}
