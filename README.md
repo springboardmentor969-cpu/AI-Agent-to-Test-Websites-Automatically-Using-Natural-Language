@@ -119,9 +119,10 @@ Examples of supported instructions:
     Results are returned to the UI
 
 ## 🧠 Why Hybrid (Rule-Based + LLM)?
-Approach	Problem
-Pure LLM	Hallucinates selectors, unstable
-Pure rules	Too rigid, site-specific
+
+Approach	            Problem
+Pure LLM	            Hallucinates selectors, unstable
+Pure rules	            Too rigid, site-specific
 Hybrid (this project)	✅ Reliable + adaptable
 
 This design ensures:
@@ -156,10 +157,11 @@ playwright install
 5️⃣ Create .env file
 
 HF_TOKEN=hf_your_token_here
+AUTO_EXECUTE=true
+HEADLESS=false
 
 ⚠️ One variable per line
 ⚠️ No quotes
-▶️ Running the Application
 
 python app.py
 
