@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Playground</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="container">
+    <div class="card">
+        <h1>Natural Language Test Agent</h1>
+        <p>Describe the web test you want to run. The agent will plan the steps for you.</p>
+
+        <form method="POST" class="form">
+            <label for="instruction">Test instruction</label>
+            <textarea id="instruction" name="instruction" rows="3" placeholder="Describe your test, e.g. 'Login with admin and check dashboard'" required></textarea>
+            <button type="submit" class="btn">Generate Test Plan</button>
+        </form>
+
+        {% if result %}
+            <div class="message success">
+                <strong>Response</strong>
+                <pre><code>{{ result }}</code></pre>
+            </div>
+        {% endif %}
+
+        {% if actions %}
+            <div class="card" style="margin-top: 1rem;">
+                <h3>Planned Actions</h3>
+                <ul style="padding-left: 18px;">
+                    {% for action in actions %}
+                        <li>{{ action }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="links">
+            <a href="{{ url_for('home') }}">Home</a> |
+            <a href="{{ url_for('dashboard') }}">Dashboard</a> |
+            <a href="{{ url_for('testpage') }}">Static Test Page</a>
+        </div>
+    </div>
+</body>
+</html>
+

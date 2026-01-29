@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Flask App{% endblock %}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap">
+            <div class="logo"><a href="{{ url_for('dashboard') }}">MyApp</a></div>
+            <nav>
+                {% if session.username %}
+                    <span class="nav-item">Hello, {{ session.username }}</span>
+                    <a class="nav-item" href="{{ url_for('students_page') }}">Students</a>
+                    <a class="nav-item" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class="nav-item" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-item" href="{{ url_for('signup') }}">Signup</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-list">
+                    {% for category, msg in messages %}
+                        <div class="flash {{ category }}">{{ msg }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="wrap small muted">
+        <p>Made with Flask • Demo project</p>
+    </footer>
+</body>
+</html>

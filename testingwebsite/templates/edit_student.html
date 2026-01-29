@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Edit Student{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Edit Student</h2>
+
+    <form method="POST" action="{{ url_for('edit_student', student_id=student.id) }}">
+        <label>ID (cannot change)</label>
+        <input value="{{ student.id }}" disabled>
+
+        <label>Name</label>
+        <input name="name" value="{{ student.name }}" required>
+
+        <label>Age</label>
+        <input name="age" type="number" value="{{ student.age }}">
+
+        <label>Department</label>
+        <input name="dept" value="{{ student.dept }}">
+
+        <label>Grade</label>
+        <input name="grade" value="{{ student.grade }}">
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p><a href="{{ url_for('students_page') }}" class="btn">Back to Students</a></p>
+</div>
+{% endblock %}

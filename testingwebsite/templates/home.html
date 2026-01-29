@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Welcome, {{ username }}!</h2>
+    <p class="muted">Here are some random articles from Wikipedia.</p>
+
+    <div class="articles-grid">
+        {% for a in articles %}
+            <article class="wiki-card">
+                {% if a.thumbnail %}
+                    <img src="{{ a.thumbnail }}" alt="{{ a.title }} thumbnail" />
+                {% endif %}
+                <h3>{{ a.title }}</h3>
+                <p>{{ a.extract }}</p>
+                {% if a.url %}
+                    <p><a class="btn" href="{{ a.url }}" target="_blank" rel="noopener">Read full article</a></p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+
+    <p><a href="{{ url_for('students_page') }}" class="btn">Go to Student Records</a></p>
+</div>
+{% endblock %}

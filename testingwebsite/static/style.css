@@ -1,0 +1,116 @@
+:root {
+    --accent: #3aa657;
+    --muted: #666;
+    --card-bg: #fff;
+    --bg: #f5f6f7;
+    --border: #e6e6e6;
+}
+
+* { box-sizing: border-box; font-family: "Segoe UI", Roboto, Arial, sans-serif; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: #111;
+    -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 980px; margin: 24px auto; padding: 0 16px; }
+
+.topbar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+}
+.topbar .wrap { display:flex; align-items:center; justify-content:space-between; }
+.logo a { font-weight:700; color:#111; text-decoration:none; font-size:18px; }
+nav .nav-item { margin-left:12px; color:var(--muted); text-decoration:none; }
+nav .nav-item a, nav .nav-item { color:var(--muted); text-decoration:none; margin-left:12px; }
+
+.card {
+    background: var(--card-bg);
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(15,15,15,0.05);
+    margin-bottom: 18px;
+}
+
+h2 { margin-top:0; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; color: #777; }
+
+input[type="text"], input[type="password"], input[type="number"], textarea, select {
+    display:block;
+    width:100%;
+    padding:10px 12px;
+    margin:8px 0 12px 0;
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#fff;
+}
+
+button, .btn {
+    display:inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding:10px 14px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    text-decoration:none;
+}
+.btn { background: var(--accent); color: white; border-radius:6px; padding:8px 12px; }
+
+.student-table {
+    width:100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+}
+.student-table th, .student-table td {
+    border:1px solid var(--border);
+    padding:8px 10px;
+    text-align:left;
+}
+.student-table th { background:#fafafa; }
+
+.grid-form {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    gap:10px;
+    align-items:end;
+}
+.grid-form input { margin: 0; }
+
+.inline-form { display:inline-block; margin:0; padding:0; }
+.linklike {
+    background: transparent;
+    color: #c33;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.flash-list { margin-bottom: 12px; }
+.flash { padding: 8px 10px; border-radius:6px; margin-bottom:8px; }
+.flash.success { background: #e7f9ee; color:#0a6a2a; }
+.flash.danger { background: #ffecec; color:#a10; }
+.flash.warning { background: #fff4d6; color:#a56a00; }
+.flash.info { background: #e8f3ff; color:#0b66d0; }
+
+.articles-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+.wiki-card {
+    border:1px solid var(--border);
+    padding:12px;
+    border-radius:8px;
+    background: #fff;
+}
+.wiki-card img { width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:10px; }
+.wiki-card h3 { margin:6px 0; font-size:16px; }
+.actions { white-space:nowrap; }
