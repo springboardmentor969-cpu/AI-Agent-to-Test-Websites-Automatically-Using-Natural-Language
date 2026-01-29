@@ -120,10 +120,13 @@ Examples of supported instructions:
 
 ## 🧠 Why Hybrid (Rule-Based + LLM)?
 
-Approach	            Problem
-Pure LLM	            Hallucinates selectors, unstable
-Pure rules	            Too rigid, site-specific
-Hybrid (this project)	✅ Reliable + adaptable
+Approach	                                                   Problem
+
+Pure LLM	                                                   Hallucinates selectors, unstable
+
+Pure rules	                                                   Too rigid, site-specific
+
+Hybrid (this project)	                                       ✅ Reliable + adaptable
 
 This design ensures:
 
