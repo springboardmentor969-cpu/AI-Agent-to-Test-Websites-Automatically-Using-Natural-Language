@@ -1,51 +1,46 @@
-/* =====================================================
-   FIREFOX-LIKE THEME
-   Neutral greys, flat UI, subtle shadows
-   ===================================================== */
-
-/* -------- RESET -------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* -------- ROOT COLORS -------- */
+/* -------- ROOT COLORS (modernized) -------- */
 :root {
-    --bg-main: #f9f9fb;
+    --bg-main: #f5f7fa;
     --bg-surface: #ffffff;
-    --bg-toolbar: #f0f0f4;
-    --bg-hover: #e7e7eb;
+    --bg-toolbar: #eef1f6;
+    --bg-hover: #e6e9f0;
 
-    --border-light: #d7d7db;
-    --border-dark: #cfcfd4;
+    --border-light: #dcdfe6;
+    --border-dark: #cfd3dc;
 
-    --text-main: #15141a;
-    --text-muted: #5b5b66;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
 
-    --accent: #0060df;
-    --accent-hover: #0250bb;
-    --danger: #d70022;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --danger: #dc2626;
 
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
 
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 /* -------- BODY -------- */
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
                  "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
     background: var(--bg-main);
     color: var(--text-main);
     min-height: 100vh;
+    line-height: 1.5;
 }
 
 /* =====================================================
-   SHARED LAYOUT
+   SHARED LAYOUT (unchanged structurally)
    ===================================================== */
 .container {
     min-height: 100vh;
@@ -85,19 +80,25 @@ body {
     padding: 10px 12px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-light);
-    background: #fff;
+    background: #ffffff;
     font-size: 14px;
+    color: var(--text-main);
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #9ca3af;
 }
 
 .form input:focus,
 .form textarea:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(0,96,223,0.25);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
 }
 
 /* =====================================================
-   BUTTONS (Firefox style)
+   BUTTONS
    ===================================================== */
 .btn,
 .btn-submit,
@@ -115,20 +116,21 @@ body {
     background: var(--bg-toolbar);
     color: var(--text-main);
     cursor: pointer;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 
 .btn:hover,
 .btn-submit:hover,
 .btn-login:hover {
     background: var(--bg-hover);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary,
 .btn-submit,
 .btn-signup-nav {
     background: var(--accent);
-    color: #fff;
+    color: #ffffff;
     border-color: var(--accent);
 }
 
@@ -142,12 +144,12 @@ body {
 .btn-logout {
     background: var(--danger);
     border-color: var(--danger);
-    color: #fff;
+    color: #ffffff;
 }
 
 .btn-danger:hover,
 .btn-logout:hover {
-    background: #b8001c;
+    background: #b91c1c;
 }
 
 /* =====================================================
@@ -156,6 +158,7 @@ body {
 a {
     color: var(--accent);
     text-decoration: none;
+    font-weight: 500;
 }
 
 a:hover {
@@ -171,7 +174,7 @@ a:hover {
 }
 
 .message.success {
-    border-left: 4px solid #2ac3a2;
+    border-left: 4px solid #10b981;
 }
 
 .message.info {
@@ -179,7 +182,7 @@ a:hover {
 }
 
 /* =====================================================
-   NAVBAR – Browser Toolbar Look
+   NAVBAR – Modern Browser Toolbar Feel
    ===================================================== */
 .navbar {
     background: var(--bg-toolbar);
@@ -211,10 +214,11 @@ a:hover {
     flex: 1;
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #ffffff;
     border: 1px solid var(--border-light);
     border-radius: 999px;
     padding: 6px 12px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
 }
 
 .search-box input {
@@ -222,6 +226,7 @@ a:hover {
     outline: none;
     font-size: 14px;
     width: 100%;
+    color: var(--text-main);
 }
 
 .search-box button {
@@ -231,6 +236,7 @@ a:hover {
     color: var(--text-muted);
 }
 
+/* Nav links */
 .navbar-menu {
     display: flex;
     gap: 8px;
@@ -276,7 +282,7 @@ a:hover {
 
 .info-box,
 .detail-section {
-    background: var(--bg-main);
+    background: #f9fafb;
     border: 1px solid var(--border-light);
     border-radius: var(--radius-sm);
     padding: 16px;
@@ -303,6 +309,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     font-size: 48px;
+    color: var(--text-muted);
 }
 
 /* =====================================================
@@ -316,10 +323,10 @@ footer {
     font-size: 13px;
     color: var(--text-muted);
 }
-/* =====================================================
-   LANDING PAGE LAYOUT FIX (Firefox-style)
-   ===================================================== */
 
+/* =====================================================
+   LANDING PAGE (appearance only)
+   ===================================================== */
 .page {
     max-width: 1100px;
     margin: 0 auto;
@@ -336,6 +343,7 @@ footer {
     font-size: 44px;
     font-weight: 800;
     margin-bottom: 12px;
+    letter-spacing: -0.02em;
 }
 
 .hero p {
@@ -350,7 +358,6 @@ footer {
     gap: 12px;
 }
 
-/* Features */
 .features {
     margin-top: 64px;
 }
@@ -358,6 +365,7 @@ footer {
 .features h2 {
     font-size: 28px;
     margin-bottom: 24px;
+    font-weight: 700;
 }
 
 .features-grid {
@@ -369,15 +377,14 @@ footer {
 .feature-card {
     border: 1px solid var(--border-light);
     background: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
 }
 
-/* About section */
 .about {
     margin-top: 64px;
     text-align: left;
 }
 
-/* Footer */
 footer {
     margin-top: 80px;
 }

@@ -1,0 +1,9 @@
+flask
+flask_sqlalchemy
+werkzeug
+playwright
+huggingface-hub
+python-dotenv
+requests
+pydantic
+rich
