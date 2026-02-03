@@ -22,6 +22,23 @@ Traditional web automation tools require coding knowledge, making them inaccessi
 
 ---
 
+---
+🚀 Features
+
+🌐 Web UI to run tests easily
+
+🧠 AI Agent that understands natural language test instructions
+
+🧪 Automated testing using Playwright
+
+📄 Assertion generation using AI
+
+📊 Test reports generation
+
+⚙️ Modular and scalable architecture
+
+---
+
 ## 🏗️ Project Structure
 ai_agent_web_testing/
 │
@@ -50,10 +67,10 @@ ai_agent_web_testing/
 ## 🛠️ Technologies Used
 - Python
 - Flask
-- LangGraph
 - Playwright
 - HTML / CSS / JavaScript
 - JSON
+- AI / NLP: LLM-based agent (LangGraph style)
 
 ---
 
