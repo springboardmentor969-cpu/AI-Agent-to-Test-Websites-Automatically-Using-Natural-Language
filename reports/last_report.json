@@ -1,0 +1,23 @@
+{
+    "status": "PASS",
+    "steps_executed": [
+        {
+            "action": "open",
+            "url": "https://www.wikipedia.org"
+        },
+        {
+            "action": "search",
+            "selector": "input[id='searchInput']",
+            "text": "Machine Learning"
+        },
+        {
+            "action": "scroll",
+            "direction": "down"
+        },
+        {
+            "action": "wait",
+            "duration": 5000
+        }
+    ],
+    "errors": []
+}
