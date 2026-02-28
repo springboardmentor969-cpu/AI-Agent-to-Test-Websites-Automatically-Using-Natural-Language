@@ -1,119 +1,168 @@
-# 🤖 AI Agent to Test Websites Automatically Using Natural Language
+# 🤖 AI Agent for Automated Web Testing using Natural Language
 
 ## 📌 Project Overview
-This project implements an AI-powered web testing agent that converts natural language test instructions into executable browser automation scripts. It eliminates the need for manual scripting by allowing users to describe test cases in plain English.
 
-The system uses a LangGraph-based agent to parse instructions, generate Playwright automation code, execute tests in a headless browser, and produce structured test reports.
+This project presents an AI-powered web automation agent that converts natural language test instructions into executable browser automation workflows.
+
+Instead of writing manual Selenium or Playwright scripts, users can simply describe their test scenarios in plain English. The system intelligently interprets the instruction using a Large Language Model (Groq LLaMA 3.3), generates structured automation steps in JSON format, executes them using Playwright, and produces a structured execution report.
+
+This significantly reduces manual scripting effort and makes test automation accessible to non-technical users.
 
 ---
 
 ## 🎯 Problem Statement
-Traditional web automation tools require coding knowledge, making them inaccessible to non-technical users. This project solves that problem by enabling automated testing through natural language inputs.
+
+Traditional automation frameworks require:
+
+* Programming knowledge
+* Manual selector writing
+* Script maintenance
+* Frequent updates due to UI changes
+
+Non-technical users cannot easily create automation tests.
+
+This project solves that by enabling:
+
+> Automated website testing using natural language commands.
 
 ---
 
-## 🧠 Solution Architecture
-1. User enters test instructions in plain English
-2. Instruction Parser converts text into structured actions
-3. LangGraph workflow manages execution flow
-4. Playwright code is generated dynamically
-5. Headless browser executes the test
-6. Reporting module generates execution results
+## 🧠 System Architecture
+
+### Step-by-Step Flow
+
+1️⃣ User enters test instruction in plain English
+2️⃣ Groq LLM converts instruction into structured JSON steps
+3️⃣ Parser validates and processes steps
+4️⃣ Playwright dynamically executes steps in headless browser
+5️⃣ Assertions are applied
+6️⃣ Reporter generates pass/fail test result
 
 ---
 
----
-🚀 Features
+## 🏗️ Updated Project Structure
 
-🌐 Web UI to run tests easily
-
-🧠 AI Agent that understands natural language test instructions
-
-🧪 Automated testing using Playwright
-
-📄 Assertion generation using AI
-
-📊 Test reports generation
-
-⚙️ Modular and scalable architecture
-
----
-
-## 🏗️ Project Structure
+```
 ai_agent_web_testing/
 │
-├── app.py
+├── app.py                  # Flask entry point
+│
 ├── agent/
-│ ├── __init__.py
-│ ├── assertion_generator.py
-│ ├── parser.py
-│ ├── executor.py
-│ ├── reporter.py
-│ ├── langgraph_agent.py
-│ ├── playwright_generator.py
-│ ├── playwright_runner.py
+│   ├── __init__.py
+│   ├── groq_agent.py           # LLM instruction converter
+│   ├── parser.py               # JSON step validation
+│   ├── executor.py             # Execution controller
+│   ├── playwright_generator.py # Playwright script generator
+│   ├── playwright_runner.py    # Browser execution engine
+│   ├── assertion_generator.py  # Assertion logic
+│   ├── reporter.py             # Test reporting module
+│   ├── langgraph_agent.py      # Workflow orchestration
 │
 ├── templates/
-│ └── index.html
+│   └── index.html              # Frontend UI
 │
-├── static/
-│ └── login.html
+├── reports/                    # Generated reports
 │
-├── README.md
-└── requirements.txt
+├── .env                        # GROQ_API_KEY
+├── requirements.txt
+└── README.md
+```
 
 ---
 
 ## 🛠️ Technologies Used
-- Python
-- Flask
-- Playwright
-- HTML / CSS / JavaScript
-- JSON
-- AI / NLP: LLM-based agent (LangGraph style)
+
+* Python
+* Flask
+* Groq API (LLaMA 3.3 70B Model)
+* LangGraph
+* Playwright
+* JSON
+* HTML / CSS / JavaScript
 
 ---
 
-## 🚀 Milestones Completed
+## 🚀 Key Features
 
-### ✅ Milestone 1
-- Environment setup and dependency installation
-- Flask server initialization
-- Baseline LangGraph agent configuration
+✔ Natural Language Test Execution
+✔ LLM-based Step Generation
+✔ Dynamic JSON Automation Flow
+✔ Headless Browser Execution
+✔ Assertion Validation
+✔ Structured Test Reporting
+✔ Modular Agent Architecture
+✔ Error Handling & Adaptability
 
-### ✅ Milestone 2
-- Natural language instruction parser
-- Structured command mapping
-- LangGraph workflow integration
+---
 
-### ✅ Milestone 3
-- Playwright code generation
-- Assertion creation
-- Headless browser execution
+## 🧠 Why Groq API?
 
-### ✅ Milestone 4
-- Reporting module implementation
-- Error handling and DOM adaptability
-- UI finalization
-- End-to-end execution workflow
-- Documentation and demo preparation
+* Ultra-fast inference
+* Cost-efficient
+* Strong instruction-following capability
+* Handles structured JSON generation effectively
 
 ---
 
 ## 📊 Output
-- Parsed test steps in structured JSON
-- Automated browser execution
-- Pass/Fail test report with execution details
+
+The system generates:
+
+* Structured JSON test steps
+* Real-time browser execution
+* Pass/Fail test status
+* Execution logs
+* Error trace (if failure occurs)
 
 ---
 
 ## ▶️ How to Run the Project
+
+### 1️⃣ Install Dependencies
+
 ```bash
 pip install -r requirements.txt
+```
+
+### 2️⃣ Install Playwright Browsers
+
+```bash
 playwright install
+```
+
+### 3️⃣ Add Environment Variable
+
+Create `.env` file:
+
+```
+GROQ_API_KEY=your_api_key_here
+```
+
+### 4️⃣ Run Application
+
+```bash
 python app.py
 ```
 
+Open in browser:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 📈 Innovation & Uniqueness
+
+* Combines LLM + Automation Testing
+* Converts English instructions to executable automation
+* Reduces dependency on technical scripting
+* Supports scalable agent-based architecture
+* Can be extended for CI/CD integration
+
+---
+
 ## 👩‍💻 Developed By
-- Kaya Dhankar
-- B.Tech CSE (AI)
+
+**Kaya Dhankar**
+B.Tech CSE (Artificial Intelligence)
